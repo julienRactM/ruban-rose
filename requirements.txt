@@ -1,0 +1,46 @@
+# Core Deep Learning - Install first
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+
+# Computer Vision
+opencv-python>=4.7.0
+Pillow>=9.5.0
+albumentations>=1.3.0
+
+# Data Processing
+pandas>=2.0.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Model Architectures
+timm>=0.9.0
+transformers>=4.30.0
+
+# Web Interface
+flask>=2.3.0
+flask-cors>=4.0.0
+
+# Hyperparameter Optimization
+optuna>=3.2.0
+
+# Medical Imaging (optional)
+SimpleITK>=2.2.1
+
+# Development and Visualization
+jupyter>=1.0.0
+ipykernel>=6.23.0
+tqdm>=4.65.0
+
+# Configuration Management  
+pyyaml>=6.0
+
+# Utilities
+pathlib2
+argparse
+
+# Note: Detectron2 installation moved to separate step in install.sh``
+
+
+tensorboard>=2.12.0

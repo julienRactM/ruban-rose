@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Detection - Model Training</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
+        .header { background: #2c3e50; color: white; padding: 1rem; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .card { background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .models-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+        .model-card { border: 2px solid #e0e0e0; border-radius: 8px; padding: 1rem; transition: all 0.3s; }
+        .model-card:hover { border-color: #3498db; }
+        .model-card.selected { border-color: #e74c3c; background: #ffeaea; }
+        .model-card h3 { color: #2c3e50; margin-bottom: 0.5rem; }
+        .btn { background: #3498db; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-size: 1rem; }
+        .btn:hover { background: #2980b9; }
+        .btn:disabled { background: #bdc3c7; cursor: not-allowed; }
+        .btn-danger { background: #e74c3c; }
+        .btn-danger:hover { background: #c0392b; }
+        .status-panel { background: #2c3e50; color: white; padding: 1rem; border-radius: 8px; }
+        .logs { height: 300px; overflow-y: auto; background: #f8f9fa; padding: 1rem; border-radius: 4px; font-family: monospace; font-size: 0.9rem; }
+        .metrics-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .metrics-table th, .metrics-table td { padding: 0.5rem; text-align: left; border-bottom: 1px solid #ddd; }
+        .metrics-table th { background: #f8f9fa; }
+        .progress { background: #ecf0f1; border-radius: 10px; height: 20px; margin: 0.5rem 0; }
+        .progress-bar { background: #3498db; height: 100%; border-radius: 10px; transition: width 0.3s; }
+        .dataset-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .stat-box { text-align: center; padding: 1rem; background: #ecf0f1; border-radius: 8px; }
+        .stat-number { font-size: 2rem; font-weight: bold; color: #2c3e50; }
+        .stat-label { color: #7f8c8d; margin-top: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔬 Breast Cancer Detection - Model Training Interface</h1>
+        <p>Train and compare CNN, ResNet, and Vision Transformer models</p>
+    </div>
+    
+    <div class="container">
+        <!-- Dataset Information -->
+        <div class="card">
+            <h2>📊 Dataset Information</h2>
+            <div id="dataset-info" class="dataset-info">
+                <div class="stat-box">
+                    <div class="stat-number" id="total-patients">-</div>
+                    <div class="stat-label">Patients</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="total-images">-</div>
+                    <div class="stat-label">Images</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="cancer-images">-</div>
+                    <div class="stat-label">Cancer Images</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="healthy-images">-</div>
+                    <div class="stat-label">Healthy Images</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Model Selection -->
+        <div class="card">
+            <h2>🤖 Model Selection</h2>
+            <div class="models-grid">
+                <div class="model-card" data-model="cnn" onclick="toggleModel('cnn')">
+                    <h3>Custom CNN</h3>
+                    <p>Custom convolutional neural network optimized for 50x50 medical images</p>
+                    <p><strong>Training time:</strong> ~20-30 minutes</p>
+                    <p><strong>Parameters:</strong> ~500K</p>
+                </div>
+                <div class="model-card" data-model="resnet" onclick="toggleModel('resnet')">
+                    <h3>ResNet</h3>
+                    <p>Pre-trained ResNet with medical adaptations and transfer learning</p>
+                    <p><strong>Training time:</strong> ~30-45 minutes</p>
+                    <p><strong>Parameters:</strong> ~11M</p>
+                </div>
+                <div class="model-card" data-model="vision_transformer" onclick="toggleModel('vision_transformer')">
+                    <h3>Vision Transformer</h3>
+                    <p>Transformer-based architecture with attention mechanisms</p>
+                    <p><strong>Training time:</strong> ~45-60 minutes</p>
+                    <p><strong>Parameters:</strong> ~22M</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1rem; text-align: center;">
+                <button class="btn" id="start-training-btn" onclick="startTraining()">
+                    🚀 Start Training Selected Models
+                </button>
+                <button class="btn btn-danger" id="stop-training-btn" onclick="stopTraining()" style="display: none;">
+                    ⏹️ Stop Training
+                </button>
+            </div>
+        </div>
+        
+        <!-- Training Status -->
+        <div class="card">
+            <h2>📈 Training Status</h2>
+            <div class="status-panel">
+                <div id="training-status">Ready to start training...</div>
+                <div id="progress-container" style="display: none;">
+                    <div>Current Model: <span id="current-model">-</span></div>
+                    <div>Epoch: <span id="current-epoch">0</span>/<span id="total-epochs">0</span></div>
+                    <div class="progress">
+                        <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Training Logs -->
+            <div style="margin-top: 1rem;">
+                <h3>Training Logs</h3>
+                <div id="training-logs" class="logs">No logs yet...</div>
+            </div>
+        </div>
+        
+        <!-- Results -->
+        <div class="card">
+            <h2>📊 Training Results</h2>
+            <div id="results-container">
+                <p>Results will appear here after training completion...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedModels = [];
+        let updateInterval;
+
+        // Load dataset info on page load
+        window.onload = function() {
+            loadDatasetInfo();
+            startStatusUpdates();
+        };
+
+        function loadDatasetInfo() {
+            fetch('/api/dataset_info')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Dataset error:', data.error);
+                        return;
+                    }
+                    document.getElementById('total-patients').textContent = data.total_patients;
+                    document.getElementById('total-images').textContent = data.total_images;
+                    document.getElementById('cancer-images').textContent = data.class_distribution['0'];
+                    document.getElementById('healthy-images').textContent = data.class_distribution['1'];
+                })
+                .catch(error => console.error('Error loading dataset info:', error));
+        }
+
+        function toggleModel(modelName) {
+            const card = document.querySelector(`[data-model="${modelName}"]`);
+            const index = selectedModels.indexOf(modelName);
+            
+            if (index > -1) {
+                selectedModels.splice(index, 1);
+                card.classList.remove('selected');
+            } else {
+                selectedModels.push(modelName);
+                card.classList.add('selected');
+            }
+            
+            updateStartButton();
+        }
+
+        function updateStartButton() {
+            const startBtn = document.getElementById('start-training-btn');
+            startBtn.disabled = selectedModels.length === 0;
+        }
+
+        function startTraining() {
+            if (selectedModels.length === 0) {
+                alert('Please select at least one model to train.');
+                return;
+            }
+
+            fetch('/api/start_training', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ models: selectedModels })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('start-training-btn').style.display = 'none';
+                    document.getElementById('stop-training-btn').style.display = 'inline-block';
+                    document.getElementById('progress-container').style.display = 'block';
+                } else {
+                    alert('Error starting training: ' + data.error);
+                }
+            });
+        }
+
+        function stopTraining() {
+            fetch('/api/stop_training', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('start-training-btn').style.display = 'inline-block';
+                document.getElementById('stop-training-btn').style.display = 'none';
+                document.getElementById('progress-container').style.display = 'none';
+            });
+        }
+
+        function startStatusUpdates() {
+            updateInterval = setInterval(updateStatus, 2000);
+        }
+
+        function updateStatus() {
+            fetch('/api/training_status')
+            .then(response => response.json())
+            .then(status => {
+                // Update status display
+                const statusElement = document.getElementById('training-status');
+                if (status.is_training) {
+                    statusElement.textContent = `Training in progress... (Started: ${new Date(status.start_time).toLocaleTimeString()})`;
+                    document.getElementById('current-model').textContent = status.current_model || '-';
+                    document.getElementById('current-epoch').textContent = status.epoch || 0;
+                    document.getElementById('total-epochs').textContent = status.total_epochs || 0;
+                    
+                    const progress = status.total_epochs > 0 ? (status.epoch / status.total_epochs) * 100 : 0;
+                    document.getElementById('progress-bar').style.width = progress + '%';
+                } else {
+                    statusElement.textContent = 'Ready to start training...';
+                    document.getElementById('start-training-btn').style.display = 'inline-block';
+                    document.getElementById('stop-training-btn').style.display = 'none';
+                    document.getElementById('progress-container').style.display = 'none';
+                }
+
+                // Update logs
+                const logsElement = document.getElementById('training-logs');
+                if (status.logs && status.logs.length > 0) {
+                    logsElement.innerHTML = status.logs.join('<br>');
+                    logsElement.scrollTop = logsElement.scrollHeight;
+                }
+
+                // Update results
+                updateResults(status.model_results);
+            });
+        }
+
+        function updateResults(results) {
+            const container = document.getElementById('results-container');
+            
+            if (Object.keys(results).length === 0) {
+                container.innerHTML = '<p>Results will appear here after training completion...</p>';
+                return;
+            }
+
+            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>F1-Score</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
+            
+            for (const [modelName, result] in Object.entries(results)) {
+                const status = result.completed ? '✅ Completed' : '❌ Failed';
+                const metrics = result.best_metrics || {};
+                
+                html += `<tr>
+                    <td><strong>${modelName.toUpperCase()}</strong></td>
+                    <td>${status}</td>
+                    <td>${(metrics.f1_score || 0).toFixed(4)}</td>
+                    <td>${(metrics.sensitivity || 0).toFixed(4)}</td>
+                    <td>${(metrics.specificity || 0).toFixed(4)}</td>
+                    <td>${(metrics.accuracy || 0).toFixed(4)}</td>
+                </tr>`;
+            }
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
+    

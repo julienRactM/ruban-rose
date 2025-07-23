@@ -1,0 +1,109 @@
+# Breast Cancer Detection Configuration
+
+# Data Configuration
+data:
+  data_path: "data/BHI"
+  image_size: [50, 50]
+  batch_size: 32
+  data_percentage: 1.0  # Use full dataset (0.1 for 10% during development)
+  num_workers: 4
+  train_split: 0.8
+  val_split: 0.2
+  
+# Class Balancing
+class_balance:
+  enabled: true
+  target_ratio: 0.5  # 50-50 split
+  augmentation_ratio: 0.5  # 50% augmentation, 50% reduction
+  strategy: "hybrid"  # hybrid, augmentation_only, reduction_only
+  
+# Data Augmentation
+augmentation:
+  enabled: true
+  rotation_range: 15
+  brightness_range: [0.8, 1.2] 
+  contrast_range: [0.8, 1.2]
+  horizontal_flip: true
+  vertical_flip: false  # Not anatomically appropriate
+  gaussian_noise: 0.01
+  random_crop: false  # Images are already small patches
+
+# Model Configuration
+models:
+  cnn:
+    enabled: true
+    evaluate: 1
+    architecture: "custom"
+    learning_rate: 0.001
+    epochs: 50
+    dropout: 0.5
+    
+  resnet:
+    enabled: true  
+    evaluate: 1
+    architecture: "resnet18"
+    pretrained: true
+    learning_rate: 0.0001
+    epochs: 30
+    fine_tune_layers: -1  # -1 for all layers, positive number for top N layers
+    
+  faster_rcnn:
+    enabled: true
+    evaluate: 1
+    backbone: "resnet50"
+    learning_rate: 0.0001
+    epochs: 25
+    # Note: Faster R-CNN may be overkill for 50x50 patches
+    
+  vision_transformer:
+    enabled: true
+    evaluate: 1
+    model_name: "vit_base_patch16_224"
+    learning_rate: 0.00001
+    epochs: 20
+    patch_size: 16
+    image_size: 224  # ViT requires larger input, will upscale 50x50
+
+# Training Configuration  
+training:
+  device: "mps"  # mps for M4 Pro GPU, auto, cuda, cpu
+  mixed_precision: true
+  gradient_clipping: 1.0
+  patience: 10  # Early stopping patience
+  save_best_only: true
+  monitor_metric: "val_f1_score"
+  
+# Evaluation Metrics (Medical Focus)
+metrics:
+  primary: ["sensitivity", "specificity", "f1_score"]
+  secondary: ["accuracy", "precision", "recall", "auc_roc"]
+  medical_focus: true  # Emphasize sensitivity over specificity
+  
+# Hyperparameter Optimization
+optuna:
+  enabled: false  # Enable after selecting best model
+  n_trials: 100
+  optimize_metric: "f1_score"
+  search_space:
+    learning_rate: [1e-5, 1e-2]
+    batch_size: [16, 32, 64]
+    dropout: [0.2, 0.7]
+  
+# Logging and Output
+logging:
+  level: "INFO"
+  save_logs: true
+  log_file: "logs/training.log"
+  tensorboard: true
+  
+output:
+  save_models: true
+  save_plots: true
+  results_dir: "results"
+  model_checkpoint_dir: "models/checkpoints"
+  
+# Web Interface Configuration
+web:
+  host: "0.0.0.0"
+  port: 8081
+  debug: false
