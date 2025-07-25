@@ -8,6 +8,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from typing import Dict, Optional
 
+print("MPS available:", torch.backends.mps.is_available())
+print("MPS built:", torch.backends.mps.is_built())
 
 class BreastCancerCNN(nn.Module):
     """
@@ -287,13 +289,21 @@ def test_cnn_model():
     """Test the CNN model implementation"""
     print("Testing CNN Model...")
     
-    # Create model
-    model = BreastCancerCNN()
-    print(f"Created model: {model.__class__.__name__}")
+    # Detect device
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+        print("✅ Using GPU via MPS (Apple Silicon)")
+    else:
+        device = torch.device("cpu")
+        print("❌ MPS not available. Using CPU.")
+
+    # Create and move model to device
+    model = BreastCancerCNN().to(device)
+    print(f"Created model: {model.__class__.__name__} on {device}")
     
-    # Test forward pass
+    # Prepare dummy input and move to device
     batch_size = 4
-    x = torch.randn(batch_size, 3, 50, 50)
+    x = torch.randn(batch_size, 3, 50, 50).to(device)
     
     model.eval()
     with torch.no_grad():
@@ -314,12 +324,13 @@ def test_cnn_model():
     print(f"\nFeature maps shape (conv4): {feature_maps.shape}")
     
     # Test compact model
-    compact_model = CompactCNN()
+    compact_model = CompactCNN().to(device)
     compact_output = compact_model(x)
     print(f"\nCompact model output shape: {compact_output.shape}")
     print(f"Compact model parameters: {sum(p.numel() for p in compact_model.parameters()):,}")
     
     print("✅ CNN model test completed successfully!")
+
 
 
 if __name__ == "__main__":

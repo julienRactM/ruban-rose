@@ -389,30 +389,38 @@ def create_vit_model(config: Dict) -> nn.Module:
 def test_vit_model():
     """Test Vision Transformer model implementation"""
     print("Testing Vision Transformer Model...")
-    
+
+    # Detect device
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+        print("✅ Using GPU via MPS (Apple Silicon)")
+    else:
+        device = torch.device("cpu")
+        print("❌ MPS not available. Using CPU.")
+
     # Test Medical ViT
-    model = MedicalViT(model_name='vit_tiny_patch16_224', pretrained=False)
-    print(f"Created model: {model.__class__.__name__}")
-    
+    model = MedicalViT(model_name='vit_tiny_patch16_224', pretrained=False).to(device)
+    print(f"Created model: {model.__class__.__name__} on {device}")
+
     # Test forward pass
     batch_size = 4
-    x = torch.randn(batch_size, 3, 50, 50)
-    
+    x = torch.randn(batch_size, 3, 50, 50).to(device)
+
     model.eval()
     with torch.no_grad():
         output = model(x)
         features = model.get_features(x)
-    
+
     print(f"Input shape: {x.shape}")
     print(f"Output shape: {output.shape}")
     print(f"Features shape: {features.shape}")
-    
+
     # Test model info
     info = model.get_model_info()
     print("\nModel Information:")
     for key, value in info.items():
         print(f"  {key}: {value}")
-    
+
     # Test compact ViT
     compact_model = CompactViT(
         img_size=50,
@@ -420,18 +428,18 @@ def test_vit_model():
         embed_dim=96,
         depth=4,
         num_heads=4
-    )
-    
+    ).to(device)
+
     with torch.no_grad():
         compact_output = compact_model(x)
-    
+
     compact_params = sum(p.numel() for p in compact_model.parameters())
-    
+
     print(f"\nCompact ViT:")
     print(f"  Output shape: {compact_output.shape}")
     print(f"  Parameters: {compact_params:,}")
     print(f"  Patches: {compact_model.num_patches}")
-    
+
     # Test attention visualization (if available)
     try:
         attention = model.get_attention_maps(x)
@@ -439,7 +447,7 @@ def test_vit_model():
             print(f"  Attention maps shape: {attention.shape}")
     except Exception as e:
         print(f"  Attention extraction not available: {e}")
-    
+
     print("✅ Vision Transformer model test completed successfully!")
 
 

@@ -360,13 +360,21 @@ def test_resnet_model():
     """Test ResNet model implementation"""
     print("Testing ResNet Model...")
     
+    # Detect device
+    if torch.backends.mps.is_available():
+        device = torch.device("mps")
+        print("✅ Using GPU via MPS (Apple Silicon)")
+    else:
+        device = torch.device("cpu")
+        print("❌ MPS not available. Using CPU.")
+    
     # Test standard ResNet
-    model = MedicalResNet(architecture='resnet18', pretrained=False)
-    print(f"Created model: {model.__class__.__name__}")
+    model = MedicalResNet(architecture='resnet18', pretrained=False).to(device)
+    print(f"Created model: {model.__class__.__name__} on {device}")
     
     # Test forward pass
     batch_size = 4
-    x = torch.randn(batch_size, 3, 50, 50)
+    x = torch.randn(batch_size, 3, 50, 50).to(device)
     
     model.eval()
     with torch.no_grad():
@@ -383,13 +391,20 @@ def test_resnet_model():
     for key, value in info.items():
         print(f"  {key}: {value}")
     
-    # Test layer freezing
-    model_frozen = MedicalResNet(architecture='resnet18', fine_tune_layers=1, pretrained=False)
+    # Test layer freezing (create normally, freeze manually after)
+    model_frozen = MedicalResNet(architecture='resnet18', fine_tune_layers=-1, pretrained=False).to(device)
+
+    # Manually freeze layers (mimicking fine_tune_layers=1)
+    for name, param in model_frozen.backbone.named_parameters():
+        param.requires_grad = False
+    for param in model_frozen.classifier.parameters():
+        param.requires_grad = True
+
     frozen_info = model_frozen.get_model_info()
     print(f"\nFrozen model trainable params: {frozen_info['trainable_parameters']:,}")
     
     # Test lightweight version
-    lightweight_model = LightweightResNet()
+    lightweight_model = LightweightResNet().to(device)
     lightweight_output = lightweight_model(x)
     lightweight_params = sum(p.numel() for p in lightweight_model.parameters())
     
