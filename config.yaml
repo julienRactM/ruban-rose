@@ -5,7 +5,7 @@ data:
   data_path: "data/BHI"
   image_size: [50, 50]
   batch_size: 32
-  data_percentage: 1.0  # Use full dataset (0.1 for 10% during development)
+  data_percentage: 0.05  # Use full dataset (0.1 for 10% during development)
   num_workers: 4
   train_split: 0.8
   val_split: 0.2
@@ -14,7 +14,7 @@ data:
 class_balance:
   enabled: true
   target_ratio: 0.5  # 50-50 split
-  augmentation_ratio: 0.5  # 50% augmentation, 50% reduction
+  augmentation_ratio: 1  # 100% augmentation, 0% reduction
   strategy: "hybrid"  # hybrid, augmentation_only, reduction_only
   
 # Data Augmentation
@@ -66,7 +66,7 @@ models:
 
 # Training Configuration  
 training:
-  device: "mps"  # mps for M4 Pro GPU, auto, cuda, cpu
+  device: "auto"  # auto, cuda, cpu
   mixed_precision: true
   gradient_clipping: 1.0
   patience: 10  # Early stopping patience
@@ -105,5 +105,5 @@ output:
 # Web Interface Configuration
 web:
   host: "0.0.0.0"
-  port: 8081
+  port: 5000
   debug: false
