@@ -205,13 +205,23 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                     config['models'][model_name].update(params)
                     add_log(f"Applied custom parameters for {model_name}: {params}")
         
-        # Use MPS for M4 Pro, fallback to CPU
-        if torch.backends.mps.is_available():
+        # Device selection based on config
+        training_config = config.get('training', {})
+        device_config = training_config.get('device', 'auto')
+        
+        if device_config == 'mps' and torch.backends.mps.is_available():
             device = torch.device('mps')
-        elif torch.cuda.is_available():
+        elif device_config == 'cuda' and torch.cuda.is_available():
             device = torch.device('cuda')
-        else:
+        elif device_config == 'cpu':
             device = torch.device('cpu')
+        else:  # auto
+            if torch.backends.mps.is_available():
+                device = torch.device('mps')
+            elif torch.cuda.is_available():
+                device = torch.device('cuda')
+            else:
+                device = torch.device('cpu')
         
         # Add log
         add_log(f"Starting training on device: {device}")
@@ -416,6 +426,7 @@ def create_templates_at_path(templates_dir):
     </div>
     
     <div class="container">
+
         <!-- Dataset Information -->
         <div class="card">
             <h2>📊 Dataset Information</h2>
@@ -599,6 +610,23 @@ def create_templates_at_path(templates_dir):
             </div>
         </div>
         
+        <!-- Snake Game (appears during training) -->
+        <div class="card" id="snake-game-card" style="display: none;">
+            <h2>🐍 Snake Game - Play while training!</h2>
+            <div style="text-align: center;">
+                <canvas id="snakeCanvas" width="400" height="300" style="border: 2px solid #2c3e50; background: #ecf0f1;"></canvas>
+                <div style="margin-top: 1rem;">
+                    <div>Score: <span id="snake-score">0</span></div>
+                    <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #666;">
+                        Use arrow keys to control the snake
+                    </div>
+                    <button id="see-results-btn" class="btn" onclick="scrollToResults()" style="display: none; margin-top: 1rem;">
+                        🎯 See Training Results
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Training Status -->
         <div class="card">
             <h2>📈 Training Status</h2>
@@ -632,11 +660,20 @@ def create_templates_at_path(templates_dir):
     <script>
         let selectedModels = [];
         let updateInterval;
+        
+        // Snake game variables
+        let snake = [{x: 200, y: 150}];
+        let dx = 20, dy = 0;
+        let food = {x: 0, y: 0};
+        let score = 0;
+        let gameRunning = false;
+        let gameLoop;
 
         // Load dataset info on page load
         window.onload = function() {
             loadDatasetInfo();
             startStatusUpdates();
+            initSnakeGame();
         };
 
         function updateClassBalanceDisplay(value) {
@@ -768,6 +805,9 @@ def create_templates_at_path(templates_dir):
             .then(status => {
                 // Update status display
                 const statusElement = document.getElementById('training-status');
+                const snakeGameCard = document.getElementById('snake-game-card');
+                const seeResultsBtn = document.getElementById('see-results-btn');
+                
                 if (status.is_training) {
                     statusElement.textContent = `Training in progress... (Started: ${new Date(status.start_time).toLocaleTimeString()})`;
                     document.getElementById('current-model').textContent = status.current_model || '-';
@@ -776,11 +816,25 @@ def create_templates_at_path(templates_dir):
                     
                     const progress = status.total_epochs > 0 ? (status.epoch / status.total_epochs) * 100 : 0;
                     document.getElementById('progress-bar').style.width = progress + '%';
+                    
+                    // Show snake game during training
+                    snakeGameCard.style.display = 'block';
+                    if (!gameRunning) startSnakeGame();
+                    seeResultsBtn.style.display = 'none';
                 } else {
                     statusElement.textContent = 'Ready to start training...';
                     document.getElementById('start-training-btn').style.display = 'inline-block';
                     document.getElementById('stop-training-btn').style.display = 'none';
                     document.getElementById('progress-container').style.display = 'none';
+                    
+                    // Show results button if training completed with results
+                    if (Object.keys(status.model_results).length > 0) {
+                        seeResultsBtn.style.display = 'inline-block';
+                        stopSnakeGame();
+                    } else {
+                        snakeGameCard.style.display = 'none';
+                        stopSnakeGame();
+                    }
                 }
 
                 // Update logs
@@ -821,6 +875,158 @@ def create_templates_at_path(templates_dir):
             
             html += '</tbody></table>';
             container.innerHTML = html;
+        }
+
+        // Snake Game Functions
+        function initSnakeGame() {
+            const canvas = document.getElementById('snakeCanvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            generateFood();
+            
+            // Initial draw
+            drawSnakeGame(ctx, canvas);
+            
+            // Add keyboard controls
+            document.addEventListener('keydown', changeDirection);
+        }
+
+        function startSnakeGame() {
+            if (gameRunning) return;
+            
+            // Reset game state
+            snake = [{x: 200, y: 150}];
+            dx = 20; dy = 0;
+            score = 0;
+            gameRunning = true;
+            document.getElementById('snake-score').textContent = score;
+            
+            generateFood();
+            gameLoop = setInterval(updateSnakeGame, 150);
+        }
+
+        function stopSnakeGame() {
+            gameRunning = false;
+            if (gameLoop) clearInterval(gameLoop);
+        }
+
+        function updateSnakeGame() {
+            if (!gameRunning) return;
+            
+            const canvas = document.getElementById('snakeCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Move snake
+            let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            
+            // Wall wrapping instead of collision
+            if (head.x < 0) head.x = canvas.width - 20;
+            if (head.x >= canvas.width) head.x = 0;
+            if (head.y < 0) head.y = canvas.height - 20;
+            if (head.y >= canvas.height) head.y = 0;
+            
+            // Check self collision
+            for (let segment of snake) {
+                if (head.x === segment.x && head.y === segment.y) {
+                    resetSnakeGame();
+                    return;
+                }
+            }
+            
+            snake.unshift(head);
+            
+            // Check food collision with tolerance for any coordinate issues
+            const distance = Math.abs(head.x - food.x) + Math.abs(head.y - food.y);
+            if (distance < 20) { // If head is within one grid cell of food
+                score += 10;
+                document.getElementById('snake-score').textContent = score;
+                generateFood();
+                // Don't remove tail when food is eaten (snake grows)
+            } else {
+                snake.pop();
+            }
+            
+            drawSnakeGame(ctx, canvas);
+        }
+
+        function drawSnakeGame(ctx, canvas) {
+            // Clear canvas
+            ctx.fillStyle = '#ecf0f1';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw snake head (different color)
+            if (snake.length > 0) {
+                ctx.fillStyle = '#34495e';
+                ctx.fillRect(snake[0].x, snake[0].y, 18, 18);
+                
+                // Draw snake body
+                ctx.fillStyle = '#2c3e50';
+                for (let i = 1; i < snake.length; i++) {
+                    ctx.fillRect(snake[i].x, snake[i].y, 18, 18);
+                }
+            }
+            
+            // Draw food as a circle for better visibility
+            ctx.fillStyle = '#e74c3c';
+            ctx.beginPath();
+            ctx.arc(food.x + 9, food.y + 9, 8, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+
+        function generateFood() {
+            const canvas = document.getElementById('snakeCanvas');
+            if (!canvas) return;
+            
+            let newFood;
+            let attempts = 0;
+            
+            // Ensure food doesn't spawn on snake
+            do {
+                newFood = {
+                    x: Math.floor(Math.random() * (canvas.width / 20)) * 20,
+                    y: Math.floor(Math.random() * (canvas.height / 20)) * 20
+                };
+                attempts++;
+            } while (attempts < 100 && snake.some(segment => segment.x === newFood.x && segment.y === newFood.y));
+            
+            food.x = newFood.x;
+            food.y = newFood.y;
+        }
+
+        function changeDirection(event) {
+            if (!gameRunning) return;
+            
+            const LEFT_KEY = 37, RIGHT_KEY = 39, UP_KEY = 38, DOWN_KEY = 40;
+            
+            // Prevent page scrolling when using arrow keys during game
+            if ([LEFT_KEY, RIGHT_KEY, UP_KEY, DOWN_KEY].includes(event.keyCode)) {
+                event.preventDefault();
+            }
+            
+            switch(event.keyCode) {
+                case LEFT_KEY:
+                    if (dx === 0) { dx = -20; dy = 0; }
+                    break;
+                case UP_KEY:
+                    if (dy === 0) { dx = 0; dy = -20; }
+                    break;
+                case RIGHT_KEY:
+                    if (dx === 0) { dx = 20; dy = 0; }
+                    break;
+                case DOWN_KEY:
+                    if (dy === 0) { dx = 0; dy = 20; }
+                    break;
+            }
+        }
+
+        function resetSnakeGame() {
+            stopSnakeGame();
+            setTimeout(startSnakeGame, 1000); // Restart after 1 second
+        }
+
+        function scrollToResults() {
+            document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
         }
     </script>
 </body>
