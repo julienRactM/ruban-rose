@@ -1,3 +1,14 @@
 BHI
 BHI/*
 venv
+
+# Model checkpoints (too large for GitHub)
+models/checkpoints/
+*.pth
+*.pkl
+*.h5
+
+# Logs and temporary files
+logs/
+*.log
+test_gpu.ipynb
