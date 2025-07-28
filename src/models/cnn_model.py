@@ -323,7 +323,8 @@ def test_cnn_model():
     feature_maps = model.get_feature_maps(x, 'conv4')
     print(f"\nFeature maps shape (conv4): {feature_maps.shape}")
     
-    # Test compact model
+    # Test compact 
+    
     compact_model = CompactCNN().to(device)
     compact_output = compact_model(x)
     print(f"\nCompact model output shape: {compact_output.shape}")

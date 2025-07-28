@@ -21,6 +21,10 @@ from models.vision_transformer import create_vit_model
 from data_loaders.breast_cancer_dataloader import create_dataloaders
 from training.trainer import BreastCancerTrainer
 
+# Import optimization components
+from optimization.optuna_optimizer import OptunaOptimizer, OptimizationPresets
+from optimization.tracking import OptimizationTracker, OptimizationResult, get_global_tracker
+
 app = Flask(__name__, template_folder='src/templates')
 CORS(app)
 
@@ -35,6 +39,24 @@ training_status = {
     'start_time': None,
     'model_results': {}
 }
+
+# Global variables for optimization status
+optimization_status = {
+    'is_optimizing': False,
+    'current_model': None,
+    'current_trial': 0,
+    'total_trials': 0,
+    'best_f1_score': 0.0,
+    'best_params': {},
+    'optimization_mode': None,
+    'logs': [],
+    'start_time': None,
+    'study_name': None,
+    'trial_results': []
+}
+
+# Global optimization tracker
+optimization_tracker = get_global_tracker()
 
 # Load configuration
 def load_config():
@@ -119,6 +141,58 @@ def get_model_results():
     """Get training results for all models"""
     return jsonify(training_status['model_results'])
 
+@app.route('/api/start_optimization', methods=['POST'])
+def start_optimization():
+    """Start hyperparameter optimization for selected model"""
+    if training_status['is_training'] or optimization_status['is_optimizing']:
+        return jsonify({'success': False, 'error': 'Training or optimization already in progress'}), 400
+    
+    try:
+        data = request.json
+        model_type = data.get('model_type')
+        optimization_mode = data.get('optimization_mode', 'fast')
+        data_config = data.get('data_config', {})
+        
+        if not model_type:
+            return jsonify({'success': False, 'error': 'No model selected for optimization'}), 400
+        
+        # Start optimization in background thread
+        optimization_thread = threading.Thread(
+            target=run_optimization_background,
+            args=(model_type, optimization_mode, data_config)
+        )
+        optimization_thread.daemon = True
+        optimization_thread.start()
+        
+        return jsonify({'success': True, 'message': 'Optimization started'})
+    
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/optimization_status')
+def get_optimization_status():
+    """Get current optimization status"""
+    return jsonify(optimization_status)
+
+@app.route('/api/stop_optimization', methods=['POST'])
+def stop_optimization():
+    """Stop current optimization"""
+    optimization_status['is_optimizing'] = False
+    optimization_status['current_model'] = None
+    return jsonify({'success': True, 'message': 'Optimization stopped'})
+
+@app.route('/api/optimization_results/<study_name>')
+def get_optimization_results(study_name):
+    """Get detailed optimization results for a study"""
+    try:
+        study_data = optimization_tracker.get_study_progress(study_name)
+        if study_data:
+            return jsonify(study_data)
+        else:
+            return jsonify({'error': 'Study not found'}), 404
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/api/dataset_info')
 def get_dataset_info():
     """Get dataset information"""
@@ -161,6 +235,164 @@ def scan_dataset(data_path):
                     info['total_images'] += class_images
     
     return info
+
+def run_optimization_background(model_type, optimization_mode, data_config=None):
+    """Background optimization function"""
+    global optimization_status
+    
+    try:
+        # Initialize optimization status
+        study_name = f"{model_type}_optimization_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        optimization_status.update({
+            'is_optimizing': True,
+            'current_model': model_type,
+            'start_time': datetime.now().isoformat(),
+            'logs': [],
+            'study_name': study_name,
+            'optimization_mode': optimization_mode,
+            'current_trial': 0,
+            'total_trials': 0,
+            'best_f1_score': 0.0,
+            'best_params': {},
+            'trial_results': []
+        })
+        
+        config = load_config()
+        
+        # Apply data configuration
+        if data_config:
+            if 'data_percentage' in data_config:
+                config['data']['data_percentage'] = data_config['data_percentage']
+                add_optimization_log(f"Using {data_config['data_percentage']:.1%} of dataset")
+            if 'batch_size' in data_config:
+                config['data']['batch_size'] = data_config['batch_size']
+                add_optimization_log(f"Batch size: {data_config['batch_size']}")
+            if 'class_balance_enabled' in data_config:
+                config['class_balance']['enabled'] = data_config['class_balance_enabled']
+                if 'class_balance_ratio' in data_config:
+                    config['class_balance']['target_ratio'] = data_config['class_balance_ratio']
+        
+        # Device selection with M4 Pro optimizations
+        training_config = config.get('training', {})
+        device_config = training_config.get('device', 'auto')
+        
+        if device_config == 'mps' and torch.backends.mps.is_available():
+            device = torch.device('mps')
+            # Apply M4 Pro specific optimizations
+            _apply_m4_pro_optimizations(config)
+        elif device_config == 'cuda' and torch.cuda.is_available():
+            device = torch.device('cuda')
+        elif device_config == 'cpu':
+            device = torch.device('cpu')
+        else:  # auto
+            if torch.backends.mps.is_available():
+                device = torch.device('mps')
+                _apply_m4_pro_optimizations(config)
+            elif torch.cuda.is_available():
+                device = torch.device('cuda')
+            else:
+                device = torch.device('cpu')
+        
+        add_optimization_log(f"Starting optimization on device: {device}")
+        add_optimization_log(f"Model: {model_type}, Mode: {optimization_mode}")
+        
+        # Create data loaders
+        add_optimization_log("Loading dataset...")
+        train_loader, val_loader = create_dataloaders(config)
+        add_optimization_log(f"Dataset loaded - Train: {len(train_loader.dataset)}, Val: {len(val_loader.dataset)}")
+        
+        # Get optimization preset
+        if optimization_mode == 'fast':
+            preset = OptimizationPresets.get_fast_preset()
+        elif optimization_mode == 'thorough':
+            preset = OptimizationPresets.get_thorough_preset()
+        elif optimization_mode == 'medical':
+            preset = OptimizationPresets.get_medical_preset()
+        else:
+            preset = OptimizationPresets.get_fast_preset()
+        
+        optimization_status['total_trials'] = preset['n_trials']
+        add_optimization_log(f"Optimization preset: {optimization_mode} ({preset['n_trials']} trials, {preset['timeout']}s timeout)")
+        
+        # Start tracking
+        optimization_tracker.start_study(study_name, model_type)
+        
+        # Create optimizer
+        optimizer = OptunaOptimizer(
+            model_type=model_type,
+            train_loader=train_loader,
+            val_loader=val_loader,
+            base_config=config,
+            device=device,
+            study_name=study_name
+        )
+        
+        # Set up callbacks for real-time updates
+        def optimization_progress_callback(current_trial, total_trials, message):
+            optimization_status.update({
+                'current_trial': current_trial,
+                'total_trials': total_trials
+            })
+            add_optimization_log(message)
+        
+        def trial_completion_callback(trial_id, params, f1_score, sensitivity, specificity):
+            result = OptimizationResult(
+                trial_id=trial_id,
+                model_type=model_type,
+                parameters=params,
+                f1_score=f1_score,
+                sensitivity=sensitivity,
+                specificity=specificity,
+                accuracy=0.0,  # Will be updated if available
+                training_time=0.0,  # Will be updated if available
+                epochs_completed=params.get('epochs', 0),
+                timestamp=datetime.now().isoformat(),
+                study_name=study_name
+            )
+            
+            optimization_tracker.record_trial(result)
+            optimization_status['trial_results'].append(result.to_dict())
+            
+            # Update best results
+            if f1_score > optimization_status['best_f1_score']:
+                optimization_status.update({
+                    'best_f1_score': f1_score,
+                    'best_params': params.copy()
+                })
+                add_optimization_log(f"New best F1-score: {f1_score:.4f}")
+        
+        optimizer.set_progress_callback(optimization_progress_callback)
+        optimizer.set_trial_callback(trial_completion_callback)
+        
+        # Run optimization
+        add_optimization_log("Starting hyperparameter optimization...")
+        study = optimizer.optimize(
+            n_trials=preset['n_trials'],
+            timeout=preset['timeout'],
+            pruner=preset['pruner']
+        )
+        
+        # Finish tracking
+        optimization_tracker.finish_study(preset['n_trials'], preset['timeout'])
+        
+        # Store final results
+        optimization_status.update({
+            'is_optimizing': False,
+            'current_model': None,
+            'best_f1_score': study.best_value,
+            'best_params': study.best_params
+        })
+        
+        add_optimization_log("\n=== Optimization Completed! ===")
+        add_optimization_log(f"Best F1-Score: {study.best_value:.4f}")
+        add_optimization_log(f"Best Parameters: {study.best_params}")
+        add_optimization_log(f"Total Trials: {len(study.trials)}")
+        
+    except Exception as e:
+        optimization_status['is_optimizing'] = False
+        optimization_status['current_model'] = None
+        add_optimization_log(f"Optimization failed: {str(e)}")
+        print(f"Optimization error: {e}")
 
 def train_models_background(selected_models, model_parameters=None, data_config=None):
     """Background training function"""
@@ -205,12 +437,13 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                     config['models'][model_name].update(params)
                     add_log(f"Applied custom parameters for {model_name}: {params}")
         
-        # Device selection based on config
+        # Device selection based on config with M4 Pro optimizations
         training_config = config.get('training', {})
         device_config = training_config.get('device', 'auto')
         
         if device_config == 'mps' and torch.backends.mps.is_available():
             device = torch.device('mps')
+            _apply_m4_pro_optimizations(config)
         elif device_config == 'cuda' and torch.cuda.is_available():
             device = torch.device('cuda')
         elif device_config == 'cpu':
@@ -218,6 +451,7 @@ def train_models_background(selected_models, model_parameters=None, data_config=
         else:  # auto
             if torch.backends.mps.is_available():
                 device = torch.device('mps')
+                _apply_m4_pro_optimizations(config)
             elif torch.cuda.is_available():
                 device = torch.device('cuda')
             else:
@@ -346,6 +580,18 @@ def add_log(message):
     
     print(log_entry)  # Also print to console
 
+def add_optimization_log(message):
+    """Add log message to optimization status"""
+    timestamp = datetime.now().strftime("%H:%M:%S")
+    log_entry = f"[{timestamp}] {message}"
+    optimization_status['logs'].append(log_entry)
+    
+    # Keep only last 100 log entries
+    if len(optimization_status['logs']) > 100:
+        optimization_status['logs'] = optimization_status['logs'][-100:]
+    
+    print(log_entry)  # Also print to console
+
 class WebLogger:
     """Custom logger that captures logs for web interface"""
     
@@ -364,6 +610,51 @@ class WebLogger:
     def warning(self, message):
         self.original_logger.warning(message)
         self.log_function(f"WARNING: {message}")
+
+
+def _apply_m4_pro_optimizations(config):
+    """Apply M4 Pro specific optimizations to configuration"""
+    try:
+        import platform
+        import subprocess
+        
+        # Detect M4 Pro
+        is_m4_pro = False
+        if platform.system() == 'Darwin':
+            try:
+                result = subprocess.run(['sysctl', '-n', 'machdep.cpu.brand_string'], 
+                                      capture_output=True, text=True)
+                cpu_brand = result.stdout.strip()
+                is_m4_pro = 'Apple M4 Pro' in cpu_brand or 'M4 Pro' in cpu_brand
+            except:
+                pass
+        
+        if not is_m4_pro:
+            is_m4_pro = torch.backends.mps.is_available()
+        
+        if is_m4_pro:
+            # Apply M4 Pro memory optimizations
+            m4_pro_config = config.get('training', {}).get('m4_pro_optimizations', {})
+            
+            # Set memory fraction
+            memory_fraction = m4_pro_config.get('memory_fraction', 0.85)
+            try:
+                if hasattr(torch.mps, 'set_per_process_memory_fraction'):
+                    torch.mps.set_per_process_memory_fraction(memory_fraction)
+            except:
+                pass
+            
+            # Enable graph mode if available
+            if m4_pro_config.get('enable_graph_mode', True):
+                try:
+                    if hasattr(torch.backends.mps, 'enable_graph_mode'):
+                        torch.backends.mps.enable_graph_mode(True)
+                except:
+                    pass
+            
+            print(f"Applied M4 Pro optimizations: memory_fraction={memory_fraction}")
+    except Exception as e:
+        print(f"Warning: Could not apply M4 Pro optimizations: {e}")
 
 # Create templates directory and basic HTML template
 def create_templates():
@@ -601,12 +892,65 @@ def create_templates_at_path(templates_dir):
             </div>
             
             <div style="margin-top: 1rem; text-align: center;">
-                <button class="btn" id="start-training-btn" onclick="startTraining()">
-                    🚀 Start Training Selected Models
-                </button>
-                <button class="btn btn-danger" id="stop-training-btn" onclick="stopTraining()" style="display: none;">
-                    ⏹️ Stop Training
-                </button>
+                <!-- Training Mode Selection -->
+                <div class="param-group" style="margin-bottom: 1rem;">
+                    <label style="text-align: center; margin-bottom: 0.5rem; font-size: 1.1rem;">Training Mode</label>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="training-mode" value="manual" checked onchange="toggleTrainingMode()">
+                            <span>Manual Training</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="training-mode" value="optimization" onchange="toggleTrainingMode()">
+                            <span>Hyperparameter Optimization</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Manual Training Controls -->
+                <div id="manual-training-controls">
+                    <button class="btn" id="start-training-btn" onclick="startTraining()">
+                        🚀 Start Training Selected Models
+                    </button>
+                    <button class="btn btn-danger" id="stop-training-btn" onclick="stopTraining()" style="display: none;">
+                        ⏹️ Stop Training
+                    </button>
+                </div>
+
+                <!-- Optimization Controls -->
+                <div id="optimization-controls" style="display: none;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; text-align: left;">
+                        <div class="param-group">
+                            <label for="optimization-model">Model to Optimize</label>
+                            <select id="optimization-model">
+                                <option value="cnn">CNN</option>
+                                <option value="resnet">ResNet</option>
+                                <option value="vision_transformer">Vision Transformer</option>
+                            </select>
+                            <small>Select one model for optimization</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="optimization-preset">Optimization Preset</label>
+                            <select id="optimization-preset">
+                                <option value="fast">Fast (20 trials, 1 hour)</option>
+                                <option value="medical" selected>Medical (50 trials, 2 hours)</option>
+                                <option value="thorough">Thorough (100 trials, 4 hours)</option>
+                            </select>
+                            <small>Choose optimization strategy</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="optimization-trials">Number of Trials</label>
+                            <input type="number" id="optimization-trials" value="50" min="5" max="200">
+                            <small>Override preset trial count</small>
+                        </div>
+                    </div>
+                    <button class="btn" id="start-optimization-btn" onclick="startOptimization()">
+                        🔍 Start Hyperparameter Optimization
+                    </button>
+                    <button class="btn btn-danger" id="stop-optimization-btn" onclick="stopOptimization()" style="display: none;">
+                        ⏹️ Stop Optimization
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -627,16 +971,40 @@ def create_templates_at_path(templates_dir):
             </div>
         </div>
 
-        <!-- Training Status -->
+        <!-- Training/Optimization Status -->
         <div class="card">
-            <h2>📈 Training Status</h2>
+            <h2 id="status-header">📈 Training Status</h2>
             <div class="status-panel">
-                <div id="training-status">Ready to start training...</div>
-                <div id="progress-container" style="display: none;">
-                    <div>Current Model: <span id="current-model">-</span></div>
-                    <div>Epoch: <span id="current-epoch">0</span>/<span id="total-epochs">0</span></div>
-                    <div class="progress">
-                        <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                <!-- Training Status -->
+                <div id="training-status-panel">
+                    <div id="training-status">Ready to start training...</div>
+                    <div id="progress-container" style="display: none;">
+                        <div>Current Model: <span id="current-model">-</span></div>
+                        <div>Epoch: <span id="current-epoch">0</span>/<span id="total-epochs">0</span></div>
+                        <div class="progress">
+                            <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Optimization Status -->
+                <div id="optimization-status-panel" style="display: none;">
+                    <div id="optimization-status">Ready to start optimization...</div>
+                    <div id="optimization-progress-container" style="display: none;">
+                        <div>Model: <span id="optimization-current-model">-</span></div>
+                        <div>Trial: <span id="optimization-current-trial">0</span>/<span id="optimization-total-trials">0</span></div>
+                        <div>Best F1-Score: <span id="optimization-best-f1">0.0000</span></div>
+                        <div class="progress">
+                            <div class="progress-bar" id="optimization-progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <details>
+                                <summary style="cursor: pointer; color: #3498db;">Best Parameters Found</summary>
+                                <div id="optimization-best-params" style="margin-top: 0.5rem; font-size: 0.9rem; background: #34495e; padding: 0.5rem; border-radius: 4px; font-family: monospace;">
+                                    No parameters found yet...
+                                </div>
+                            </details>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -660,6 +1028,7 @@ def create_templates_at_path(templates_dir):
     <script>
         let selectedModels = [];
         let updateInterval;
+        let currentTrainingMode = 'manual';
         
         // Snake game variables
         let snake = [{x: 200, y: 150}];
@@ -1027,6 +1396,191 @@ def create_templates_at_path(templates_dir):
 
         function scrollToResults() {
             document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Optimization Functions
+        function toggleTrainingMode() {
+            const manualMode = document.querySelector('input[name="training-mode"][value="manual"]').checked;
+            const optimizationMode = document.querySelector('input[name="training-mode"][value="optimization"]').checked;
+            
+            currentTrainingMode = manualMode ? 'manual' : 'optimization';
+            
+            // Toggle control visibility
+            document.getElementById('manual-training-controls').style.display = manualMode ? 'block' : 'none';
+            document.getElementById('optimization-controls').style.display = optimizationMode ? 'block' : 'none';
+            
+            // Toggle status panel visibility
+            document.getElementById('training-status-panel').style.display = manualMode ? 'block' : 'none';
+            document.getElementById('optimization-status-panel').style.display = optimizationMode ? 'block' : 'none';
+            
+            // Update header
+            document.getElementById('status-header').textContent = manualMode ? '📈 Training Status' : '🔍 Optimization Status';
+        }
+
+        function startOptimization() {
+            const model = document.getElementById('optimization-model').value;
+            const preset = document.getElementById('optimization-preset').value;
+            const trials = parseInt(document.getElementById('optimization-trials').value);
+            
+            // Collect data configuration
+            const classBalanceValue = parseInt(document.getElementById('class-balance').value);
+            const dataConfig = {
+                data_percentage: parseFloat(document.getElementById('data-percentage').value) / 100,
+                batch_size: parseInt(document.getElementById('batch-size').value),
+                class_balance_ratio: classBalanceValue / 100,
+                class_balance_enabled: classBalanceValue !== 50
+            };
+
+            fetch('/api/start_optimization', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    model_type: model,
+                    optimization_mode: preset,
+                    n_trials: trials,
+                    data_config: dataConfig
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('start-optimization-btn').style.display = 'none';
+                    document.getElementById('stop-optimization-btn').style.display = 'inline-block';
+                    document.getElementById('optimization-progress-container').style.display = 'block';
+                } else {
+                    alert('Error starting optimization: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error starting optimization: ' + error.message);
+            });
+        }
+
+        function stopOptimization() {
+            fetch('/api/stop_optimization', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('start-optimization-btn').style.display = 'inline-block';
+                document.getElementById('stop-optimization-btn').style.display = 'none';
+                document.getElementById('optimization-progress-container').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Update the existing updateStatus function to handle optimization
+        function updateStatus() {
+            if (currentTrainingMode === 'manual') {
+                updateTrainingStatus();
+            } else {
+                updateOptimizationStatus();
+            }
+        }
+
+        function updateTrainingStatus() {
+            fetch('/api/training_status')
+            .then(response => response.json())
+            .then(status => {
+                // Update status display
+                const statusElement = document.getElementById('training-status');
+                const snakeGameCard = document.getElementById('snake-game-card');
+                const seeResultsBtn = document.getElementById('see-results-btn');
+                
+                if (status.is_training) {
+                    statusElement.textContent = `Training in progress... (Started: ${new Date(status.start_time).toLocaleTimeString()})`;
+                    document.getElementById('current-model').textContent = status.current_model || '-';
+                    document.getElementById('current-epoch').textContent = status.epoch || 0;
+                    document.getElementById('total-epochs').textContent = status.total_epochs || 0;
+                    
+                    const progress = status.total_epochs > 0 ? (status.epoch / status.total_epochs) * 100 : 0;
+                    document.getElementById('progress-bar').style.width = progress + '%';
+                    
+                    // Show snake game during training
+                    snakeGameCard.style.display = 'block';
+                    if (!gameRunning) startSnakeGame();
+                    seeResultsBtn.style.display = 'none';
+                } else {
+                    statusElement.textContent = 'Ready to start training...';
+                    document.getElementById('start-training-btn').style.display = 'inline-block';
+                    document.getElementById('stop-training-btn').style.display = 'none';
+                    document.getElementById('progress-container').style.display = 'none';
+                    
+                    // Show results button if training completed with results
+                    if (Object.keys(status.model_results).length > 0) {
+                        seeResultsBtn.style.display = 'inline-block';
+                        stopSnakeGame();
+                    } else {
+                        snakeGameCard.style.display = 'none';
+                        stopSnakeGame();
+                    }
+                }
+
+                // Update logs
+                const logsElement = document.getElementById('training-logs');
+                if (status.logs && status.logs.length > 0) {
+                    logsElement.innerHTML = status.logs.join('<br>');
+                    logsElement.scrollTop = logsElement.scrollHeight;
+                }
+
+                // Update results
+                updateResults(status.model_results);
+            })
+            .catch(error => console.error('Error fetching training status:', error));
+        }
+
+        function updateOptimizationStatus() {
+            fetch('/api/optimization_status')
+            .then(response => response.json())
+            .then(status => {
+                const statusElement = document.getElementById('optimization-status');
+                const snakeGameCard = document.getElementById('snake-game-card');
+                const seeResultsBtn = document.getElementById('see-results-btn');
+                
+                if (status.is_optimizing) {
+                    statusElement.textContent = `Optimization in progress... (Started: ${new Date(status.start_time).toLocaleTimeString()})`;
+                    document.getElementById('optimization-current-model').textContent = status.current_model || '-';
+                    document.getElementById('optimization-current-trial').textContent = status.current_trial || 0;
+                    document.getElementById('optimization-total-trials').textContent = status.total_trials || 0;
+                    document.getElementById('optimization-best-f1').textContent = (status.best_f1_score || 0).toFixed(4);
+                    
+                    const progress = status.total_trials > 0 ? (status.current_trial / status.total_trials) * 100 : 0;
+                    document.getElementById('optimization-progress-bar').style.width = progress + '%';
+                    
+                    // Show best parameters
+                    if (status.best_params && Object.keys(status.best_params).length > 0) {
+                        document.getElementById('optimization-best-params').textContent = JSON.stringify(status.best_params, null, 2);
+                    }
+                    
+                    // Show snake game during optimization
+                    snakeGameCard.style.display = 'block';
+                    if (!gameRunning) startSnakeGame();
+                    seeResultsBtn.style.display = 'none';
+                } else {
+                    statusElement.textContent = 'Ready to start optimization...';
+                    document.getElementById('start-optimization-btn').style.display = 'inline-block';
+                    document.getElementById('stop-optimization-btn').style.display = 'none';
+                    document.getElementById('optimization-progress-container').style.display = 'none';
+                    
+                    // Show results if optimization completed
+                    if (status.best_f1_score > 0) {
+                        seeResultsBtn.style.display = 'inline-block';
+                        stopSnakeGame();
+                    } else {
+                        snakeGameCard.style.display = 'none';
+                        stopSnakeGame();
+                    }
+                }
+
+                // Update logs
+                const logsElement = document.getElementById('training-logs');
+                if (status.logs && status.logs.length > 0) {
+                    logsElement.innerHTML = status.logs.join('<br>');
+                    logsElement.scrollTop = logsElement.scrollHeight;
+                }
+            })
+            .catch(error => console.error('Error fetching optimization status:', error));
         }
     </script>
 </body>

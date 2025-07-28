@@ -4,9 +4,9 @@
 data:
   data_path: "data/BHI"
   image_size: [50, 50]
-  batch_size: 32
+  batch_size: 128  # M4 Pro optimized batch size for larger unified memory
   data_percentage: 0.05  # Use full dataset (0.1 for 10% during development)
-  num_workers: 4
+  num_workers: 8  # M4 Pro 14-core optimized (will be auto-adjusted by data loader)
   train_split: 0.8
   val_split: 0.2
   
@@ -66,12 +66,17 @@ models:
 
 # Training Configuration  
 training:
-  device: "auto"  # auto, cuda, cpu
-  mixed_precision: true
+  device: "mps"  # M4 Pro optimized for MPS backend
+  mixed_precision: true  # Enable for M4 Pro performance boost
   gradient_clipping: 1.0
   patience: 10  # Early stopping patience
   save_best_only: true
   monitor_metric: "val_f1_score"
+  # M4 Pro specific optimizations
+  m4_pro_optimizations:
+    memory_fraction: 0.85  # Use 85% of unified memory
+    enable_graph_mode: true  # Enable MPS graph compilation
+    prefetch_factor: 4  # Optimized for M4 Pro memory bandwidth
   
 # Evaluation Metrics (Medical Focus)
 metrics:
@@ -82,12 +87,26 @@ metrics:
 # Hyperparameter Optimization
 optuna:
   enabled: false  # Enable after selecting best model
-  n_trials: 100
+  n_trials: 50  # Reduced for faster M4 Pro optimization cycles
   optimize_metric: "f1_score"
   search_space:
     learning_rate: [1e-5, 1e-2]
-    batch_size: [16, 32, 64]
+    batch_size: [64, 128, 256, 384]  # M4 Pro optimized batch sizes
     dropout: [0.2, 0.7]
+  # M4 Pro specific optimization settings
+  m4_pro_presets:
+    fast_preset:
+      n_trials: 15
+      timeout: 1800  # 30 minutes
+      batch_sizes: [64, 128, 192]
+    thorough_preset:
+      n_trials: 75
+      timeout: 7200  # 2 hours
+      batch_sizes: [64, 128, 256, 384]
+    medical_preset:
+      n_trials: 40
+      timeout: 3600  # 1 hour
+      batch_sizes: [96, 128, 192, 256]
   
 # Logging and Output
 logging:
@@ -105,5 +124,5 @@ output:
 # Web Interface Configuration
 web:
   host: "0.0.0.0"
-  port: 5000
+  port: 8080
   debug: false

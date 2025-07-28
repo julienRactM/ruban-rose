@@ -5,6 +5,7 @@ Implements 50/50 class distribution through augmentation and reduction strategie
 
 import os
 import random
+import platform
 from pathlib import Path
 from collections import defaultdict, Counter
 from typing import Dict, List, Tuple, Optional
@@ -400,6 +401,9 @@ def create_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
     batch_size = data_config.get('batch_size', 32)
     num_workers = data_config.get('num_workers', 4)
     
+    # M4 Pro optimized data loading configuration
+    num_workers = _get_optimized_num_workers(num_workers)
+    
     print("Creating datasets and dataloaders...")
     
     # Create datasets
@@ -420,24 +424,29 @@ def create_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
         transform=val_transform
     )
     
-    # Create dataloaders (reduce num_workers to avoid multiprocessing issues)
-    effective_num_workers = min(num_workers, 2) if num_workers > 0 else 0
+    # Create dataloaders with M4 Pro optimizations
+    is_m4_pro = _detect_m4_pro()
+    pin_memory = is_m4_pro and torch.backends.mps.is_available()  # Enable pin_memory for M4 Pro MPS
     
     train_loader = DataLoader(
         train_dataset,
         batch_size=batch_size,
         shuffle=True,
-        num_workers=effective_num_workers,
-        pin_memory=False,  # Disable pin_memory to avoid MPS warnings
-        drop_last=True
+        num_workers=num_workers,
+        pin_memory=pin_memory,
+        drop_last=True,
+        persistent_workers=num_workers > 0 and is_m4_pro,  # Keep workers alive on M4 Pro
+        prefetch_factor=4 if is_m4_pro else 2  # Optimized prefetch for M4 Pro
     )
     
     val_loader = DataLoader(
         val_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=effective_num_workers,
-        pin_memory=False
+        num_workers=num_workers,
+        pin_memory=pin_memory,
+        persistent_workers=num_workers > 0 and is_m4_pro,
+        prefetch_factor=4 if is_m4_pro else 2
     )
     
     # Print dataset statistics
@@ -459,6 +468,49 @@ def create_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
         print(f"Augmented samples in training: {train_stats['augmented_samples']}")
     
     return train_loader, val_loader
+
+
+def _detect_m4_pro() -> bool:
+    """Detect if running on Apple M4 Pro"""
+    try:
+        if platform.system() == 'Darwin':
+            import subprocess
+            result = subprocess.run(['sysctl', '-n', 'machdep.cpu.brand_string'], 
+                                  capture_output=True, text=True)
+            cpu_brand = result.stdout.strip()
+            return 'Apple M4 Pro' in cpu_brand or 'M4 Pro' in cpu_brand
+    except:
+        pass
+    return torch.backends.mps.is_available()  # Fallback to MPS availability
+
+
+def _get_optimized_num_workers(default_num_workers: int) -> int:
+    """Get optimized number of workers for M4 Pro 14-core architecture"""
+    is_m4_pro = _detect_m4_pro()
+    
+    if not is_m4_pro:
+        # Conservative approach for non-M4 Pro systems
+        return min(default_num_workers, 2) if default_num_workers > 0 else 0
+    
+    # M4 Pro has 14 cores: 10 performance + 4 efficiency
+    # Optimal configuration balances CPU usage with memory bandwidth
+    try:
+        import psutil
+        cpu_count = psutil.cpu_count(logical=False)  # Physical cores
+        
+        # M4 Pro optimization: Use 8-10 workers for optimal performance
+        # This leaves headroom for system processes and the main training thread
+        if cpu_count >= 14:  # M4 Pro
+            optimal_workers = 8  # Sweet spot for data loading
+        elif cpu_count >= 10:  # M4 or similar
+            optimal_workers = 6
+        else:
+            optimal_workers = min(4, cpu_count - 2)
+        
+        return min(optimal_workers, max(default_num_workers, 8))
+    except:
+        # Fallback if psutil unavailable
+        return 8 if is_m4_pro else min(default_num_workers, 2)
 
 
 def test_dataloader():

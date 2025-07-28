@@ -8,6 +8,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
+import torch.backends.mps
 import numpy as np
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 from typing import Dict, List, Optional, Tuple
@@ -16,6 +17,8 @@ import os
 from pathlib import Path
 import yaml
 import logging
+import platform
+import gc
 
 
 class MedicalMetrics:
@@ -107,6 +110,15 @@ class BreastCancerTrainer:
         self.monitor_metric = training_config.get('monitor_metric', 'val_f1_score')
         self.save_best_only = training_config.get('save_best_only', True)
         
+        # M4 Pro specific optimizations
+        self.is_m4_pro = self._detect_m4_pro()
+        self.use_mixed_precision = training_config.get('mixed_precision', True) and self.is_m4_pro
+        self.scaler = torch.GradScaler('mps') if self.use_mixed_precision and device.type == 'mps' else None
+        
+        # Setup M4 Pro optimizations
+        if self.is_m4_pro:
+            self._setup_m4_pro_optimizations()
+        
         # Setup optimizer and loss
         self._setup_optimizer()
         self._setup_loss_function()
@@ -121,6 +133,9 @@ class BreastCancerTrainer:
         
         # Setup logging
         self._setup_logging()
+        
+        if self.is_m4_pro:
+            self.logger.info(f"M4 Pro optimizations enabled: Mixed Precision={self.use_mixed_precision}")
     
     def _setup_optimizer(self):
         """Setup optimizer based on model type"""
@@ -157,6 +172,11 @@ class BreastCancerTrainer:
             class_weights = torch.tensor([1.0, 1.0]).to(self.device)
         
         self.criterion = nn.CrossEntropyLoss(weight=class_weights)
+        
+        # M4 Pro specific loss optimizations
+        if self.is_m4_pro and self.device.type == 'mps':
+            # Ensure loss computation is optimized for MPS
+            self.criterion = self.criterion.to(self.device)
     
     def _setup_logging(self):
         """Setup logging and tensorboard"""
@@ -179,6 +199,44 @@ class BreastCancerTrainer:
         else:
             self.writer = None
     
+    def _detect_m4_pro(self) -> bool:
+        """Detect if running on Apple M4 Pro"""
+        try:
+            if platform.system() == 'Darwin':
+                import subprocess
+                result = subprocess.run(['sysctl', '-n', 'machdep.cpu.brand_string'], 
+                                      capture_output=True, text=True)
+                cpu_brand = result.stdout.strip()
+                return 'Apple M4 Pro' in cpu_brand or 'M4 Pro' in cpu_brand
+        except:
+            pass
+        return torch.backends.mps.is_available()  # Fallback to MPS availability
+    
+    def _setup_m4_pro_optimizations(self):
+        """Setup M4 Pro specific optimizations"""
+        if self.device.type == 'mps':
+            # Enable MPS optimizations
+            try:
+                # Set optimal memory allocation
+                torch.mps.set_per_process_memory_fraction(0.85)
+                
+                # Enable graph mode for better performance
+                if hasattr(torch.backends.mps, 'enable_graph_mode'):
+                    torch.backends.mps.enable_graph_mode(True)
+                
+                self.logger.info("M4 Pro MPS optimizations enabled")
+            except Exception as e:
+                self.logger.warning(f"Could not enable all MPS optimizations: {e}")
+    
+    def _cleanup_memory(self):
+        """Cleanup memory for M4 Pro"""
+        gc.collect()
+        if self.device.type == 'mps':
+            try:
+                torch.mps.empty_cache()
+            except:
+                pass
+    
     def train_epoch(self) -> Tuple[float, Dict[str, float]]:
         """Train for one epoch"""
         self.model.train()
@@ -191,14 +249,31 @@ class BreastCancerTrainer:
             data, target = data.to(self.device), target.to(self.device)
             
             self.optimizer.zero_grad()
-            output = self.model(data)
-            loss = self.criterion(output, target)
-            loss.backward()
             
-            # Gradient clipping for stable training
-            torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
-            
-            self.optimizer.step()
+            # Mixed precision training for M4 Pro
+            if self.use_mixed_precision and self.scaler is not None:
+                with torch.autocast(device_type='mps', dtype=torch.float16):
+                    output = self.model(data)
+                    loss = self.criterion(output, target)
+                
+                self.scaler.scale(loss).backward()
+                
+                # Gradient clipping with scaler
+                self.scaler.unscale_(self.optimizer)
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
+                
+                self.scaler.step(self.optimizer)
+                self.scaler.update()
+            else:
+                # Standard training
+                output = self.model(data)
+                loss = self.criterion(output, target)
+                loss.backward()
+                
+                # Gradient clipping for stable training
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
+                
+                self.optimizer.step()
             
             running_loss += loss.item()
             
@@ -232,8 +307,15 @@ class BreastCancerTrainer:
             for data, target in self.val_loader:
                 data, target = data.to(self.device), target.to(self.device)
                 
-                output = self.model(data)
-                loss = self.criterion(output, target)
+                # Use mixed precision for validation on M4 Pro
+                if self.use_mixed_precision and self.device.type == 'mps':
+                    with torch.autocast(device_type='mps', dtype=torch.float16):
+                        output = self.model(data)
+                        loss = self.criterion(output, target)
+                else:
+                    output = self.model(data)
+                    loss = self.criterion(output, target)
+                
                 running_loss += loss.item()
                 
                 # Collect predictions
@@ -327,6 +409,10 @@ class BreastCancerTrainer:
             self.training_history['val_loss'].append(val_loss)
             self.training_history['train_metrics'].append(train_metrics)
             self.training_history['val_metrics'].append(val_metrics)
+            
+            # M4 Pro memory cleanup between epochs
+            if self.is_m4_pro and epoch % 5 == 0:  # Cleanup every 5 epochs
+                self._cleanup_memory()
         
         total_time = time.time() - start_time
         self.logger.info(f"Training completed in {total_time:.2f} seconds")
