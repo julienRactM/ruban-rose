@@ -28,6 +28,12 @@ class MedicalMetrics:
     def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_proba: np.ndarray) -> Dict[str, float]:
         """Calculate comprehensive medical metrics"""
         
+        # Ensure proper data types for sklearn compatibility
+        y_true = np.array(y_true, dtype=np.int32)
+        y_pred = np.array(y_pred, dtype=np.int32)
+        if y_proba is not None:
+            y_proba = np.array(y_proba, dtype=np.float32)
+        
         # Basic metrics
         accuracy = accuracy_score(y_true, y_pred)
         
@@ -110,10 +116,14 @@ class BreastCancerTrainer:
         self.monitor_metric = training_config.get('monitor_metric', 'val_f1_score')
         self.save_best_only = training_config.get('save_best_only', True)
         
+        # Setup logging first (needed by other methods)
+        self._setup_logging()
+        
         # M4 Pro specific optimizations
         self.is_m4_pro = self._detect_m4_pro()
-        self.use_mixed_precision = training_config.get('mixed_precision', True) and self.is_m4_pro
-        self.scaler = torch.GradScaler('mps') if self.use_mixed_precision and device.type == 'mps' else None
+        # Disable mixed precision on MPS due to float64 conversion issues in PyTorch
+        self.use_mixed_precision = training_config.get('mixed_precision', True) and self.is_m4_pro and device.type != 'mps'
+        self.scaler = torch.GradScaler('cuda') if self.use_mixed_precision and device.type == 'cuda' else None
         
         # Setup M4 Pro optimizations
         if self.is_m4_pro:
@@ -131,11 +141,11 @@ class BreastCancerTrainer:
             'train_metrics': [], 'val_metrics': []
         }
         
-        # Setup logging
-        self._setup_logging()
-        
         if self.is_m4_pro:
-            self.logger.info(f"M4 Pro optimizations enabled: Mixed Precision={self.use_mixed_precision}")
+            if device.type == 'mps':
+                self.logger.info(f"M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)")
+            else:
+                self.logger.info(f"M4 Pro optimizations enabled: Mixed Precision={self.use_mixed_precision}")
     
     def _setup_optimizer(self):
         """Setup optimizer based on model type"""
@@ -224,9 +234,13 @@ class BreastCancerTrainer:
                 if hasattr(torch.backends.mps, 'enable_graph_mode'):
                     torch.backends.mps.enable_graph_mode(True)
                 
-                self.logger.info("M4 Pro MPS optimizations enabled")
+                if hasattr(self, 'logger') and self.logger:
+                    self.logger.info("M4 Pro MPS optimizations enabled")
             except Exception as e:
-                self.logger.warning(f"Could not enable all MPS optimizations: {e}")
+                if hasattr(self, 'logger') and self.logger:
+                    self.logger.warning(f"Could not enable all MPS optimizations: {e}")
+                else:
+                    print(f"Warning: Could not enable all MPS optimizations: {e}")
     
     def _cleanup_memory(self):
         """Cleanup memory for M4 Pro"""
@@ -250,9 +264,9 @@ class BreastCancerTrainer:
             
             self.optimizer.zero_grad()
             
-            # Mixed precision training for M4 Pro
-            if self.use_mixed_precision and self.scaler is not None:
-                with torch.autocast(device_type='mps', dtype=torch.float16):
+            # Mixed precision training (disabled on MPS due to PyTorch limitations)
+            if self.use_mixed_precision and self.scaler is not None and self.device.type == 'cuda':
+                with torch.autocast(device_type='cuda', dtype=torch.float16):
                     output = self.model(data)
                     loss = self.criterion(output, target)
                 
@@ -265,7 +279,7 @@ class BreastCancerTrainer:
                 self.scaler.step(self.optimizer)
                 self.scaler.update()
             else:
-                # Standard training
+                # Standard training (used on MPS and when mixed precision is disabled)
                 output = self.model(data)
                 loss = self.criterion(output, target)
                 loss.backward()
@@ -281,9 +295,10 @@ class BreastCancerTrainer:
             probas = torch.softmax(output, dim=1)
             predictions = torch.argmax(output, dim=1)
             
-            all_predictions.extend(predictions.detach().cpu().numpy())
-            all_labels.extend(target.detach().cpu().numpy())
-            all_probas.extend(probas.detach().cpu().numpy())
+            # Convert to CPU and ensure proper dtypes for sklearn compatibility
+            all_predictions.extend(predictions.detach().cpu().numpy().astype(np.int32))
+            all_labels.extend(target.detach().cpu().numpy().astype(np.int32))
+            all_probas.extend(probas.detach().cpu().numpy().astype(np.float32))
         
         # Calculate metrics
         avg_loss = running_loss / len(self.train_loader)
@@ -307,9 +322,9 @@ class BreastCancerTrainer:
             for data, target in self.val_loader:
                 data, target = data.to(self.device), target.to(self.device)
                 
-                # Use mixed precision for validation on M4 Pro
-                if self.use_mixed_precision and self.device.type == 'mps':
-                    with torch.autocast(device_type='mps', dtype=torch.float16):
+                # Use mixed precision for validation (disabled on MPS due to PyTorch limitations)
+                if self.use_mixed_precision and self.device.type == 'cuda':
+                    with torch.autocast(device_type='cuda', dtype=torch.float16):
                         output = self.model(data)
                         loss = self.criterion(output, target)
                 else:
@@ -322,9 +337,10 @@ class BreastCancerTrainer:
                 probas = torch.softmax(output, dim=1)
                 predictions = torch.argmax(output, dim=1)
                 
-                all_predictions.extend(predictions.detach().cpu().numpy())
-                all_labels.extend(target.detach().cpu().numpy())
-                all_probas.extend(probas.detach().cpu().numpy())
+                # Convert to CPU and ensure proper dtypes for sklearn compatibility
+                all_predictions.extend(predictions.detach().cpu().numpy().astype(np.int32))
+                all_labels.extend(target.detach().cpu().numpy().astype(np.int32))
+                all_probas.extend(probas.detach().cpu().numpy().astype(np.float32))
         
         # Calculate metrics
         avg_loss = running_loss / len(self.val_loader)

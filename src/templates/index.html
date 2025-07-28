@@ -38,6 +38,91 @@
         .stat-box { text-align: center; padding: 1rem; background: #ecf0f1; border-radius: 8px; }
         .stat-number { font-size: 2rem; font-weight: bold; color: #2c3e50; }
         .stat-label { color: #7f8c8d; margin-top: 0.5rem; }
+        
+        /* Stylish Toggle Switch for Training Mode */
+        .training-mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .optuna-toggle {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+        }
+        
+        .optuna-toggle:hover {
+            background: #e9ecef;
+            border-color: #dee2e6;
+        }
+        
+        .optuna-toggle.active {
+            background: linear-gradient(135deg, #6c757d 0%, #52796f 100%);
+            border-color: #52796f;
+            color: white;
+            box-shadow: 0 4px 12px rgba(82, 121, 111, 0.3);
+        }
+        
+        .optuna-checkbox {
+            position: relative;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #adb5bd;
+            border-radius: 4px;
+            background: #fff;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .optuna-toggle.active .optuna-checkbox {
+            background: #fff;
+            border-color: #fff;
+        }
+        
+        .optuna-checkbox::after {
+            content: '✓';
+            font-size: 14px;
+            font-weight: bold;
+            color: #52796f;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.2s ease;
+        }
+        
+        .optuna-toggle.active .optuna-checkbox::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .optuna-label {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #6c757d;
+            transition: color 0.3s ease;
+        }
+        
+        .optuna-toggle.active .optuna-label {
+            color: #fff;
+        }
+        
+        .mode-description {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -222,12 +307,61 @@
             </div>
             
             <div style="margin-top: 1rem; text-align: center;">
-                <button class="btn" id="start-training-btn" onclick="startTraining()">
-                    🚀 Start Training Selected Models
-                </button>
-                <button class="btn btn-danger" id="stop-training-btn" onclick="stopTraining()" style="display: none;">
-                    ⏹️ Stop Training
-                </button>
+                <!-- Stylish Training Mode Toggle -->
+                <div class="training-mode-toggle">
+                    <div class="optuna-toggle" id="optuna-toggle" onclick="toggleOptuna()">
+                        <div class="optuna-checkbox"></div>
+                        <div>
+                            <div class="optuna-label">Optuna</div>
+                            <div class="mode-description">Hyperparameter Optimization</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manual Training Controls -->
+                <div id="manual-training-controls">
+                    <button class="btn" id="start-training-btn" onclick="startTraining()">
+                        🚀 Start Training Selected Models
+                    </button>
+                    <button class="btn btn-danger" id="stop-training-btn" onclick="stopTraining()" style="display: none;">
+                        ⏹️ Stop Training
+                    </button>
+                </div>
+
+                <!-- Optimization Controls -->
+                <div id="optimization-controls" style="display: none;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; text-align: left;">
+                        <div class="param-group">
+                            <label for="optimization-model">Model to Optimize</label>
+                            <select id="optimization-model">
+                                <option value="cnn">CNN</option>
+                                <option value="resnet">ResNet</option>
+                                <option value="vision_transformer">Vision Transformer</option>
+                            </select>
+                            <small>Select one model for optimization</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="optimization-preset">Optimization Preset</label>
+                            <select id="optimization-preset">
+                                <option value="fast">Fast (20 trials, 1 hour)</option>
+                                <option value="medical" selected>Medical (50 trials, 2 hours)</option>
+                                <option value="thorough">Thorough (100 trials, 4 hours)</option>
+                            </select>
+                            <small>Choose optimization strategy</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="optimization-trials">Number of Trials</label>
+                            <input type="number" id="optimization-trials" value="50" min="5" max="200">
+                            <small>Override preset trial count</small>
+                        </div>
+                    </div>
+                    <button class="btn" id="start-optimization-btn" onclick="startOptimization()">
+                        🔍 Start Hyperparameter Optimization
+                    </button>
+                    <button class="btn btn-danger" id="stop-optimization-btn" onclick="stopOptimization()" style="display: none;">
+                        ⏹️ Stop Optimization
+                    </button>
+                </div>
             </div>
         </div>
         
@@ -248,16 +382,40 @@
             </div>
         </div>
 
-        <!-- Training Status -->
+        <!-- Training/Optimization Status -->
         <div class="card">
-            <h2>📈 Training Status</h2>
+            <h2 id="status-header">📈 Training Status</h2>
             <div class="status-panel">
-                <div id="training-status">Ready to start training...</div>
-                <div id="progress-container" style="display: none;">
-                    <div>Current Model: <span id="current-model">-</span></div>
-                    <div>Epoch: <span id="current-epoch">0</span>/<span id="total-epochs">0</span></div>
-                    <div class="progress">
-                        <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                <!-- Training Status -->
+                <div id="training-status-panel">
+                    <div id="training-status">Ready to start training...</div>
+                    <div id="progress-container" style="display: none;">
+                        <div>Current Model: <span id="current-model">-</span></div>
+                        <div>Epoch: <span id="current-epoch">0</span>/<span id="total-epochs">0</span></div>
+                        <div class="progress">
+                            <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Optimization Status -->
+                <div id="optimization-status-panel" style="display: none;">
+                    <div id="optimization-status">Ready to start optimization...</div>
+                    <div id="optimization-progress-container" style="display: none;">
+                        <div>Model: <span id="optimization-current-model">-</span></div>
+                        <div>Trial: <span id="optimization-current-trial">0</span>/<span id="optimization-total-trials">0</span></div>
+                        <div>Best F1-Score: <span id="optimization-best-f1">0.0000</span></div>
+                        <div class="progress">
+                            <div class="progress-bar" id="optimization-progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <div style="margin-top: 0.5rem;">
+                            <details>
+                                <summary style="cursor: pointer; color: #3498db;">Best Parameters Found</summary>
+                                <div id="optimization-best-params" style="margin-top: 0.5rem; font-size: 0.9rem; background: #34495e; padding: 0.5rem; border-radius: 4px; font-family: monospace;">
+                                    No parameters found yet...
+                                </div>
+                            </details>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -281,6 +439,7 @@
     <script>
         let selectedModels = [];
         let updateInterval;
+        let currentTrainingMode = 'manual';
         
         // Snake game variables
         let snake = [{x: 200, y: 150}];
@@ -648,6 +807,207 @@
 
         function scrollToResults() {
             document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Stylish Toggle Functions
+        function toggleOptuna() {
+            const optunaToggle = document.getElementById('optuna-toggle');
+            const isActive = optunaToggle.classList.contains('active');
+            
+            if (isActive) {
+                // Switch to Manual Training
+                optunaToggle.classList.remove('active');
+                currentTrainingMode = 'manual';
+            } else {
+                // Switch to Optuna Optimization
+                optunaToggle.classList.add('active');
+                currentTrainingMode = 'optimization';
+            }
+            
+            // Toggle control visibility with smooth transitions
+            const manualControls = document.getElementById('manual-training-controls');
+            const optimizationControls = document.getElementById('optimization-controls');
+            
+            if (currentTrainingMode === 'manual') {
+                manualControls.style.display = 'block';
+                optimizationControls.style.display = 'none';
+            } else {
+                manualControls.style.display = 'none';
+                optimizationControls.style.display = 'block';
+            }
+            
+            // Toggle status panel visibility
+            document.getElementById('training-status-panel').style.display = currentTrainingMode === 'manual' ? 'block' : 'none';
+            document.getElementById('optimization-status-panel').style.display = currentTrainingMode === 'optimization' ? 'block' : 'none';
+            
+            // Update header
+            document.getElementById('status-header').textContent = currentTrainingMode === 'manual' ? '📈 Training Status' : '🔍 Optimization Status';
+        }
+
+        function startOptimization() {
+            const model = document.getElementById('optimization-model').value;
+            const preset = document.getElementById('optimization-preset').value;
+            const trials = parseInt(document.getElementById('optimization-trials').value);
+            
+            // Collect data configuration
+            const classBalanceValue = parseInt(document.getElementById('class-balance').value);
+            const dataConfig = {
+                data_percentage: parseFloat(document.getElementById('data-percentage').value) / 100,
+                batch_size: parseInt(document.getElementById('batch-size').value),
+                class_balance_ratio: classBalanceValue / 100,
+                class_balance_enabled: classBalanceValue !== 50
+            };
+
+            fetch('/api/start_optimization', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    model_type: model,
+                    optimization_mode: preset,
+                    n_trials: trials,
+                    data_config: dataConfig
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('start-optimization-btn').style.display = 'none';
+                    document.getElementById('stop-optimization-btn').style.display = 'inline-block';
+                    document.getElementById('optimization-progress-container').style.display = 'block';
+                } else {
+                    alert('Error starting optimization: ' + data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error starting optimization: ' + error.message);
+            });
+        }
+
+        function stopOptimization() {
+            fetch('/api/stop_optimization', { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('start-optimization-btn').style.display = 'inline-block';
+                document.getElementById('stop-optimization-btn').style.display = 'none';
+                document.getElementById('optimization-progress-container').style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        // Update the existing updateStatus function to handle optimization
+        function updateStatus() {
+            if (currentTrainingMode === 'manual') {
+                updateTrainingStatus();
+            } else {
+                updateOptimizationStatus();
+            }
+        }
+
+        function updateTrainingStatus() {
+            fetch('/api/training_status')
+            .then(response => response.json())
+            .then(status => {
+                // Update status display
+                const statusElement = document.getElementById('training-status');
+                const snakeGameCard = document.getElementById('snake-game-card');
+                const seeResultsBtn = document.getElementById('see-results-btn');
+                
+                if (status.is_training) {
+                    statusElement.textContent = `Training in progress... (Started: ${new Date(status.start_time).toLocaleTimeString()})`;
+                    document.getElementById('current-model').textContent = status.current_model || '-';
+                    document.getElementById('current-epoch').textContent = status.epoch || 0;
+                    document.getElementById('total-epochs').textContent = status.total_epochs || 0;
+                    
+                    const progress = status.total_epochs > 0 ? (status.epoch / status.total_epochs) * 100 : 0;
+                    document.getElementById('progress-bar').style.width = progress + '%';
+                    
+                    // Show snake game during training
+                    snakeGameCard.style.display = 'block';
+                    if (!gameRunning) startSnakeGame();
+                    seeResultsBtn.style.display = 'none';
+                } else {
+                    statusElement.textContent = 'Ready to start training...';
+                    document.getElementById('start-training-btn').style.display = 'inline-block';
+                    document.getElementById('stop-training-btn').style.display = 'none';
+                    document.getElementById('progress-container').style.display = 'none';
+                    
+                    // Show results button if training completed with results
+                    if (Object.keys(status.model_results).length > 0) {
+                        seeResultsBtn.style.display = 'inline-block';
+                        stopSnakeGame();
+                    } else {
+                        snakeGameCard.style.display = 'none';
+                        stopSnakeGame();
+                    }
+                }
+
+                // Update logs
+                const logsElement = document.getElementById('training-logs');
+                if (status.logs && status.logs.length > 0) {
+                    logsElement.innerHTML = status.logs.join('<br>');
+                    logsElement.scrollTop = logsElement.scrollHeight;
+                }
+
+                // Update results
+                updateResults(status.model_results);
+            })
+            .catch(error => console.error('Error fetching training status:', error));
+        }
+
+        function updateOptimizationStatus() {
+            fetch('/api/optimization_status')
+            .then(response => response.json())
+            .then(status => {
+                const statusElement = document.getElementById('optimization-status');
+                const snakeGameCard = document.getElementById('snake-game-card');
+                const seeResultsBtn = document.getElementById('see-results-btn');
+                
+                if (status.is_optimizing) {
+                    statusElement.textContent = `Optimization in progress... (Started: ${new Date(status.start_time).toLocaleTimeString()})`;
+                    document.getElementById('optimization-current-model').textContent = status.current_model || '-';
+                    document.getElementById('optimization-current-trial').textContent = status.current_trial || 0;
+                    document.getElementById('optimization-total-trials').textContent = status.total_trials || 0;
+                    document.getElementById('optimization-best-f1').textContent = (status.best_f1_score || 0).toFixed(4);
+                    
+                    const progress = status.total_trials > 0 ? (status.current_trial / status.total_trials) * 100 : 0;
+                    document.getElementById('optimization-progress-bar').style.width = progress + '%';
+                    
+                    // Show best parameters
+                    if (status.best_params && Object.keys(status.best_params).length > 0) {
+                        document.getElementById('optimization-best-params').textContent = JSON.stringify(status.best_params, null, 2);
+                    }
+                    
+                    // Show snake game during optimization
+                    snakeGameCard.style.display = 'block';
+                    if (!gameRunning) startSnakeGame();
+                    seeResultsBtn.style.display = 'none';
+                } else {
+                    statusElement.textContent = 'Ready to start optimization...';
+                    document.getElementById('start-optimization-btn').style.display = 'inline-block';
+                    document.getElementById('stop-optimization-btn').style.display = 'none';
+                    document.getElementById('optimization-progress-container').style.display = 'none';
+                    
+                    // Show results if optimization completed
+                    if (status.best_f1_score > 0) {
+                        seeResultsBtn.style.display = 'inline-block';
+                        stopSnakeGame();
+                    } else {
+                        snakeGameCard.style.display = 'none';
+                        stopSnakeGame();
+                    }
+                }
+
+                // Update logs
+                const logsElement = document.getElementById('training-logs');
+                if (status.logs && status.logs.length > 0) {
+                    logsElement.innerHTML = status.logs.join('<br>');
+                    logsElement.scrollTop = logsElement.scrollHeight;
+                }
+            })
+            .catch(error => console.error('Error fetching optimization status:', error));
         }
     </script>
 </body>

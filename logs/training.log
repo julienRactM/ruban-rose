@@ -3631,3 +3631,1470 @@
 2025-07-25 16:23:51,957 - INFO - Epoch 4/7 (31.97s) - Train Loss: 0.2869, Val Loss: 0.3482
 2025-07-25 16:24:14,011 - INFO - 127.0.0.1 - - [25/Jul/2025 16:24:14] "POST /api/stop_optimization HTTP/1.1" 200 -
 2025-07-25 16:24:23,932 - INFO - Epoch 5/7 (31.97s) - Train Loss: 0.2667, Val Loss: 0.4043
+2025-07-28 10:40:18,534 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:40:18,535 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:40:18,535 - INFO - Test log message
+2025-07-28 10:40:19,673 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:40:19,675 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:42:35,277 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:42:35,278 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:42:35,278 - INFO - Starting training for 12 epochs
+2025-07-28 10:42:35,278 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:43:01,489 - ERROR - Trial 0 failed: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead.
+2025-07-28 10:43:01,489 - ERROR - Trial 0 parameters: {'learning_rate': 6.084540043274841e-05, 'dropout': 0.3588265594978173, 'epochs': 12, 'architecture': 'custom', 'batch_size': 192}
+2025-07-28 10:43:21,972 - INFO - M4 Pro detected with 48.0GB unified memory
+2025-07-28 10:43:21,973 - INFO - Optimized max batch size: 192
+2025-07-28 10:43:22,173 - INFO - Starting optimization for cnn with 1 trials
+2025-07-28 10:43:22,355 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:43:22,356 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:43:22,357 - INFO - Starting training for 11 epochs
+2025-07-28 10:43:22,357 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:43:46,897 - ERROR - Trial 0 failed: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead.
+2025-07-28 10:43:46,897 - ERROR - Trial 0 parameters: {'learning_rate': 2.6771943816210704e-05, 'dropout': 0.35721192721124573, 'epochs': 11, 'architecture': 'compact', 'batch_size': 192}
+2025-07-28 10:43:47,183 - INFO - Optimization completed. Best F1-score: 0.0000
+2025-07-28 10:43:47,184 - INFO - Best parameters: {'learning_rate': 2.6771943816210704e-05, 'dropout': 0.35721192721124573, 'epochs': 14, 'architecture': 'compact', 'batch_size': 192}
+2025-07-28 10:46:49,476 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:46:49,477 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:46:49,477 - INFO - Starting training for 8 epochs
+2025-07-28 10:46:49,477 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:47:12,434 - ERROR - Trial 0 failed: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead.
+2025-07-28 10:47:12,434 - ERROR - Trial 0 parameters: {'learning_rate': 3.504152112518643e-05, 'dropout': 0.46454038299962097, 'epochs': 8, 'architecture': 'compact', 'batch_size': 48}
+2025-07-28 10:47:22,930 - INFO - M4 Pro detected with 48.0GB unified memory
+2025-07-28 10:47:22,930 - INFO - Optimized max batch size: 192
+2025-07-28 10:47:23,122 - INFO - Starting optimization for cnn with 1 trials
+2025-07-28 10:47:23,311 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:47:23,312 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:47:23,313 - INFO - Starting training for 12 epochs
+2025-07-28 10:47:23,313 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:47:46,875 - ERROR - Trial 0 failed: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead.
+2025-07-28 10:47:46,876 - ERROR - Trial 0 parameters: {'learning_rate': 0.006547137938603561, 'dropout': 0.47778074632300604, 'epochs': 12, 'architecture': 'custom', 'batch_size': 192}
+2025-07-28 10:47:47,146 - INFO - Optimization completed. Best F1-score: 0.0000
+2025-07-28 10:47:47,147 - INFO - Best parameters: {'learning_rate': 0.006547137938603561, 'dropout': 0.47778074632300604, 'epochs': 15, 'architecture': 'custom', 'batch_size': 192}
+2025-07-28 10:49:14,650 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:49:14,651 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:49:14,651 - INFO - Starting training for 6 epochs
+2025-07-28 10:49:14,651 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:49:37,371 - ERROR - Trial 0 failed: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead.
+2025-07-28 10:49:37,371 - ERROR - Trial 0 parameters: {'learning_rate': 0.0017312140365237396, 'dropout': 0.28869375497453775, 'epochs': 6, 'architecture': 'compact', 'batch_size': 48}
+2025-07-28 10:49:37,372 - ERROR - Trial 0 stack trace: Traceback (most recent call last):
+  File "/Users/julienrm/Workspace/ruban-rose/src/optimization/optuna_optimizer.py", line 309, in _objective
+    history = trainer.train()
+              ^^^^^^^^^^^^^^^
+  File "/Users/julienrm/Workspace/ruban-rose/src/training/trainer.py", line 370, in train
+    train_loss, train_metrics = self.train_epoch()
+                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/Workspace/ruban-rose/src/training/trainer.py", line 272, in train_epoch
+    self.scaler.unscale_(self.optimizer)
+  File "/Users/julienrm/.pyenv/versions/3.12.8/envs/ruban-rose/lib/python3.12/site-packages/torch/amp/grad_scaler.py", line 339, in unscale_
+    inv_scale = self._scale.double().reciprocal().float()
+                ^^^^^^^^^^^^^^^^^^^^
+TypeError: Cannot convert a MPS Tensor to float64 dtype as the MPS framework doesn't support float64. Please use float32 instead.
+
+2025-07-28 10:50:02,853 - INFO - M4 Pro detected with 48.0GB unified memory
+2025-07-28 10:50:02,853 - INFO - Optimized max batch size: 192
+2025-07-28 10:50:03,047 - INFO - Starting optimization for cnn with 1 trials
+2025-07-28 10:50:03,230 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:50:03,231 - INFO - M4 Pro optimizations enabled: Mixed Precision=True
+2025-07-28 10:50:03,231 - INFO - Starting training for 8 epochs
+2025-07-28 10:50:03,231 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:50:03,231 - ERROR - Trial 0 failed: [Errno 32] Broken pipe
+2025-07-28 10:50:03,231 - ERROR - Trial 0 parameters: {'learning_rate': 2.3373985350776854e-05, 'dropout': 0.6546475586611508, 'epochs': 8, 'architecture': 'custom', 'batch_size': 192}
+2025-07-28 10:50:03,233 - ERROR - Trial 0 stack trace: Traceback (most recent call last):
+  File "/Users/julienrm/Workspace/ruban-rose/src/optimization/optuna_optimizer.py", line 309, in _objective
+    history = trainer.train()
+              ^^^^^^^^^^^^^^^
+  File "/Users/julienrm/Workspace/ruban-rose/src/training/trainer.py", line 370, in train
+    train_loss, train_metrics = self.train_epoch()
+                                ^^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/Workspace/ruban-rose/src/training/trainer.py", line 258, in train_epoch
+    for batch_idx, (data, target) in enumerate(self.train_loader):
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/.pyenv/versions/3.12.8/envs/ruban-rose/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 488, in __iter__
+    self._iterator = self._get_iterator()
+                     ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/.pyenv/versions/3.12.8/envs/ruban-rose/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 424, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/.pyenv/versions/3.12.8/envs/ruban-rose/lib/python3.12/site-packages/torch/utils/data/dataloader.py", line 1171, in __init__
+    w.start()
+  File "/Users/julienrm/.pyenv/versions/3.12.8/lib/python3.12/multiprocessing/process.py", line 121, in start
+    self._popen = self._Popen(self)
+                  ^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/.pyenv/versions/3.12.8/lib/python3.12/multiprocessing/context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/.pyenv/versions/3.12.8/lib/python3.12/multiprocessing/context.py", line 289, in _Popen
+    return Popen(process_obj)
+           ^^^^^^^^^^^^^^^^^^
+  File "/Users/julienrm/.pyenv/versions/3.12.8/lib/python3.12/multiprocessing/popen_spawn_posix.py", line 32, in __init__
+    super().__init__(process_obj)
+  File "/Users/julienrm/.pyenv/versions/3.12.8/lib/python3.12/multiprocessing/popen_fork.py", line 16, in __init__
+    util._flush_std_streams()
+  File "/Users/julienrm/.pyenv/versions/3.12.8/lib/python3.12/multiprocessing/util.py", line 438, in _flush_std_streams
+    sys.stdout.flush()
+BrokenPipeError: [Errno 32] Broken pipe
+
+2025-07-28 10:50:03,492 - INFO - Optimization completed. Best F1-score: 0.0000
+2025-07-28 10:50:03,493 - INFO - Best parameters: {'learning_rate': 2.3373985350776854e-05, 'dropout': 0.6546475586611508, 'epochs': 11, 'architecture': 'custom', 'batch_size': 192}
+2025-07-28 10:51:54,314 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:51:54,315 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 10:51:54,316 - INFO - Starting training for 8 epochs
+2025-07-28 10:51:54,316 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:52:42,854 - INFO - Epoch 1/8 (48.54s) - Train Loss: 0.6391, Val Loss: 0.5984
+2025-07-28 10:52:42,901 - INFO - Best model saved to optimization_temp/objective_test/trial_0/best_model.pth
+2025-07-28 10:52:44,724 - INFO - Epoch 2/8 (1.71s) - Train Loss: 0.5427, Val Loss: 0.5227
+2025-07-28 10:52:46,430 - INFO - Epoch 3/8 (1.71s) - Train Loss: 0.4871, Val Loss: 0.5207
+2025-07-28 10:52:48,128 - INFO - Epoch 4/8 (1.70s) - Train Loss: 0.4421, Val Loss: 0.4516
+2025-07-28 10:52:49,834 - INFO - Epoch 5/8 (1.71s) - Train Loss: 0.4088, Val Loss: 0.5096
+2025-07-28 10:52:51,535 - INFO - Epoch 6/8 (1.70s) - Train Loss: 0.3820, Val Loss: 0.4639
+2025-07-28 10:52:53,338 - INFO - Epoch 7/8 (1.70s) - Train Loss: 0.3509, Val Loss: 0.4197
+2025-07-28 10:52:55,041 - INFO - Epoch 8/8 (1.70s) - Train Loss: 0.3242, Val Loss: 0.3558
+2025-07-28 10:52:55,075 - INFO - Best model saved to optimization_temp/objective_test/trial_0/best_model.pth
+2025-07-28 10:52:55,075 - INFO - Training completed in 60.76 seconds
+2025-07-28 10:52:55,075 - INFO - Best val_f1_score: 0.9051
+2025-07-28 10:52:55,075 - INFO - Trial 0: F1=0.9051, Sensitivity=0.8418, Specificity=0.9599
+2025-07-28 10:53:55,471 - INFO - M4 Pro detected with 48.0GB unified memory
+2025-07-28 10:53:55,471 - INFO - Optimized max batch size: 192
+2025-07-28 10:53:55,669 - INFO - Starting optimization for cnn with 1 trials
+2025-07-28 10:53:55,874 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 10:53:55,875 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 10:53:55,875 - INFO - Starting training for 9 epochs
+2025-07-28 10:53:55,875 - INFO - Monitoring metric: val_f1_score
+2025-07-28 10:54:47,351 - INFO - Epoch 1/9 (51.48s) - Train Loss: 0.4608, Val Loss: 0.4148
+2025-07-28 10:54:47,392 - INFO - Best model saved to optimization_temp/test_study/trial_0/best_model.pth
+2025-07-28 10:54:51,927 - INFO - Epoch 2/9 (4.39s) - Train Loss: 0.3280, Val Loss: 0.4025
+2025-07-28 10:54:56,301 - INFO - Epoch 3/9 (4.37s) - Train Loss: 0.2980, Val Loss: 0.4275
+2025-07-28 10:55:00,675 - INFO - Epoch 4/9 (4.37s) - Train Loss: 0.2725, Val Loss: 0.5339
+2025-07-28 10:55:05,054 - INFO - Epoch 5/9 (4.38s) - Train Loss: 0.2571, Val Loss: 0.4788
+2025-07-28 10:55:09,423 - INFO - Epoch 6/9 (4.37s) - Train Loss: 0.2380, Val Loss: 0.4672
+2025-07-28 10:55:13,937 - INFO - Epoch 7/9 (4.39s) - Train Loss: 0.2182, Val Loss: 0.4530
+2025-07-28 10:55:18,320 - INFO - Epoch 8/9 (4.38s) - Train Loss: 0.1771, Val Loss: 0.4824
+2025-07-28 10:55:22,704 - INFO - Epoch 9/9 (4.38s) - Train Loss: 0.1493, Val Loss: 0.7457
+2025-07-28 10:55:22,705 - INFO - Training completed in 86.83 seconds
+2025-07-28 10:55:22,705 - INFO - Best val_f1_score: 0.9020
+2025-07-28 10:55:22,709 - INFO - Trial 0: F1=0.9020, Sensitivity=0.9577, Specificity=0.5591
+2025-07-28 10:55:22,846 - INFO - Optimization completed. Best F1-score: 0.9020
+2025-07-28 10:55:22,847 - INFO - Best parameters: {'learning_rate': 0.0002513324232129565, 'dropout': 0.5445702128646059, 'epochs': 12, 'architecture': 'custom', 'batch_size': 96}
+2025-07-28 11:42:58,074 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:42:58,075 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:42:58,075 - INFO - Starting training for 8 epochs
+2025-07-28 11:42:58,075 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:42:58,255 - INFO - 127.0.0.1 - - [28/Jul/2025 11:42:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:42:58,370 - INFO - 127.0.0.1 - - [28/Jul/2025 11:42:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:00,364 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:02,365 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:04,366 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:06,367 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:08,368 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:10,369 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:12,369 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:14,370 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:16,371 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:18,373 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:20,372 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:22,372 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:23,984 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:23] "GET /api/training_status HTTP/1.1" 200 -
+2025-07-28 11:43:24,374 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:26,380 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:28,376 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:30,376 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:30,427 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:32,377 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:34,378 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:36,379 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:38,380 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:40,381 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:42,381 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:44,382 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:44,598 - INFO - Epoch 1/8 (46.52s) - Train Loss: 0.4558, Val Loss: 0.5688
+2025-07-28 11:43:44,617 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_0/best_model.pth
+2025-07-28 11:43:46,383 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:47,046 - INFO - Epoch 2/8 (2.31s) - Train Loss: 0.3683, Val Loss: 0.5208
+2025-07-28 11:43:48,384 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:49,358 - INFO - Epoch 3/8 (2.31s) - Train Loss: 0.3422, Val Loss: 0.4935
+2025-07-28 11:43:50,385 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:51,674 - INFO - Epoch 4/8 (2.32s) - Train Loss: 0.3314, Val Loss: 0.4648
+2025-07-28 11:43:52,386 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:53,992 - INFO - Epoch 5/8 (2.32s) - Train Loss: 0.3201, Val Loss: 0.4450
+2025-07-28 11:43:54,006 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_0/best_model.pth
+2025-07-28 11:43:54,386 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:56,320 - INFO - Epoch 6/8 (2.31s) - Train Loss: 0.3080, Val Loss: 0.4714
+2025-07-28 11:43:56,428 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:58,388 - INFO - 127.0.0.1 - - [28/Jul/2025 11:43:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:43:58,742 - INFO - Epoch 7/8 (2.32s) - Train Loss: 0.3018, Val Loss: 0.4430
+2025-07-28 11:44:00,388 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:01,063 - INFO - Epoch 8/8 (2.32s) - Train Loss: 0.2989, Val Loss: 0.4520
+2025-07-28 11:44:01,063 - INFO - Training completed in 62.99 seconds
+2025-07-28 11:44:01,064 - INFO - Best val_f1_score: 0.8325
+2025-07-28 11:44:01,068 - INFO - Trial 0: F1=0.8325, Sensitivity=0.7413, Specificity=0.8774
+2025-07-28 11:44:01,344 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:44:01,346 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:44:01,346 - INFO - Starting training for 8 epochs
+2025-07-28 11:44:01,346 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:44:02,390 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:04,391 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:04,710 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:06,065 - INFO - Epoch 1/8 (4.72s) - Train Loss: 0.5334, Val Loss: 0.5342
+2025-07-28 11:44:06,107 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_1/best_model.pth
+2025-07-28 11:44:06,390 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:08,392 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:10,391 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:10,642 - INFO - Epoch 2/8 (4.41s) - Train Loss: 0.4043, Val Loss: 0.5075
+2025-07-28 11:44:10,677 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_1/best_model.pth
+2025-07-28 11:44:12,394 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:14,393 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:15,103 - INFO - Epoch 3/8 (4.43s) - Train Loss: 0.3441, Val Loss: 0.5202
+2025-07-28 11:44:16,394 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:18,396 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:19,518 - INFO - Epoch 4/8 (4.41s) - Train Loss: 0.3127, Val Loss: 0.4664
+2025-07-28 11:44:19,551 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_1/best_model.pth
+2025-07-28 11:44:20,396 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:22,397 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:23,957 - INFO - Epoch 5/8 (4.41s) - Train Loss: 0.2882, Val Loss: 0.5006
+2025-07-28 11:44:24,397 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:25,064 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:25] "GET /api/training_status HTTP/1.1" 200 -
+2025-07-28 11:44:26,399 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:28,373 - INFO - Epoch 6/8 (4.42s) - Train Loss: 0.2667, Val Loss: 0.6867
+2025-07-28 11:44:28,482 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:30,400 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:32,400 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:32,931 - INFO - Epoch 7/8 (4.45s) - Train Loss: 0.2417, Val Loss: 0.4099
+2025-07-28 11:44:32,965 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_1/best_model.pth
+2025-07-28 11:44:34,402 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:36,403 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:37,385 - INFO - Epoch 8/8 (4.42s) - Train Loss: 0.2200, Val Loss: 0.4627
+2025-07-28 11:44:37,385 - INFO - Training completed in 36.04 seconds
+2025-07-28 11:44:37,385 - INFO - Best val_f1_score: 0.8757
+2025-07-28 11:44:37,390 - INFO - Trial 1: F1=0.8757, Sensitivity=0.8730, Specificity=0.6258
+2025-07-28 11:44:37,654 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:44:37,655 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:44:37,655 - INFO - Starting training for 12 epochs
+2025-07-28 11:44:37,655 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:44:38,405 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:39,987 - INFO - Epoch 1/12 (2.33s) - Train Loss: 0.3561, Val Loss: 0.3763
+2025-07-28 11:44:40,003 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_2/best_model.pth
+2025-07-28 11:44:40,405 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:42,405 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:42,458 - INFO - Epoch 2/12 (2.33s) - Train Loss: 0.2962, Val Loss: 0.6546
+2025-07-28 11:44:44,406 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:44,778 - INFO - Epoch 3/12 (2.32s) - Train Loss: 0.2816, Val Loss: 0.4082
+2025-07-28 11:44:46,406 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:47,095 - INFO - Epoch 4/12 (2.32s) - Train Loss: 0.2724, Val Loss: 0.4140
+2025-07-28 11:44:48,407 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:49,418 - INFO - Epoch 5/12 (2.32s) - Train Loss: 0.2656, Val Loss: 0.4268
+2025-07-28 11:44:49,650 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:49] "GET /api/training_status HTTP/1.1" 200 -
+2025-07-28 11:44:50,409 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:51,743 - INFO - Epoch 6/12 (2.32s) - Train Loss: 0.2553, Val Loss: 0.4233
+2025-07-28 11:44:52,408 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:54,199 - INFO - Epoch 7/12 (2.35s) - Train Loss: 0.2427, Val Loss: 0.4220
+2025-07-28 11:44:54,409 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:56,408 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:56,559 - INFO - Epoch 8/12 (2.36s) - Train Loss: 0.2175, Val Loss: 0.4709
+2025-07-28 11:44:58,411 - INFO - 127.0.0.1 - - [28/Jul/2025 11:44:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:44:58,924 - INFO - Epoch 9/12 (2.37s) - Train Loss: 0.2076, Val Loss: 0.4353
+2025-07-28 11:45:00,412 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:01,279 - INFO - Epoch 10/12 (2.35s) - Train Loss: 0.1942, Val Loss: 0.4486
+2025-07-28 11:45:02,413 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:03,653 - INFO - Epoch 11/12 (2.37s) - Train Loss: 0.1878, Val Loss: 0.4187
+2025-07-28 11:45:03,653 - INFO - Early stopping after 11 epochs
+2025-07-28 11:45:03,653 - INFO - Training completed in 26.00 seconds
+2025-07-28 11:45:03,653 - INFO - Best val_f1_score: 0.8926
+2025-07-28 11:45:03,658 - INFO - Trial 2: F1=0.8926, Sensitivity=0.8621, Specificity=0.7844
+2025-07-28 11:45:03,920 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:45:03,921 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:45:03,921 - INFO - Starting training for 15 epochs
+2025-07-28 11:45:03,921 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:45:04,415 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:06,315 - INFO - Epoch 1/15 (2.39s) - Train Loss: 0.3911, Val Loss: 0.5881
+2025-07-28 11:45:06,332 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_3/best_model.pth
+2025-07-28 11:45:06,453 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:08,415 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:08,844 - INFO - Epoch 2/15 (2.39s) - Train Loss: 0.3340, Val Loss: 0.4906
+2025-07-28 11:45:08,859 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_3/best_model.pth
+2025-07-28 11:45:10,416 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:11,258 - INFO - Epoch 3/15 (2.40s) - Train Loss: 0.3169, Val Loss: 0.5527
+2025-07-28 11:45:11,273 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_3/best_model.pth
+2025-07-28 11:45:12,417 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:13,672 - INFO - Epoch 4/15 (2.40s) - Train Loss: 0.3094, Val Loss: 0.5031
+2025-07-28 11:45:14,418 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:14,916 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:16,094 - INFO - Epoch 5/15 (2.42s) - Train Loss: 0.3012, Val Loss: 0.5056
+2025-07-28 11:45:16,419 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:18,420 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:18,530 - INFO - Epoch 6/15 (2.44s) - Train Loss: 0.2892, Val Loss: 0.4895
+2025-07-28 11:45:20,421 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:21,058 - INFO - Epoch 7/15 (2.42s) - Train Loss: 0.2931, Val Loss: 0.4813
+2025-07-28 11:45:22,423 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:23,494 - INFO - Epoch 8/15 (2.44s) - Train Loss: 0.2890, Val Loss: 0.6018
+2025-07-28 11:45:24,423 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:25,911 - INFO - Epoch 9/15 (2.42s) - Train Loss: 0.2813, Val Loss: 0.5626
+2025-07-28 11:45:26,424 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:28,040 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:28,356 - INFO - Epoch 10/15 (2.44s) - Train Loss: 0.2707, Val Loss: 0.4789
+2025-07-28 11:45:28,425 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:30,427 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:30,797 - INFO - Epoch 11/15 (2.44s) - Train Loss: 0.2543, Val Loss: 0.3904
+2025-07-28 11:45:30,812 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_3/best_model.pth
+2025-07-28 11:45:32,426 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:33,381 - INFO - Epoch 12/15 (2.46s) - Train Loss: 0.2537, Val Loss: 0.5213
+2025-07-28 11:45:34,428 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:35,816 - INFO - Epoch 13/15 (2.44s) - Train Loss: 0.2523, Val Loss: 0.4672
+2025-07-28 11:45:36,428 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:38,254 - INFO - Epoch 14/15 (2.44s) - Train Loss: 0.2483, Val Loss: 0.4412
+2025-07-28 11:45:38,269 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_3/best_model.pth
+2025-07-28 11:45:38,428 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:40,429 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:40,708 - INFO - Epoch 15/15 (2.44s) - Train Loss: 0.2434, Val Loss: 0.6838
+2025-07-28 11:45:40,708 - INFO - Training completed in 36.79 seconds
+2025-07-28 11:45:40,709 - INFO - Best val_f1_score: 0.8767
+2025-07-28 11:45:40,713 - INFO - Trial 3: F1=0.8767, Sensitivity=0.8225, Specificity=0.8330
+2025-07-28 11:45:40,977 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:45:40,978 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:45:40,978 - INFO - Starting training for 12 epochs
+2025-07-28 11:45:40,978 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:45:42,431 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:43,386 - INFO - Epoch 1/12 (2.41s) - Train Loss: 0.3450, Val Loss: 0.4160
+2025-07-28 11:45:43,403 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_4/best_model.pth
+2025-07-28 11:45:44,431 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:45,987 - INFO - Epoch 2/12 (2.46s) - Train Loss: 0.2924, Val Loss: 0.5430
+2025-07-28 11:45:46,433 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:48,422 - INFO - Epoch 3/12 (2.43s) - Train Loss: 0.2868, Val Loss: 0.3554
+2025-07-28 11:45:48,434 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:48,437 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_4/best_model.pth
+2025-07-28 11:45:50,434 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:50,891 - INFO - Epoch 4/12 (2.45s) - Train Loss: 0.2614, Val Loss: 0.4646
+2025-07-28 11:45:52,435 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:53,395 - INFO - Epoch 5/12 (2.50s) - Train Loss: 0.2470, Val Loss: 0.5638
+2025-07-28 11:45:54,435 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:55,849 - INFO - Epoch 6/12 (2.45s) - Train Loss: 0.2398, Val Loss: 0.4438
+2025-07-28 11:45:56,436 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:58,437 - INFO - 127.0.0.1 - - [28/Jul/2025 11:45:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:45:58,442 - INFO - Epoch 7/12 (2.49s) - Train Loss: 0.2238, Val Loss: 0.4602
+2025-07-28 11:46:00,439 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:00,890 - INFO - Epoch 8/12 (2.45s) - Train Loss: 0.2159, Val Loss: 0.4213
+2025-07-28 11:46:02,441 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:03,355 - INFO - Epoch 9/12 (2.46s) - Train Loss: 0.1991, Val Loss: 0.4838
+2025-07-28 11:46:04,442 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:05,819 - INFO - Epoch 10/12 (2.46s) - Train Loss: 0.1625, Val Loss: 0.5090
+2025-07-28 11:46:06,444 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:08,295 - INFO - Epoch 11/12 (2.48s) - Train Loss: 0.1530, Val Loss: 0.5803
+2025-07-28 11:46:08,445 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:10,446 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:10,870 - INFO - Epoch 12/12 (2.47s) - Train Loss: 0.1394, Val Loss: 0.6216
+2025-07-28 11:46:10,871 - INFO - Training completed in 29.89 seconds
+2025-07-28 11:46:10,871 - INFO - Best val_f1_score: 0.9023
+2025-07-28 11:46:10,876 - INFO - Trial 4: F1=0.9023, Sensitivity=0.8853, Specificity=0.7611
+2025-07-28 11:46:11,155 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:46:11,156 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:46:11,156 - INFO - Starting training for 13 epochs
+2025-07-28 11:46:11,156 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:46:12,449 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:14,450 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:15,884 - INFO - Epoch 1/13 (4.73s) - Train Loss: 0.4993, Val Loss: 0.5972
+2025-07-28 11:46:15,926 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_5/best_model.pth
+2025-07-28 11:46:16,451 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:18,452 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:20,452 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:20,748 - INFO - Epoch 2/13 (4.70s) - Train Loss: 0.3620, Val Loss: 0.5904
+2025-07-28 11:46:22,454 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:24,455 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:25,414 - INFO - Epoch 3/13 (4.66s) - Train Loss: 0.3103, Val Loss: 0.5858
+2025-07-28 11:46:25,448 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_5/best_model.pth
+2025-07-28 11:46:26,455 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:28,455 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:30,099 - INFO - Epoch 4/13 (4.65s) - Train Loss: 0.2819, Val Loss: 0.4343
+2025-07-28 11:46:30,133 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_5/best_model.pth
+2025-07-28 11:46:30,457 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:32,457 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:34,459 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:34,795 - INFO - Epoch 5/13 (4.66s) - Train Loss: 0.2613, Val Loss: 0.4075
+2025-07-28 11:46:34,837 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_5/best_model.pth
+2025-07-28 11:46:36,460 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:38,461 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:39,500 - INFO - Epoch 6/13 (4.66s) - Train Loss: 0.2436, Val Loss: 0.6340
+2025-07-28 11:46:40,461 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:42,463 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:44,269 - INFO - Epoch 7/13 (4.66s) - Train Loss: 0.2293, Val Loss: 0.7892
+2025-07-28 11:46:44,464 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:46,465 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:48,466 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:48,910 - INFO - Epoch 8/13 (4.64s) - Train Loss: 0.2041, Val Loss: 0.5694
+2025-07-28 11:46:50,467 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:52,467 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:53,540 - INFO - Epoch 9/13 (4.63s) - Train Loss: 0.1776, Val Loss: 0.6927
+2025-07-28 11:46:54,467 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:56,468 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:58,180 - INFO - Epoch 10/13 (4.64s) - Train Loss: 0.1587, Val Loss: 0.6897
+2025-07-28 11:46:58,469 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:46:59,189 - INFO - 127.0.0.1 - - [28/Jul/2025 11:46:59] "GET /api/training_status HTTP/1.1" 200 -
+2025-07-28 11:47:00,471 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:02,472 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:02,821 - INFO - Epoch 11/13 (4.64s) - Train Loss: 0.1398, Val Loss: 0.6407
+2025-07-28 11:47:04,472 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:06,473 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:07,533 - INFO - Epoch 12/13 (4.61s) - Train Loss: 0.1077, Val Loss: 0.6590
+2025-07-28 11:47:08,473 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:10,474 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:12,124 - INFO - Epoch 13/13 (4.59s) - Train Loss: 0.1013, Val Loss: 0.6579
+2025-07-28 11:47:12,125 - INFO - Training completed in 60.97 seconds
+2025-07-28 11:47:12,125 - INFO - Best val_f1_score: 0.8796
+2025-07-28 11:47:12,129 - INFO - Trial 5: F1=0.8796, Sensitivity=0.8300, Specificity=0.8224
+2025-07-28 11:47:12,413 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:47:12,414 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:47:12,414 - INFO - Starting training for 8 epochs
+2025-07-28 11:47:12,414 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:47:12,474 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:14,475 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:16,476 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:17,048 - INFO - Epoch 1/8 (4.63s) - Train Loss: 0.4212, Val Loss: 0.4126
+2025-07-28 11:47:17,091 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_6/best_model.pth
+2025-07-28 11:47:18,478 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:20,479 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:21,778 - INFO - Epoch 2/8 (4.57s) - Train Loss: 0.3160, Val Loss: 0.6996
+2025-07-28 11:47:22,479 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:24,480 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:26,342 - INFO - Epoch 3/8 (4.56s) - Train Loss: 0.2935, Val Loss: 0.4962
+2025-07-28 11:47:26,479 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:28,481 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:30,481 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:30,908 - INFO - Epoch 4/8 (4.57s) - Train Loss: 0.2729, Val Loss: 0.5026
+2025-07-28 11:47:32,483 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:34,484 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:35,450 - INFO - Epoch 5/8 (4.54s) - Train Loss: 0.2523, Val Loss: 0.5767
+2025-07-28 11:47:36,485 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:38,485 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:39,991 - INFO - Epoch 6/8 (4.54s) - Train Loss: 0.2545, Val Loss: 0.6421
+2025-07-28 11:47:40,486 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:42,487 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:44,487 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:44,652 - INFO - Epoch 7/8 (4.55s) - Train Loss: 0.2440, Val Loss: 0.4557
+2025-07-28 11:47:46,487 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:48,488 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:48,501 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:49,218 - INFO - Epoch 8/8 (4.57s) - Train Loss: 0.2107, Val Loss: 0.5108
+2025-07-28 11:47:49,218 - INFO - Training completed in 36.80 seconds
+2025-07-28 11:47:49,218 - INFO - Best val_f1_score: 0.8774
+2025-07-28 11:47:49,223 - INFO - Trial 6: F1=0.8774, Sensitivity=0.8280, Specificity=0.8161
+2025-07-28 11:47:49,504 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:47:49,505 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:47:49,505 - INFO - Starting training for 7 epochs
+2025-07-28 11:47:49,505 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:47:50,489 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:51,949 - INFO - Epoch 1/7 (2.44s) - Train Loss: 0.3463, Val Loss: 0.6214
+2025-07-28 11:47:51,966 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_7/best_model.pth
+2025-07-28 11:47:52,489 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:54,489 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:54,506 - INFO - Epoch 2/7 (2.42s) - Train Loss: 0.2996, Val Loss: 0.4645
+2025-07-28 11:47:54,520 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_7/best_model.pth
+2025-07-28 11:47:56,490 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:56,896 - INFO - Epoch 3/7 (2.38s) - Train Loss: 0.2891, Val Loss: 0.3957
+2025-07-28 11:47:56,910 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_7/best_model.pth
+2025-07-28 11:47:58,491 - INFO - 127.0.0.1 - - [28/Jul/2025 11:47:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:47:59,287 - INFO - Epoch 4/7 (2.38s) - Train Loss: 0.2718, Val Loss: 0.4730
+2025-07-28 11:48:00,493 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:01,720 - INFO - Epoch 5/7 (2.43s) - Train Loss: 0.2765, Val Loss: 0.4580
+2025-07-28 11:48:01,735 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_7/best_model.pth
+2025-07-28 11:48:02,493 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:04,145 - INFO - Epoch 6/7 (2.41s) - Train Loss: 0.2661, Val Loss: 0.5115
+2025-07-28 11:48:04,494 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:06,494 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:06,683 - INFO - Epoch 7/7 (2.42s) - Train Loss: 0.2543, Val Loss: 0.4938
+2025-07-28 11:48:06,697 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_7/best_model.pth
+2025-07-28 11:48:06,697 - INFO - Training completed in 17.19 seconds
+2025-07-28 11:48:06,697 - INFO - Best val_f1_score: 0.8925
+2025-07-28 11:48:06,701 - INFO - Trial 7: F1=0.8925, Sensitivity=0.8526, Specificity=0.8203
+2025-07-28 11:48:06,966 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:48:06,967 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:48:06,967 - INFO - Starting training for 12 epochs
+2025-07-28 11:48:06,967 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:48:08,495 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:09,370 - INFO - Epoch 1/12 (2.40s) - Train Loss: 0.3675, Val Loss: 0.5104
+2025-07-28 11:48:09,386 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_8/best_model.pth
+2025-07-28 11:48:10,496 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:11,927 - INFO - Epoch 2/12 (2.42s) - Train Loss: 0.3259, Val Loss: 0.4959
+2025-07-28 11:48:11,949 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_8/best_model.pth
+2025-07-28 11:48:12,496 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:14,362 - INFO - Epoch 3/12 (2.41s) - Train Loss: 0.3122, Val Loss: 0.6148
+2025-07-28 11:48:14,376 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_8/best_model.pth
+2025-07-28 11:48:14,497 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:16,498 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:16,801 - INFO - Epoch 4/12 (2.43s) - Train Loss: 0.2904, Val Loss: 0.6525
+2025-07-28 11:48:18,500 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:19,208 - INFO - Epoch 5/12 (2.41s) - Train Loss: 0.2929, Val Loss: 0.5664
+2025-07-28 11:48:19,222 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_8/best_model.pth
+2025-07-28 11:48:20,500 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:21,632 - INFO - Epoch 6/12 (2.41s) - Train Loss: 0.2860, Val Loss: 0.6392
+2025-07-28 11:48:22,501 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:24,159 - INFO - Epoch 7/12 (2.42s) - Train Loss: 0.2745, Val Loss: 0.4773
+2025-07-28 11:48:24,504 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:26,502 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:26,555 - INFO - Epoch 8/12 (2.40s) - Train Loss: 0.2627, Val Loss: 0.4323
+2025-07-28 11:48:28,504 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:28,957 - INFO - Epoch 9/12 (2.40s) - Train Loss: 0.2677, Val Loss: 0.4295
+2025-07-28 11:48:28,971 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_8/best_model.pth
+2025-07-28 11:48:30,504 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:31,361 - INFO - Epoch 10/12 (2.39s) - Train Loss: 0.2651, Val Loss: 0.5319
+2025-07-28 11:48:32,505 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:33,749 - INFO - Epoch 11/12 (2.39s) - Train Loss: 0.2599, Val Loss: 0.4921
+2025-07-28 11:48:34,505 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:36,293 - INFO - Epoch 12/12 (2.44s) - Train Loss: 0.2469, Val Loss: 0.5121
+2025-07-28 11:48:36,293 - INFO - Training completed in 29.33 seconds
+2025-07-28 11:48:36,293 - INFO - Best val_f1_score: 0.8960
+2025-07-28 11:48:36,297 - INFO - Trial 8: F1=0.8960, Sensitivity=0.8819, Specificity=0.7315
+2025-07-28 11:48:36,523 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:36,563 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:48:36,564 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:48:36,564 - INFO - Starting training for 13 epochs
+2025-07-28 11:48:36,564 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:48:38,505 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:38,979 - INFO - Epoch 1/13 (2.41s) - Train Loss: 0.3423, Val Loss: 0.5700
+2025-07-28 11:48:38,996 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_9/best_model.pth
+2025-07-28 11:48:40,507 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:41,506 - INFO - Epoch 2/13 (2.39s) - Train Loss: 0.2998, Val Loss: 0.6410
+2025-07-28 11:48:42,506 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:43,901 - INFO - Epoch 3/13 (2.39s) - Train Loss: 0.2873, Val Loss: 0.6846
+2025-07-28 11:48:44,508 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:46,330 - INFO - Epoch 4/13 (2.43s) - Train Loss: 0.2773, Val Loss: 0.4701
+2025-07-28 11:48:46,345 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_9/best_model.pth
+2025-07-28 11:48:46,509 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:48,510 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:48,736 - INFO - Epoch 5/13 (2.39s) - Train Loss: 0.2706, Val Loss: 0.4728
+2025-07-28 11:48:50,511 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:51,141 - INFO - Epoch 6/13 (2.41s) - Train Loss: 0.2594, Val Loss: 0.4480
+2025-07-28 11:48:51,155 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_9/best_model.pth
+2025-07-28 11:48:52,512 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:53,691 - INFO - Epoch 7/13 (2.43s) - Train Loss: 0.2490, Val Loss: 0.5272
+2025-07-28 11:48:54,513 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:56,088 - INFO - Epoch 8/13 (2.40s) - Train Loss: 0.2415, Val Loss: 0.4321
+2025-07-28 11:48:56,514 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:48:58,472 - INFO - Epoch 9/13 (2.38s) - Train Loss: 0.2404, Val Loss: 0.4626
+2025-07-28 11:48:58,514 - INFO - 127.0.0.1 - - [28/Jul/2025 11:48:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:00,516 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:00,854 - INFO - Epoch 10/13 (2.38s) - Train Loss: 0.2200, Val Loss: 0.5699
+2025-07-28 11:49:02,516 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:03,233 - INFO - Epoch 11/13 (2.38s) - Train Loss: 0.2064, Val Loss: 0.4738
+2025-07-28 11:49:04,516 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:05,742 - INFO - Epoch 12/13 (2.40s) - Train Loss: 0.1869, Val Loss: 0.4743
+2025-07-28 11:49:05,757 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_9/best_model.pth
+2025-07-28 11:49:06,518 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:08,142 - INFO - Epoch 13/13 (2.39s) - Train Loss: 0.1680, Val Loss: 0.4758
+2025-07-28 11:49:08,157 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_9/best_model.pth
+2025-07-28 11:49:08,157 - INFO - Training completed in 31.59 seconds
+2025-07-28 11:49:08,157 - INFO - Best val_f1_score: 0.8728
+2025-07-28 11:49:08,162 - INFO - Trial 9: F1=0.8728, Sensitivity=0.8826, Specificity=0.5666
+2025-07-28 11:49:08,445 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:49:08,446 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:49:08,446 - INFO - Starting training for 10 epochs
+2025-07-28 11:49:08,446 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:49:08,519 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:10,519 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:12,518 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:13,033 - INFO - Epoch 1/10 (4.59s) - Train Loss: 0.3960, Val Loss: 0.4117
+2025-07-28 11:49:13,074 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_10/best_model.pth
+2025-07-28 11:49:14,521 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:16,521 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:17,754 - INFO - Epoch 2/10 (4.56s) - Train Loss: 0.3296, Val Loss: 0.3438
+2025-07-28 11:49:17,788 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_10/best_model.pth
+2025-07-28 11:49:18,522 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:20,523 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:22,312 - INFO - Epoch 3/10 (4.52s) - Train Loss: 0.2970, Val Loss: 0.5612
+2025-07-28 11:49:22,524 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:24,524 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:26,525 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:26,856 - INFO - Epoch 4/10 (4.54s) - Train Loss: 0.2877, Val Loss: 0.4305
+2025-07-28 11:49:28,526 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:30,527 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:31,371 - INFO - Epoch 5/10 (4.51s) - Train Loss: 0.2757, Val Loss: 0.4856
+2025-07-28 11:49:32,528 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:34,529 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:35,925 - INFO - Epoch 6/10 (4.55s) - Train Loss: 0.2695, Val Loss: 0.4885
+2025-07-28 11:49:36,530 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:38,530 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:40,530 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:40,563 - INFO - Epoch 7/10 (4.53s) - Train Loss: 0.2530, Val Loss: 0.3866
+2025-07-28 11:49:42,531 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:44,532 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:45,090 - INFO - Epoch 8/10 (4.53s) - Train Loss: 0.2539, Val Loss: 0.3797
+2025-07-28 11:49:45,124 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_10/best_model.pth
+2025-07-28 11:49:46,533 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:48,534 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:49,706 - INFO - Epoch 9/10 (4.58s) - Train Loss: 0.2400, Val Loss: 0.4408
+2025-07-28 11:49:50,535 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:52,535 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:53,150 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:53] "GET /api/training_status HTTP/1.1" 200 -
+2025-07-28 11:49:54,185 - INFO - Epoch 10/10 (4.48s) - Train Loss: 0.2420, Val Loss: 0.4519
+2025-07-28 11:49:54,185 - INFO - Training completed in 45.74 seconds
+2025-07-28 11:49:54,185 - INFO - Best val_f1_score: 0.8944
+2025-07-28 11:49:54,190 - INFO - Trial 10: F1=0.8944, Sensitivity=0.8553, Specificity=0.8224
+2025-07-28 11:49:54,460 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:49:54,461 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:49:54,462 - INFO - Starting training for 12 epochs
+2025-07-28 11:49:54,462 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:49:54,537 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:56,537 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:56,855 - INFO - Epoch 1/12 (2.39s) - Train Loss: 0.3522, Val Loss: 0.7153
+2025-07-28 11:49:56,872 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_11/best_model.pth
+2025-07-28 11:49:58,539 - INFO - 127.0.0.1 - - [28/Jul/2025 11:49:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:49:59,370 - INFO - Epoch 2/12 (2.38s) - Train Loss: 0.3287, Val Loss: 0.4184
+2025-07-28 11:49:59,385 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_11/best_model.pth
+2025-07-28 11:50:00,538 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:00,843 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:01,786 - INFO - Epoch 3/12 (2.40s) - Train Loss: 0.2969, Val Loss: 0.4604
+2025-07-28 11:50:02,540 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:04,163 - INFO - Epoch 4/12 (2.38s) - Train Loss: 0.2982, Val Loss: 0.6739
+2025-07-28 11:50:04,539 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:06,542 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:06,562 - INFO - Epoch 5/12 (2.40s) - Train Loss: 0.2791, Val Loss: 0.4945
+2025-07-28 11:50:08,543 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:08,992 - INFO - Epoch 6/12 (2.43s) - Train Loss: 0.2807, Val Loss: 0.4365
+2025-07-28 11:50:10,544 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:11,784 - INFO - Epoch 7/12 (2.67s) - Train Loss: 0.2644, Val Loss: 0.4191
+2025-07-28 11:50:12,543 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:14,324 - INFO - Epoch 8/12 (2.54s) - Train Loss: 0.2700, Val Loss: 0.5574
+2025-07-28 11:50:14,544 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:16,545 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:16,765 - INFO - Epoch 9/12 (2.44s) - Train Loss: 0.2399, Val Loss: 0.5244
+2025-07-28 11:50:18,546 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:19,243 - INFO - Epoch 10/12 (2.48s) - Train Loss: 0.2376, Val Loss: 0.5267
+2025-07-28 11:50:20,548 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:21,932 - INFO - Epoch 11/12 (2.69s) - Train Loss: 0.2366, Val Loss: 0.4318
+2025-07-28 11:50:22,820 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:25,058 - INFO - Epoch 12/12 (3.01s) - Train Loss: 0.2301, Val Loss: 0.4336
+2025-07-28 11:50:25,058 - INFO - Early stopping after 12 epochs
+2025-07-28 11:50:25,058 - INFO - Training completed in 30.60 seconds
+2025-07-28 11:50:25,058 - INFO - Best val_f1_score: 0.8937
+2025-07-28 11:50:25,064 - INFO - Trial 11: F1=0.8937, Sensitivity=0.8580, Specificity=0.8076
+2025-07-28 11:50:25,366 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:50:25,367 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:50:25,367 - INFO - Starting training for 16 epochs
+2025-07-28 11:50:25,368 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:50:25,602 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:25] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:27,907 - INFO - Epoch 1/16 (2.54s) - Train Loss: 0.4021, Val Loss: 0.5570
+2025-07-28 11:50:27,925 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_12/best_model.pth
+2025-07-28 11:50:30,781 - INFO - Epoch 2/16 (2.73s) - Train Loss: 0.3443, Val Loss: 0.5556
+2025-07-28 11:50:31,383 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:31] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:33,404 - INFO - Epoch 3/16 (2.62s) - Train Loss: 0.3163, Val Loss: 0.4299
+2025-07-28 11:50:33,420 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_12/best_model.pth
+2025-07-28 11:50:35,521 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:35] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:36,330 - INFO - Epoch 4/16 (2.91s) - Train Loss: 0.3148, Val Loss: 0.4274
+2025-07-28 11:50:36,346 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_12/best_model.pth
+2025-07-28 11:50:39,023 - INFO - Epoch 5/16 (2.68s) - Train Loss: 0.3060, Val Loss: 0.6200
+2025-07-28 11:50:41,938 - INFO - Epoch 6/16 (2.92s) - Train Loss: 0.3020, Val Loss: 0.4855
+2025-07-28 11:50:44,829 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:45,210 - INFO - Epoch 7/16 (3.15s) - Train Loss: 0.3056, Val Loss: 0.3415
+2025-07-28 11:50:45,224 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_12/best_model.pth
+2025-07-28 11:50:48,026 - INFO - Epoch 8/16 (2.80s) - Train Loss: 0.2865, Val Loss: 0.3639
+2025-07-28 11:50:49,325 - INFO - 127.0.0.1 - - [28/Jul/2025 11:50:49] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:50:50,880 - INFO - Epoch 9/16 (2.85s) - Train Loss: 0.2834, Val Loss: 0.6314
+2025-07-28 11:50:53,456 - INFO - Epoch 10/16 (2.58s) - Train Loss: 0.2803, Val Loss: 0.4248
+2025-07-28 11:50:56,197 - INFO - Epoch 11/16 (2.74s) - Train Loss: 0.2694, Val Loss: 0.3824
+2025-07-28 11:50:59,132 - INFO - Epoch 12/16 (2.82s) - Train Loss: 0.2693, Val Loss: 2.1472
+2025-07-28 11:51:01,816 - INFO - Epoch 13/16 (2.68s) - Train Loss: 0.2604, Val Loss: 0.3883
+2025-07-28 11:51:04,513 - INFO - Epoch 14/16 (2.70s) - Train Loss: 0.2433, Val Loss: 0.5004
+2025-07-28 11:51:07,029 - INFO - Epoch 15/16 (2.52s) - Train Loss: 0.2332, Val Loss: 0.7026
+2025-07-28 11:51:09,542 - INFO - Epoch 16/16 (2.51s) - Train Loss: 0.2315, Val Loss: 0.4507
+2025-07-28 11:51:09,653 - INFO - Training completed in 44.29 seconds
+2025-07-28 11:51:09,653 - INFO - Best val_f1_score: 0.8919
+2025-07-28 11:51:09,658 - INFO - Trial 12: F1=0.8919, Sensitivity=0.8451, Specificity=0.8457
+2025-07-28 11:51:09,939 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:51:09,940 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:51:09,940 - INFO - Starting training for 13 epochs
+2025-07-28 11:51:09,940 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:51:12,413 - INFO - Epoch 1/13 (2.47s) - Train Loss: 0.3656, Val Loss: 0.5814
+2025-07-28 11:51:12,429 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_13/best_model.pth
+2025-07-28 11:51:14,991 - INFO - Epoch 2/13 (2.44s) - Train Loss: 0.3164, Val Loss: 0.5035
+2025-07-28 11:51:15,005 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_13/best_model.pth
+2025-07-28 11:51:17,450 - INFO - Epoch 3/13 (2.45s) - Train Loss: 0.3067, Val Loss: 0.4898
+2025-07-28 11:51:18,092 - INFO - 127.0.0.1 - - [28/Jul/2025 11:51:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:51:19,947 - INFO - Epoch 4/13 (2.50s) - Train Loss: 0.2956, Val Loss: 0.6432
+2025-07-28 11:51:22,490 - INFO - Epoch 5/13 (2.54s) - Train Loss: 0.2737, Val Loss: 0.5955
+2025-07-28 11:51:24,862 - INFO - Epoch 6/13 (2.37s) - Train Loss: 0.2795, Val Loss: 0.5883
+2025-07-28 11:51:27,334 - INFO - Epoch 7/13 (2.36s) - Train Loss: 0.2782, Val Loss: 0.4686
+2025-07-28 11:51:29,714 - INFO - Epoch 8/13 (2.38s) - Train Loss: 0.2664, Val Loss: 0.4680
+2025-07-28 11:51:29,729 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_13/best_model.pth
+2025-07-28 11:51:32,125 - INFO - Epoch 9/13 (2.40s) - Train Loss: 0.2634, Val Loss: 0.6758
+2025-07-28 11:51:34,521 - INFO - Epoch 10/13 (2.40s) - Train Loss: 0.2523, Val Loss: 0.4332
+2025-07-28 11:51:34,535 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_13/best_model.pth
+2025-07-28 11:51:34,683 - INFO - 127.0.0.1 - - [28/Jul/2025 11:51:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:51:37,126 - INFO - Epoch 11/13 (2.59s) - Train Loss: 0.2447, Val Loss: 0.4042
+2025-07-28 11:51:37,141 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_13/best_model.pth
+2025-07-28 11:51:39,678 - INFO - Epoch 12/13 (2.42s) - Train Loss: 0.2466, Val Loss: 0.5046
+2025-07-28 11:51:42,086 - INFO - Epoch 13/13 (2.41s) - Train Loss: 0.2352, Val Loss: 0.4689
+2025-07-28 11:51:42,087 - INFO - Training completed in 32.15 seconds
+2025-07-28 11:51:42,087 - INFO - Best val_f1_score: 0.8812
+2025-07-28 11:51:42,092 - INFO - Trial 13: F1=0.8812, Sensitivity=0.8355, Specificity=0.8118
+2025-07-28 11:51:42,367 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:51:42,368 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:51:42,368 - INFO - Starting training for 10 epochs
+2025-07-28 11:51:42,368 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:51:44,784 - INFO - Epoch 1/10 (2.42s) - Train Loss: 0.3713, Val Loss: 0.4813
+2025-07-28 11:51:44,801 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_14/best_model.pth
+2025-07-28 11:51:47,333 - INFO - Epoch 2/10 (2.41s) - Train Loss: 0.3159, Val Loss: 0.7086
+2025-07-28 11:51:47,519 - INFO - 127.0.0.1 - - [28/Jul/2025 11:51:47] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:51:49,861 - INFO - Epoch 3/10 (2.53s) - Train Loss: 0.2976, Val Loss: 0.6925
+2025-07-28 11:51:52,276 - INFO - Epoch 4/10 (2.41s) - Train Loss: 0.2916, Val Loss: 0.6111
+2025-07-28 11:51:54,665 - INFO - Epoch 5/10 (2.39s) - Train Loss: 0.2736, Val Loss: 0.5790
+2025-07-28 11:51:57,088 - INFO - Epoch 6/10 (2.42s) - Train Loss: 0.2701, Val Loss: 0.4731
+2025-07-28 11:51:57,104 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_14/best_model.pth
+2025-07-28 11:51:59,616 - INFO - Epoch 7/10 (2.41s) - Train Loss: 0.2634, Val Loss: 0.3819
+2025-07-28 11:51:59,630 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_14/best_model.pth
+2025-07-28 11:52:02,035 - INFO - Epoch 8/10 (2.40s) - Train Loss: 0.2623, Val Loss: 0.4304
+2025-07-28 11:52:04,464 - INFO - Epoch 9/10 (2.43s) - Train Loss: 0.2569, Val Loss: 0.5349
+2025-07-28 11:52:06,850 - INFO - Epoch 10/10 (2.39s) - Train Loss: 0.2532, Val Loss: 0.4291
+2025-07-28 11:52:06,850 - INFO - Training completed in 24.48 seconds
+2025-07-28 11:52:06,850 - INFO - Best val_f1_score: 0.9011
+2025-07-28 11:52:06,855 - INFO - Trial 14: F1=0.9011, Sensitivity=0.8710, Specificity=0.8076
+2025-07-28 11:52:07,128 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:52:07,129 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:52:07,129 - INFO - Starting training for 10 epochs
+2025-07-28 11:52:07,129 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:52:09,517 - INFO - Epoch 1/10 (2.39s) - Train Loss: 0.3629, Val Loss: 0.3916
+2025-07-28 11:52:09,534 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_15/best_model.pth
+2025-07-28 11:52:12,047 - INFO - Epoch 2/10 (2.39s) - Train Loss: 0.3061, Val Loss: 0.5051
+2025-07-28 11:52:14,458 - INFO - Epoch 3/10 (2.41s) - Train Loss: 0.2750, Val Loss: 0.4637
+2025-07-28 11:52:16,862 - INFO - Epoch 4/10 (2.40s) - Train Loss: 0.2679, Val Loss: 0.3955
+2025-07-28 11:52:19,213 - INFO - Epoch 5/10 (2.35s) - Train Loss: 0.2603, Val Loss: 0.4620
+2025-07-28 11:52:19,226 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_15/best_model.pth
+2025-07-28 11:52:21,620 - INFO - Epoch 6/10 (2.39s) - Train Loss: 0.2481, Val Loss: 0.4982
+2025-07-28 11:52:24,068 - INFO - Epoch 7/10 (2.34s) - Train Loss: 0.2470, Val Loss: 0.6003
+2025-07-28 11:52:26,465 - INFO - Epoch 8/10 (2.40s) - Train Loss: 0.2429, Val Loss: 0.4645
+2025-07-28 11:52:28,827 - INFO - Epoch 9/10 (2.36s) - Train Loss: 0.2302, Val Loss: 0.4744
+2025-07-28 11:52:31,198 - INFO - Epoch 10/10 (2.37s) - Train Loss: 0.2240, Val Loss: 0.5247
+2025-07-28 11:52:31,199 - INFO - Training completed in 24.07 seconds
+2025-07-28 11:52:31,199 - INFO - Best val_f1_score: 0.8786
+2025-07-28 11:52:31,204 - INFO - Trial 15: F1=0.8786, Sensitivity=0.9188, Specificity=0.4651
+2025-07-28 11:52:31,476 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:52:31,477 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:52:31,477 - INFO - Starting training for 9 epochs
+2025-07-28 11:52:31,477 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:52:33,893 - INFO - Epoch 1/9 (2.42s) - Train Loss: 0.3693, Val Loss: 0.4715
+2025-07-28 11:52:33,909 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_16/best_model.pth
+2025-07-28 11:52:36,387 - INFO - Epoch 2/9 (2.36s) - Train Loss: 0.3210, Val Loss: 0.5040
+2025-07-28 11:52:38,787 - INFO - Epoch 3/9 (2.40s) - Train Loss: 0.3090, Val Loss: 0.5830
+2025-07-28 11:52:41,126 - INFO - Epoch 4/9 (2.34s) - Train Loss: 0.2960, Val Loss: 0.5394
+2025-07-28 11:52:43,491 - INFO - Epoch 5/9 (2.36s) - Train Loss: 0.2827, Val Loss: 0.4796
+2025-07-28 11:52:43,505 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_16/best_model.pth
+2025-07-28 11:52:45,860 - INFO - Epoch 6/9 (2.36s) - Train Loss: 0.2657, Val Loss: 0.6496
+2025-07-28 11:52:48,377 - INFO - Epoch 7/9 (2.41s) - Train Loss: 0.2805, Val Loss: 0.5111
+2025-07-28 11:52:48,390 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_16/best_model.pth
+2025-07-28 11:52:50,778 - INFO - Epoch 8/9 (2.39s) - Train Loss: 0.2624, Val Loss: 0.6884
+2025-07-28 11:52:50,793 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_16/best_model.pth
+2025-07-28 11:52:53,263 - INFO - Epoch 9/9 (2.47s) - Train Loss: 0.2562, Val Loss: 0.4620
+2025-07-28 11:52:53,263 - INFO - Training completed in 21.79 seconds
+2025-07-28 11:52:53,264 - INFO - Best val_f1_score: 0.8836
+2025-07-28 11:52:53,268 - INFO - Trial 16: F1=0.8836, Sensitivity=0.8471, Specificity=0.7822
+2025-07-28 11:52:53,544 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:52:53,545 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:52:53,545 - INFO - Starting training for 11 epochs
+2025-07-28 11:52:53,545 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:52:55,974 - INFO - Epoch 1/11 (2.43s) - Train Loss: 0.3458, Val Loss: 0.4566
+2025-07-28 11:52:55,991 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_17/best_model.pth
+2025-07-28 11:52:58,502 - INFO - Epoch 2/11 (2.39s) - Train Loss: 0.3084, Val Loss: 0.4152
+2025-07-28 11:52:58,516 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_17/best_model.pth
+2025-07-28 11:53:00,888 - INFO - Epoch 3/11 (2.37s) - Train Loss: 0.2846, Val Loss: 0.3743
+2025-07-28 11:53:00,903 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_17/best_model.pth
+2025-07-28 11:53:01,841 - INFO - 127.0.0.1 - - [28/Jul/2025 11:53:01] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:53:03,273 - INFO - Epoch 4/11 (2.37s) - Train Loss: 0.2778, Val Loss: 0.4416
+2025-07-28 11:53:05,646 - INFO - Epoch 5/11 (2.37s) - Train Loss: 0.2663, Val Loss: 0.3999
+2025-07-28 11:53:08,025 - INFO - Epoch 6/11 (2.38s) - Train Loss: 0.2600, Val Loss: 0.4438
+2025-07-28 11:53:10,520 - INFO - Epoch 7/11 (2.39s) - Train Loss: 0.2471, Val Loss: 0.5879
+2025-07-28 11:53:12,888 - INFO - Epoch 8/11 (2.37s) - Train Loss: 0.2391, Val Loss: 0.4637
+2025-07-28 11:53:15,290 - INFO - Epoch 9/11 (2.40s) - Train Loss: 0.2279, Val Loss: 0.4709
+2025-07-28 11:53:17,649 - INFO - Epoch 10/11 (2.36s) - Train Loss: 0.1978, Val Loss: 0.4462
+2025-07-28 11:53:20,003 - INFO - Epoch 11/11 (2.35s) - Train Loss: 0.1801, Val Loss: 0.5635
+2025-07-28 11:53:20,110 - INFO - Training completed in 26.56 seconds
+2025-07-28 11:53:20,110 - INFO - Best val_f1_score: 0.8875
+2025-07-28 11:53:20,114 - INFO - Trial 17: F1=0.8875, Sensitivity=0.8560, Specificity=0.7738
+2025-07-28 11:53:20,404 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:53:20,405 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:53:20,405 - INFO - Starting training for 15 epochs
+2025-07-28 11:53:20,405 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:53:24,874 - INFO - Epoch 1/15 (4.47s) - Train Loss: 0.4185, Val Loss: 0.6068
+2025-07-28 11:53:24,916 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_18/best_model.pth
+2025-07-28 11:53:29,574 - INFO - Epoch 2/15 (4.54s) - Train Loss: 0.2968, Val Loss: 0.4616
+2025-07-28 11:53:29,608 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_18/best_model.pth
+2025-07-28 11:53:34,049 - INFO - Epoch 3/15 (4.44s) - Train Loss: 0.2710, Val Loss: 0.4751
+2025-07-28 11:53:34,084 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_18/best_model.pth
+2025-07-28 11:53:38,548 - INFO - Epoch 4/15 (4.46s) - Train Loss: 0.2537, Val Loss: 0.5510
+2025-07-28 11:53:42,998 - INFO - Epoch 5/15 (4.45s) - Train Loss: 0.2305, Val Loss: 0.4491
+2025-07-28 11:53:47,442 - INFO - Epoch 6/15 (4.44s) - Train Loss: 0.2158, Val Loss: 0.5218
+2025-07-28 11:53:52,109 - INFO - Epoch 7/15 (4.56s) - Train Loss: 0.1853, Val Loss: 0.4141
+2025-07-28 11:53:52,142 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_18/best_model.pth
+2025-07-28 11:53:56,652 - INFO - Epoch 8/15 (4.51s) - Train Loss: 0.1655, Val Loss: 0.5158
+2025-07-28 11:54:01,156 - INFO - Epoch 9/15 (4.50s) - Train Loss: 0.1286, Val Loss: 0.6074
+2025-07-28 11:54:05,618 - INFO - Epoch 10/15 (4.46s) - Train Loss: 0.0965, Val Loss: 1.3192
+2025-07-28 11:54:10,207 - INFO - Epoch 11/15 (4.59s) - Train Loss: 0.0868, Val Loss: 0.7376
+2025-07-28 11:54:14,821 - INFO - Epoch 12/15 (4.51s) - Train Loss: 0.0664, Val Loss: 0.9135
+2025-07-28 11:54:19,278 - INFO - Epoch 13/15 (4.46s) - Train Loss: 0.0565, Val Loss: 0.7864
+2025-07-28 11:54:23,861 - INFO - Epoch 14/15 (4.58s) - Train Loss: 0.0327, Val Loss: 0.8475
+2025-07-28 11:54:28,585 - INFO - Epoch 15/15 (4.72s) - Train Loss: 0.0192, Val Loss: 0.8088
+2025-07-28 11:54:28,619 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_18/best_model.pth
+2025-07-28 11:54:28,620 - INFO - Training completed in 68.21 seconds
+2025-07-28 11:54:28,620 - INFO - Best val_f1_score: 0.8990
+2025-07-28 11:54:28,624 - INFO - Trial 18: F1=0.8990, Sensitivity=0.9413, Specificity=0.5264
+2025-07-28 11:54:28,908 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:54:28,909 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:54:28,909 - INFO - Starting training for 6 epochs
+2025-07-28 11:54:28,909 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:54:31,342 - INFO - Epoch 1/6 (2.43s) - Train Loss: 0.4455, Val Loss: 0.4783
+2025-07-28 11:54:31,359 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_19/best_model.pth
+2025-07-28 11:54:33,966 - INFO - Epoch 2/6 (2.49s) - Train Loss: 0.3642, Val Loss: 0.4844
+2025-07-28 11:54:36,315 - INFO - Epoch 3/6 (2.35s) - Train Loss: 0.3415, Val Loss: 0.4429
+2025-07-28 11:54:38,751 - INFO - Epoch 4/6 (2.44s) - Train Loss: 0.3302, Val Loss: 0.4433
+2025-07-28 11:54:41,212 - INFO - Epoch 5/6 (2.46s) - Train Loss: 0.3257, Val Loss: 0.4361
+2025-07-28 11:54:43,620 - INFO - Epoch 6/6 (2.41s) - Train Loss: 0.3121, Val Loss: 0.4392
+2025-07-28 11:54:43,729 - INFO - Training completed in 14.82 seconds
+2025-07-28 11:54:43,729 - INFO - Best val_f1_score: 0.8485
+2025-07-28 11:54:43,734 - INFO - Trial 19: F1=0.8485, Sensitivity=0.7686, Specificity=0.8668
+2025-07-28 11:54:44,018 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:54:44,019 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:54:44,019 - INFO - Starting training for 11 epochs
+2025-07-28 11:54:44,019 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:54:46,476 - INFO - Epoch 1/11 (2.46s) - Train Loss: 0.3827, Val Loss: 0.5311
+2025-07-28 11:54:46,492 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_20/best_model.pth
+2025-07-28 11:54:49,054 - INFO - Epoch 2/11 (2.44s) - Train Loss: 0.3317, Val Loss: 0.4999
+2025-07-28 11:54:49,069 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_20/best_model.pth
+2025-07-28 11:54:51,482 - INFO - Epoch 3/11 (2.41s) - Train Loss: 0.3164, Val Loss: 0.4507
+2025-07-28 11:54:53,953 - INFO - Epoch 4/11 (2.47s) - Train Loss: 0.3028, Val Loss: 0.5376
+2025-07-28 11:54:56,406 - INFO - Epoch 5/11 (2.45s) - Train Loss: 0.2916, Val Loss: 0.5843
+2025-07-28 11:54:58,815 - INFO - Epoch 6/11 (2.41s) - Train Loss: 0.2908, Val Loss: 0.4171
+2025-07-28 11:54:58,829 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_20/best_model.pth
+2025-07-28 11:55:01,373 - INFO - Epoch 7/11 (2.44s) - Train Loss: 0.2849, Val Loss: 0.6573
+2025-07-28 11:55:03,838 - INFO - Epoch 8/11 (2.47s) - Train Loss: 0.2821, Val Loss: 0.4838
+2025-07-28 11:55:06,308 - INFO - Epoch 9/11 (2.47s) - Train Loss: 0.2723, Val Loss: 0.4111
+2025-07-28 11:55:08,742 - INFO - Epoch 10/11 (2.43s) - Train Loss: 0.2775, Val Loss: 0.4718
+2025-07-28 11:55:11,143 - INFO - Epoch 11/11 (2.40s) - Train Loss: 0.2638, Val Loss: 0.6256
+2025-07-28 11:55:11,252 - INFO - Training completed in 27.23 seconds
+2025-07-28 11:55:11,252 - INFO - Best val_f1_score: 0.8561
+2025-07-28 11:55:11,257 - INFO - Trial 20: F1=0.8561, Sensitivity=0.7795, Specificity=0.8710
+2025-07-28 11:55:11,572 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:55:11,573 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:55:11,573 - INFO - Starting training for 15 epochs
+2025-07-28 11:55:11,573 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:55:15,714 - INFO - 127.0.0.1 - - [28/Jul/2025 11:55:15] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:55:16,116 - INFO - Epoch 1/15 (4.54s) - Train Loss: 0.4337, Val Loss: 0.5409
+2025-07-28 11:55:16,157 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_21/best_model.pth
+2025-07-28 11:55:20,805 - INFO - Epoch 2/15 (4.53s) - Train Loss: 0.3192, Val Loss: 0.4608
+2025-07-28 11:55:25,526 - INFO - Epoch 3/15 (4.72s) - Train Loss: 0.2817, Val Loss: 0.4217
+2025-07-28 11:55:25,560 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_21/best_model.pth
+2025-07-28 11:55:30,146 - INFO - Epoch 4/15 (4.59s) - Train Loss: 0.2620, Val Loss: 0.5424
+2025-07-28 11:55:34,552 - INFO - Epoch 5/15 (4.41s) - Train Loss: 0.2412, Val Loss: 0.8327
+2025-07-28 11:55:39,028 - INFO - Epoch 6/15 (4.48s) - Train Loss: 0.2237, Val Loss: 0.6634
+2025-07-28 11:55:43,576 - INFO - Epoch 7/15 (4.44s) - Train Loss: 0.1840, Val Loss: 0.9374
+2025-07-28 11:55:48,105 - INFO - Epoch 8/15 (4.53s) - Train Loss: 0.1479, Val Loss: 0.5941
+2025-07-28 11:55:52,656 - INFO - Epoch 9/15 (4.55s) - Train Loss: 0.1245, Val Loss: 0.8758
+2025-07-28 11:55:57,180 - INFO - Epoch 10/15 (4.52s) - Train Loss: 0.0757, Val Loss: 0.7173
+2025-07-28 11:56:01,663 - INFO - Epoch 11/15 (4.48s) - Train Loss: 0.0573, Val Loss: 0.7326
+2025-07-28 11:56:01,698 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_21/best_model.pth
+2025-07-28 11:56:06,351 - INFO - Epoch 12/15 (4.54s) - Train Loss: 0.0412, Val Loss: 0.7342
+2025-07-28 11:56:11,026 - INFO - Epoch 13/15 (4.68s) - Train Loss: 0.0379, Val Loss: 0.8889
+2025-07-28 11:56:13,207 - INFO - 127.0.0.1 - - [28/Jul/2025 11:56:13] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 11:56:15,588 - INFO - Epoch 14/15 (4.56s) - Train Loss: 0.0284, Val Loss: 1.1479
+2025-07-28 11:56:20,159 - INFO - Epoch 15/15 (4.57s) - Train Loss: 0.0255, Val Loss: 0.6910
+2025-07-28 11:56:20,193 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_21/best_model.pth
+2025-07-28 11:56:20,193 - INFO - Training completed in 68.62 seconds
+2025-07-28 11:56:20,193 - INFO - Best val_f1_score: 0.8897
+2025-07-28 11:56:20,198 - INFO - Trial 21: F1=0.8897, Sensitivity=0.8778, Specificity=0.7040
+2025-07-28 11:56:20,501 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:56:20,503 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:56:20,503 - INFO - Starting training for 14 epochs
+2025-07-28 11:56:20,503 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:56:25,140 - INFO - Epoch 1/14 (4.64s) - Train Loss: 0.4615, Val Loss: 0.4505
+2025-07-28 11:56:25,180 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_22/best_model.pth
+2025-07-28 11:56:29,770 - INFO - Epoch 2/14 (4.47s) - Train Loss: 0.3277, Val Loss: 0.4887
+2025-07-28 11:56:34,206 - INFO - Epoch 3/14 (4.44s) - Train Loss: 0.2834, Val Loss: 0.6821
+2025-07-28 11:56:38,722 - INFO - Epoch 4/14 (4.52s) - Train Loss: 0.2587, Val Loss: 0.4238
+2025-07-28 11:56:38,756 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_22/best_model.pth
+2025-07-28 11:56:43,270 - INFO - Epoch 5/14 (4.51s) - Train Loss: 0.2415, Val Loss: 0.5127
+2025-07-28 11:56:47,854 - INFO - Epoch 6/14 (4.58s) - Train Loss: 0.2130, Val Loss: 0.5438
+2025-07-28 11:56:52,630 - INFO - Epoch 7/14 (4.67s) - Train Loss: 0.1947, Val Loss: 0.5931
+2025-07-28 11:56:57,236 - INFO - Epoch 8/14 (4.61s) - Train Loss: 0.1623, Val Loss: 0.8606
+2025-07-28 11:57:01,685 - INFO - Epoch 9/14 (4.45s) - Train Loss: 0.1363, Val Loss: 0.7393
+2025-07-28 11:57:06,200 - INFO - Epoch 10/14 (4.51s) - Train Loss: 0.1090, Val Loss: 0.7586
+2025-07-28 11:57:10,755 - INFO - Epoch 11/14 (4.55s) - Train Loss: 0.0706, Val Loss: 0.6274
+2025-07-28 11:57:15,316 - INFO - Epoch 12/14 (4.45s) - Train Loss: 0.0627, Val Loss: 0.6765
+2025-07-28 11:57:19,813 - INFO - Epoch 13/14 (4.50s) - Train Loss: 0.0607, Val Loss: 1.0219
+2025-07-28 11:57:24,256 - INFO - Epoch 14/14 (4.44s) - Train Loss: 0.0503, Val Loss: 0.8989
+2025-07-28 11:57:24,256 - INFO - Early stopping after 14 epochs
+2025-07-28 11:57:24,256 - INFO - Training completed in 63.75 seconds
+2025-07-28 11:57:24,256 - INFO - Best val_f1_score: 0.8745
+2025-07-28 11:57:24,261 - INFO - Trial 22: F1=0.8745, Sensitivity=0.8778, Specificity=0.5983
+2025-07-28 11:57:24,570 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:57:24,572 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:57:24,572 - INFO - Starting training for 16 epochs
+2025-07-28 11:57:24,572 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:57:29,151 - INFO - Epoch 1/16 (4.58s) - Train Loss: 0.3778, Val Loss: 0.4180
+2025-07-28 11:57:29,192 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_23/best_model.pth
+2025-07-28 11:57:33,780 - INFO - Epoch 2/16 (4.46s) - Train Loss: 0.3151, Val Loss: 0.3888
+2025-07-28 11:57:33,815 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_23/best_model.pth
+2025-07-28 11:57:38,254 - INFO - Epoch 3/16 (4.44s) - Train Loss: 0.3051, Val Loss: 0.6876
+2025-07-28 11:57:43,098 - INFO - Epoch 4/16 (4.84s) - Train Loss: 0.2899, Val Loss: 0.3882
+2025-07-28 11:57:43,133 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_23/best_model.pth
+2025-07-28 11:57:47,949 - INFO - Epoch 5/16 (4.81s) - Train Loss: 0.2729, Val Loss: 0.4555
+2025-07-28 11:57:52,529 - INFO - Epoch 6/16 (4.58s) - Train Loss: 0.2696, Val Loss: 0.3971
+2025-07-28 11:57:52,563 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_23/best_model.pth
+2025-07-28 11:57:57,160 - INFO - Epoch 7/16 (4.49s) - Train Loss: 0.2544, Val Loss: 0.4914
+2025-07-28 11:58:01,578 - INFO - Epoch 8/16 (4.42s) - Train Loss: 0.2498, Val Loss: 0.4531
+2025-07-28 11:58:05,994 - INFO - Epoch 9/16 (4.42s) - Train Loss: 0.2460, Val Loss: 0.4015
+2025-07-28 11:58:10,398 - INFO - Epoch 10/16 (4.40s) - Train Loss: 0.2393, Val Loss: 0.5906
+2025-07-28 11:58:14,851 - INFO - Epoch 11/16 (4.45s) - Train Loss: 0.2250, Val Loss: 0.5762
+2025-07-28 11:58:19,470 - INFO - Epoch 12/16 (4.51s) - Train Loss: 0.2255, Val Loss: 0.4911
+2025-07-28 11:58:23,918 - INFO - Epoch 13/16 (4.45s) - Train Loss: 0.1884, Val Loss: 0.5311
+2025-07-28 11:58:28,412 - INFO - Epoch 14/16 (4.49s) - Train Loss: 0.1797, Val Loss: 0.4657
+2025-07-28 11:58:32,926 - INFO - Epoch 15/16 (4.51s) - Train Loss: 0.1717, Val Loss: 0.4824
+2025-07-28 11:58:37,409 - INFO - Epoch 16/16 (4.48s) - Train Loss: 0.1664, Val Loss: 0.4715
+2025-07-28 11:58:37,409 - INFO - Early stopping after 16 epochs
+2025-07-28 11:58:37,409 - INFO - Training completed in 72.84 seconds
+2025-07-28 11:58:37,409 - INFO - Best val_f1_score: 0.8910
+2025-07-28 11:58:37,414 - INFO - Trial 23: F1=0.8910, Sensitivity=0.8539, Specificity=0.8055
+2025-07-28 11:58:37,714 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:58:37,716 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:58:37,716 - INFO - Starting training for 12 epochs
+2025-07-28 11:58:37,716 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:58:42,230 - INFO - Epoch 1/12 (4.51s) - Train Loss: 0.3786, Val Loss: 0.6005
+2025-07-28 11:58:42,271 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_24/best_model.pth
+2025-07-28 11:58:46,800 - INFO - Epoch 2/12 (4.41s) - Train Loss: 0.3040, Val Loss: 0.5039
+2025-07-28 11:58:51,203 - INFO - Epoch 3/12 (4.40s) - Train Loss: 0.2845, Val Loss: 0.4260
+2025-07-28 11:58:51,237 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_24/best_model.pth
+2025-07-28 11:58:55,660 - INFO - Epoch 4/12 (4.42s) - Train Loss: 0.2615, Val Loss: 0.4537
+2025-07-28 11:58:55,694 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_24/best_model.pth
+2025-07-28 11:59:00,116 - INFO - Epoch 5/12 (4.42s) - Train Loss: 0.2540, Val Loss: 0.4102
+2025-07-28 11:59:00,149 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_24/best_model.pth
+2025-07-28 11:59:04,750 - INFO - Epoch 6/12 (4.60s) - Train Loss: 0.2395, Val Loss: 0.3978
+2025-07-28 11:59:04,785 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_24/best_model.pth
+2025-07-28 11:59:09,741 - INFO - Epoch 7/12 (4.85s) - Train Loss: 0.2285, Val Loss: 0.4505
+2025-07-28 11:59:14,690 - INFO - Epoch 8/12 (4.95s) - Train Loss: 0.2200, Val Loss: 0.4522
+2025-07-28 11:59:14,724 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_24/best_model.pth
+2025-07-28 11:59:19,349 - INFO - Epoch 9/12 (4.62s) - Train Loss: 0.2119, Val Loss: 0.4689
+2025-07-28 11:59:23,775 - INFO - Epoch 10/12 (4.43s) - Train Loss: 0.1866, Val Loss: 0.4944
+2025-07-28 11:59:28,245 - INFO - Epoch 11/12 (4.47s) - Train Loss: 0.1658, Val Loss: 0.6439
+2025-07-28 11:59:32,907 - INFO - Epoch 12/12 (4.55s) - Train Loss: 0.1435, Val Loss: 0.7250
+2025-07-28 11:59:32,907 - INFO - Training completed in 55.19 seconds
+2025-07-28 11:59:32,908 - INFO - Best val_f1_score: 0.8938
+2025-07-28 11:59:32,912 - INFO - Trial 24: F1=0.8938, Sensitivity=0.8990, Specificity=0.6512
+2025-07-28 11:59:33,211 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 11:59:33,213 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 11:59:33,213 - INFO - Starting training for 14 epochs
+2025-07-28 11:59:33,213 - INFO - Monitoring metric: val_f1_score
+2025-07-28 11:59:37,670 - INFO - Epoch 1/14 (4.46s) - Train Loss: 0.4142, Val Loss: 0.5099
+2025-07-28 11:59:37,711 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_25/best_model.pth
+2025-07-28 11:59:42,250 - INFO - Epoch 2/14 (4.42s) - Train Loss: 0.3029, Val Loss: 0.4173
+2025-07-28 11:59:42,284 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_25/best_model.pth
+2025-07-28 11:59:46,759 - INFO - Epoch 3/14 (4.48s) - Train Loss: 0.2830, Val Loss: 0.4994
+2025-07-28 11:59:51,254 - INFO - Epoch 4/14 (4.49s) - Train Loss: 0.2637, Val Loss: 0.4298
+2025-07-28 11:59:55,678 - INFO - Epoch 5/14 (4.42s) - Train Loss: 0.2442, Val Loss: 0.7559
+2025-07-28 12:00:00,108 - INFO - Epoch 6/14 (4.43s) - Train Loss: 0.2387, Val Loss: 0.4875
+2025-07-28 12:00:04,667 - INFO - Epoch 7/14 (4.45s) - Train Loss: 0.2256, Val Loss: 0.4560
+2025-07-28 12:00:04,702 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_25/best_model.pth
+2025-07-28 12:00:09,151 - INFO - Epoch 8/14 (4.45s) - Train Loss: 0.2105, Val Loss: 0.4266
+2025-07-28 12:00:09,185 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_25/best_model.pth
+2025-07-28 12:00:13,606 - INFO - Epoch 9/14 (4.42s) - Train Loss: 0.1878, Val Loss: 0.4607
+2025-07-28 12:00:18,056 - INFO - Epoch 10/14 (4.45s) - Train Loss: 0.1702, Val Loss: 0.4875
+2025-07-28 12:00:22,543 - INFO - Epoch 11/14 (4.49s) - Train Loss: 0.1479, Val Loss: 0.6159
+2025-07-28 12:00:27,139 - INFO - Epoch 12/14 (4.49s) - Train Loss: 0.1235, Val Loss: 0.5087
+2025-07-28 12:00:27,172 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_25/best_model.pth
+2025-07-28 12:00:31,686 - INFO - Epoch 13/14 (4.51s) - Train Loss: 0.1096, Val Loss: 0.8068
+2025-07-28 12:00:36,140 - INFO - Epoch 14/14 (4.45s) - Train Loss: 0.0973, Val Loss: 0.6841
+2025-07-28 12:00:36,140 - INFO - Training completed in 62.93 seconds
+2025-07-28 12:00:36,140 - INFO - Best val_f1_score: 0.8847
+2025-07-28 12:00:36,145 - INFO - Trial 25: F1=0.8847, Sensitivity=0.8717, Specificity=0.6934
+2025-07-28 12:00:36,450 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:00:36,451 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:00:36,451 - INFO - Starting training for 12 epochs
+2025-07-28 12:00:36,451 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:00:40,905 - INFO - Epoch 1/12 (4.45s) - Train Loss: 0.5628, Val Loss: 0.5303
+2025-07-28 12:00:40,946 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_26/best_model.pth
+2025-07-28 12:00:45,495 - INFO - Epoch 2/12 (4.43s) - Train Loss: 0.4291, Val Loss: 0.5216
+2025-07-28 12:00:49,980 - INFO - Epoch 3/12 (4.49s) - Train Loss: 0.3635, Val Loss: 0.4875
+2025-07-28 12:00:54,407 - INFO - Epoch 4/12 (4.43s) - Train Loss: 0.3209, Val Loss: 0.4395
+2025-07-28 12:00:58,835 - INFO - Epoch 5/12 (4.43s) - Train Loss: 0.2932, Val Loss: 0.4869
+2025-07-28 12:01:03,273 - INFO - Epoch 6/12 (4.44s) - Train Loss: 0.2743, Val Loss: 0.4548
+2025-07-28 12:01:07,832 - INFO - Epoch 7/12 (4.45s) - Train Loss: 0.2565, Val Loss: 0.5548
+2025-07-28 12:01:12,268 - INFO - Epoch 8/12 (4.44s) - Train Loss: 0.2307, Val Loss: 0.4578
+2025-07-28 12:01:16,666 - INFO - Epoch 9/12 (4.40s) - Train Loss: 0.2091, Val Loss: 0.5867
+2025-07-28 12:01:21,093 - INFO - Epoch 10/12 (4.43s) - Train Loss: 0.2069, Val Loss: 0.4164
+2025-07-28 12:01:21,127 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_26/best_model.pth
+2025-07-28 12:01:25,493 - INFO - Epoch 11/12 (4.37s) - Train Loss: 0.1862, Val Loss: 0.4841
+2025-07-28 12:01:30,022 - INFO - Epoch 12/12 (4.42s) - Train Loss: 0.1783, Val Loss: 0.4925
+2025-07-28 12:01:30,022 - INFO - Training completed in 53.57 seconds
+2025-07-28 12:01:30,023 - INFO - Best val_f1_score: 0.8742
+2025-07-28 12:01:30,027 - INFO - Trial 26: F1=0.8742, Sensitivity=0.8328, Specificity=0.7759
+2025-07-28 12:01:30,314 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:01:30,315 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:01:30,315 - INFO - Starting training for 9 epochs
+2025-07-28 12:01:30,316 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:01:32,650 - INFO - Epoch 1/9 (2.33s) - Train Loss: 0.3588, Val Loss: 0.4187
+2025-07-28 12:01:32,666 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_27/best_model.pth
+2025-07-28 12:01:35,161 - INFO - Epoch 2/9 (2.38s) - Train Loss: 0.3073, Val Loss: 0.4091
+2025-07-28 12:01:35,175 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_27/best_model.pth
+2025-07-28 12:01:37,503 - INFO - Epoch 3/9 (2.33s) - Train Loss: 0.2887, Val Loss: 0.4572
+2025-07-28 12:01:39,818 - INFO - Epoch 4/9 (2.32s) - Train Loss: 0.2742, Val Loss: 0.5434
+2025-07-28 12:01:42,129 - INFO - Epoch 5/9 (2.31s) - Train Loss: 0.2643, Val Loss: 0.5941
+2025-07-28 12:01:44,441 - INFO - Epoch 6/9 (2.31s) - Train Loss: 0.2489, Val Loss: 0.4518
+2025-07-28 12:01:44,455 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_27/best_model.pth
+2025-07-28 12:01:46,865 - INFO - Epoch 7/9 (2.30s) - Train Loss: 0.2384, Val Loss: 0.4844
+2025-07-28 12:01:49,159 - INFO - Epoch 8/9 (2.29s) - Train Loss: 0.2257, Val Loss: 0.4530
+2025-07-28 12:01:51,475 - INFO - Epoch 9/9 (2.32s) - Train Loss: 0.2186, Val Loss: 0.4498
+2025-07-28 12:01:51,490 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_27/best_model.pth
+2025-07-28 12:01:51,490 - INFO - Training completed in 21.17 seconds
+2025-07-28 12:01:51,490 - INFO - Best val_f1_score: 0.8691
+2025-07-28 12:01:51,494 - INFO - Trial 27: F1=0.8691, Sensitivity=0.8908, Specificity=0.5074
+2025-07-28 12:01:51,797 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:01:51,798 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:01:51,798 - INFO - Starting training for 10 epochs
+2025-07-28 12:01:51,798 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:01:56,209 - INFO - Epoch 1/10 (4.41s) - Train Loss: 0.5251, Val Loss: 0.5521
+2025-07-28 12:01:56,249 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_28/best_model.pth
+2025-07-28 12:02:00,749 - INFO - Epoch 2/10 (4.38s) - Train Loss: 0.3942, Val Loss: 0.4894
+2025-07-28 12:02:00,783 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_28/best_model.pth
+2025-07-28 12:02:05,167 - INFO - Epoch 3/10 (4.38s) - Train Loss: 0.3451, Val Loss: 0.4970
+2025-07-28 12:02:09,596 - INFO - Epoch 4/10 (4.43s) - Train Loss: 0.3088, Val Loss: 0.5828
+2025-07-28 12:02:14,010 - INFO - Epoch 5/10 (4.41s) - Train Loss: 0.2838, Val Loss: 0.4989
+2025-07-28 12:02:18,396 - INFO - Epoch 6/10 (4.39s) - Train Loss: 0.2620, Val Loss: 0.4460
+2025-07-28 12:02:22,882 - INFO - Epoch 7/10 (4.38s) - Train Loss: 0.2429, Val Loss: 0.5819
+2025-07-28 12:02:27,293 - INFO - Epoch 8/10 (4.41s) - Train Loss: 0.2266, Val Loss: 0.8012
+2025-07-28 12:02:31,702 - INFO - Epoch 9/10 (4.41s) - Train Loss: 0.1966, Val Loss: 0.7372
+2025-07-28 12:02:36,171 - INFO - Epoch 10/10 (4.47s) - Train Loss: 0.1749, Val Loss: 0.5370
+2025-07-28 12:02:36,171 - INFO - Training completed in 44.37 seconds
+2025-07-28 12:02:36,171 - INFO - Best val_f1_score: 0.8770
+2025-07-28 12:02:36,176 - INFO - Trial 28: F1=0.8770, Sensitivity=0.9051, Specificity=0.5074
+2025-07-28 12:02:36,473 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:02:36,474 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:02:36,474 - INFO - Starting training for 12 epochs
+2025-07-28 12:02:36,474 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:02:38,817 - INFO - Epoch 1/12 (2.34s) - Train Loss: 0.3511, Val Loss: 0.4475
+2025-07-28 12:02:38,833 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_29/best_model.pth
+2025-07-28 12:02:41,273 - INFO - Epoch 2/12 (2.32s) - Train Loss: 0.2955, Val Loss: 0.4836
+2025-07-28 12:02:41,287 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_29/best_model.pth
+2025-07-28 12:02:43,602 - INFO - Epoch 3/12 (2.32s) - Train Loss: 0.2819, Val Loss: 0.5393
+2025-07-28 12:02:45,921 - INFO - Epoch 4/12 (2.32s) - Train Loss: 0.2733, Val Loss: 0.4317
+2025-07-28 12:02:48,250 - INFO - Epoch 5/12 (2.33s) - Train Loss: 0.2562, Val Loss: 0.5716
+2025-07-28 12:02:50,568 - INFO - Epoch 6/12 (2.32s) - Train Loss: 0.2446, Val Loss: 0.5109
+2025-07-28 12:02:53,012 - INFO - Epoch 7/12 (2.34s) - Train Loss: 0.2338, Val Loss: 0.6015
+2025-07-28 12:02:55,346 - INFO - Epoch 8/12 (2.33s) - Train Loss: 0.2270, Val Loss: 0.6215
+2025-07-28 12:02:57,664 - INFO - Epoch 9/12 (2.32s) - Train Loss: 0.1893, Val Loss: 0.4795
+2025-07-28 12:02:57,678 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_29/best_model.pth
+2025-07-28 12:02:59,996 - INFO - Epoch 10/12 (2.32s) - Train Loss: 0.1736, Val Loss: 0.5719
+2025-07-28 12:03:02,314 - INFO - Epoch 11/12 (2.32s) - Train Loss: 0.1627, Val Loss: 0.5612
+2025-07-28 12:03:04,754 - INFO - Epoch 12/12 (2.33s) - Train Loss: 0.1427, Val Loss: 0.5934
+2025-07-28 12:03:04,754 - INFO - Training completed in 28.28 seconds
+2025-07-28 12:03:04,754 - INFO - Best val_f1_score: 0.8520
+2025-07-28 12:03:04,758 - INFO - Trial 29: F1=0.8520, Sensitivity=0.7877, Specificity=0.8097
+2025-07-28 12:03:05,045 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:03:05,046 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:03:05,047 - INFO - Starting training for 15 epochs
+2025-07-28 12:03:05,047 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:03:07,395 - INFO - Epoch 1/15 (2.35s) - Train Loss: 0.3441, Val Loss: 0.5244
+2025-07-28 12:03:07,411 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_30/best_model.pth
+2025-07-28 12:03:09,838 - INFO - Epoch 2/15 (2.31s) - Train Loss: 0.3007, Val Loss: 0.4046
+2025-07-28 12:03:09,852 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_30/best_model.pth
+2025-07-28 12:03:12,154 - INFO - Epoch 3/15 (2.30s) - Train Loss: 0.2768, Val Loss: 0.4642
+2025-07-28 12:03:12,169 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_30/best_model.pth
+2025-07-28 12:03:14,516 - INFO - Epoch 4/15 (2.35s) - Train Loss: 0.2674, Val Loss: 0.4754
+2025-07-28 12:03:16,853 - INFO - Epoch 5/15 (2.34s) - Train Loss: 0.2584, Val Loss: 0.6607
+2025-07-28 12:03:19,190 - INFO - Epoch 6/15 (2.34s) - Train Loss: 0.2439, Val Loss: 0.4067
+2025-07-28 12:03:21,628 - INFO - Epoch 7/15 (2.33s) - Train Loss: 0.2454, Val Loss: 0.4221
+2025-07-28 12:03:23,943 - INFO - Epoch 8/15 (2.32s) - Train Loss: 0.2288, Val Loss: 0.4564
+2025-07-28 12:03:26,294 - INFO - Epoch 9/15 (2.35s) - Train Loss: 0.2249, Val Loss: 0.5375
+2025-07-28 12:03:28,626 - INFO - Epoch 10/15 (2.33s) - Train Loss: 0.1807, Val Loss: 0.4914
+2025-07-28 12:03:30,973 - INFO - Epoch 11/15 (2.35s) - Train Loss: 0.1563, Val Loss: 0.5463
+2025-07-28 12:03:33,392 - INFO - Epoch 12/15 (2.31s) - Train Loss: 0.1416, Val Loss: 0.4669
+2025-07-28 12:03:35,722 - INFO - Epoch 13/15 (2.33s) - Train Loss: 0.1272, Val Loss: 0.6056
+2025-07-28 12:03:35,723 - INFO - Early stopping after 13 epochs
+2025-07-28 12:03:35,723 - INFO - Training completed in 30.68 seconds
+2025-07-28 12:03:35,723 - INFO - Best val_f1_score: 0.9135
+2025-07-28 12:03:35,728 - INFO - Trial 30: F1=0.9135, Sensitivity=0.9051, Specificity=0.7632
+2025-07-28 12:03:36,013 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:03:36,014 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:03:36,014 - INFO - Starting training for 15 epochs
+2025-07-28 12:03:36,014 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:03:38,346 - INFO - Epoch 1/15 (2.33s) - Train Loss: 0.3455, Val Loss: 0.4872
+2025-07-28 12:03:38,363 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_31/best_model.pth
+2025-07-28 12:03:40,789 - INFO - Epoch 2/15 (2.31s) - Train Loss: 0.2960, Val Loss: 0.4271
+2025-07-28 12:03:40,803 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_31/best_model.pth
+2025-07-28 12:03:43,149 - INFO - Epoch 3/15 (2.35s) - Train Loss: 0.2810, Val Loss: 0.3994
+2025-07-28 12:03:45,689 - INFO - Epoch 4/15 (2.54s) - Train Loss: 0.2730, Val Loss: 0.4599
+2025-07-28 12:03:48,204 - INFO - Epoch 5/15 (2.51s) - Train Loss: 0.2638, Val Loss: 0.4216
+2025-07-28 12:03:50,595 - INFO - Epoch 6/15 (2.39s) - Train Loss: 0.2515, Val Loss: 0.5183
+2025-07-28 12:03:53,036 - INFO - Epoch 7/15 (2.33s) - Train Loss: 0.2527, Val Loss: 0.4640
+2025-07-28 12:03:55,378 - INFO - Epoch 8/15 (2.34s) - Train Loss: 0.2333, Val Loss: 0.4139
+2025-07-28 12:03:57,723 - INFO - Epoch 9/15 (2.34s) - Train Loss: 0.2060, Val Loss: 0.5386
+2025-07-28 12:04:00,060 - INFO - Epoch 10/15 (2.34s) - Train Loss: 0.1885, Val Loss: 0.7516
+2025-07-28 12:04:02,416 - INFO - Epoch 11/15 (2.36s) - Train Loss: 0.1792, Val Loss: 0.5296
+2025-07-28 12:04:05,050 - INFO - Epoch 12/15 (2.53s) - Train Loss: 0.1619, Val Loss: 0.5284
+2025-07-28 12:04:05,050 - INFO - Early stopping after 12 epochs
+2025-07-28 12:04:05,050 - INFO - Training completed in 29.04 seconds
+2025-07-28 12:04:05,050 - INFO - Best val_f1_score: 0.8928
+2025-07-28 12:04:05,056 - INFO - Trial 31: F1=0.8928, Sensitivity=0.8560, Specificity=0.8097
+2025-07-28 12:04:05,357 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:04:05,358 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:04:05,358 - INFO - Starting training for 14 epochs
+2025-07-28 12:04:05,359 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:04:07,955 - INFO - Epoch 1/14 (2.60s) - Train Loss: 0.3453, Val Loss: 0.6492
+2025-07-28 12:04:07,973 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_32/best_model.pth
+2025-07-28 12:04:10,707 - INFO - Epoch 2/14 (2.61s) - Train Loss: 0.2981, Val Loss: 0.4372
+2025-07-28 12:04:10,722 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_32/best_model.pth
+2025-07-28 12:04:13,326 - INFO - Epoch 3/14 (2.60s) - Train Loss: 0.2918, Val Loss: 0.4584
+2025-07-28 12:04:15,921 - INFO - Epoch 4/14 (2.59s) - Train Loss: 0.2788, Val Loss: 0.5967
+2025-07-28 12:04:18,514 - INFO - Epoch 5/14 (2.59s) - Train Loss: 0.2739, Val Loss: 0.7136
+2025-07-28 12:04:21,093 - INFO - Epoch 6/14 (2.58s) - Train Loss: 0.2653, Val Loss: 0.4251
+2025-07-28 12:04:23,755 - INFO - Epoch 7/14 (2.55s) - Train Loss: 0.2520, Val Loss: 0.4359
+2025-07-28 12:04:26,396 - INFO - Epoch 8/14 (2.64s) - Train Loss: 0.2472, Val Loss: 0.5267
+2025-07-28 12:04:28,822 - INFO - Epoch 9/14 (2.43s) - Train Loss: 0.2134, Val Loss: 0.4821
+2025-07-28 12:04:31,164 - INFO - Epoch 10/14 (2.34s) - Train Loss: 0.2093, Val Loss: 0.4787
+2025-07-28 12:04:33,522 - INFO - Epoch 11/14 (2.36s) - Train Loss: 0.1959, Val Loss: 0.5826
+2025-07-28 12:04:35,978 - INFO - Epoch 12/14 (2.35s) - Train Loss: 0.1950, Val Loss: 0.5925
+2025-07-28 12:04:35,978 - INFO - Early stopping after 12 epochs
+2025-07-28 12:04:35,978 - INFO - Training completed in 30.62 seconds
+2025-07-28 12:04:35,978 - INFO - Best val_f1_score: 0.8711
+2025-07-28 12:04:35,983 - INFO - Trial 32: F1=0.8711, Sensitivity=0.8027, Specificity=0.8753
+2025-07-28 12:04:36,271 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:04:36,272 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:04:36,272 - INFO - Starting training for 16 epochs
+2025-07-28 12:04:36,272 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:04:38,605 - INFO - Epoch 1/16 (2.33s) - Train Loss: 0.3467, Val Loss: 0.4788
+2025-07-28 12:04:38,622 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_33/best_model.pth
+2025-07-28 12:04:41,071 - INFO - Epoch 2/16 (2.33s) - Train Loss: 0.3000, Val Loss: 0.4289
+2025-07-28 12:04:41,085 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_33/best_model.pth
+2025-07-28 12:04:43,398 - INFO - Epoch 3/16 (2.31s) - Train Loss: 0.2824, Val Loss: 0.4185
+2025-07-28 12:04:43,413 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_33/best_model.pth
+2025-07-28 12:04:45,742 - INFO - Epoch 4/16 (2.33s) - Train Loss: 0.2668, Val Loss: 0.4736
+2025-07-28 12:04:48,045 - INFO - Epoch 5/16 (2.30s) - Train Loss: 0.2544, Val Loss: 0.3910
+2025-07-28 12:04:48,060 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_33/best_model.pth
+2025-07-28 12:04:50,382 - INFO - Epoch 6/16 (2.32s) - Train Loss: 0.2457, Val Loss: 0.4557
+2025-07-28 12:04:52,803 - INFO - Epoch 7/16 (2.31s) - Train Loss: 0.2384, Val Loss: 0.5556
+2025-07-28 12:04:55,115 - INFO - Epoch 8/16 (2.31s) - Train Loss: 0.2174, Val Loss: 0.7288
+2025-07-28 12:04:57,431 - INFO - Epoch 9/16 (2.32s) - Train Loss: 0.2167, Val Loss: 0.4802
+2025-07-28 12:04:59,730 - INFO - Epoch 10/16 (2.30s) - Train Loss: 0.1967, Val Loss: 0.6931
+2025-07-28 12:05:02,048 - INFO - Epoch 11/16 (2.32s) - Train Loss: 0.1759, Val Loss: 0.5804
+2025-07-28 12:05:04,474 - INFO - Epoch 12/16 (2.32s) - Train Loss: 0.1392, Val Loss: 0.6587
+2025-07-28 12:05:06,776 - INFO - Epoch 13/16 (2.30s) - Train Loss: 0.1235, Val Loss: 0.5445
+2025-07-28 12:05:09,077 - INFO - Epoch 14/16 (2.30s) - Train Loss: 0.1015, Val Loss: 0.7221
+2025-07-28 12:05:11,394 - INFO - Epoch 15/16 (2.32s) - Train Loss: 0.0878, Val Loss: 0.6339
+2025-07-28 12:05:11,394 - INFO - Early stopping after 15 epochs
+2025-07-28 12:05:11,394 - INFO - Training completed in 35.12 seconds
+2025-07-28 12:05:11,394 - INFO - Best val_f1_score: 0.8868
+2025-07-28 12:05:11,399 - INFO - Trial 33: F1=0.8868, Sensitivity=0.8423, Specificity=0.8224
+2025-07-28 12:05:11,687 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:05:11,688 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:05:11,688 - INFO - Starting training for 15 epochs
+2025-07-28 12:05:11,688 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:05:14,013 - INFO - Epoch 1/15 (2.32s) - Train Loss: 0.3652, Val Loss: 0.4034
+2025-07-28 12:05:14,030 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_34/best_model.pth
+2025-07-28 12:05:16,466 - INFO - Epoch 2/15 (2.32s) - Train Loss: 0.3306, Val Loss: 0.4718
+2025-07-28 12:05:18,772 - INFO - Epoch 3/15 (2.31s) - Train Loss: 0.3121, Val Loss: 0.6258
+2025-07-28 12:05:21,091 - INFO - Epoch 4/15 (2.32s) - Train Loss: 0.2910, Val Loss: 0.6138
+2025-07-28 12:05:23,397 - INFO - Epoch 5/15 (2.31s) - Train Loss: 0.2843, Val Loss: 0.4979
+2025-07-28 12:05:25,715 - INFO - Epoch 6/15 (2.32s) - Train Loss: 0.2764, Val Loss: 0.4227
+2025-07-28 12:05:28,134 - INFO - Epoch 7/15 (2.31s) - Train Loss: 0.2757, Val Loss: 0.6174
+2025-07-28 12:05:30,454 - INFO - Epoch 8/15 (2.32s) - Train Loss: 0.2533, Val Loss: 0.4511
+2025-07-28 12:05:32,807 - INFO - Epoch 9/15 (2.35s) - Train Loss: 0.2403, Val Loss: 0.4829
+2025-07-28 12:05:35,201 - INFO - Epoch 10/15 (2.39s) - Train Loss: 0.2375, Val Loss: 0.4842
+2025-07-28 12:05:37,586 - INFO - Epoch 11/15 (2.38s) - Train Loss: 0.2269, Val Loss: 0.4151
+2025-07-28 12:05:37,586 - INFO - Early stopping after 11 epochs
+2025-07-28 12:05:37,586 - INFO - Training completed in 25.90 seconds
+2025-07-28 12:05:37,586 - INFO - Best val_f1_score: 0.9053
+2025-07-28 12:05:37,591 - INFO - Trial 34: F1=0.9053, Sensitivity=0.8840, Specificity=0.7865
+2025-07-28 12:05:37,890 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:05:37,892 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:05:37,892 - INFO - Starting training for 8 epochs
+2025-07-28 12:05:37,892 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:05:40,345 - INFO - Epoch 1/8 (2.45s) - Train Loss: 0.3603, Val Loss: 0.6556
+2025-07-28 12:05:40,361 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_35/best_model.pth
+2025-07-28 12:05:42,869 - INFO - Epoch 2/8 (2.39s) - Train Loss: 0.3150, Val Loss: 0.5829
+2025-07-28 12:05:42,884 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_35/best_model.pth
+2025-07-28 12:05:45,223 - INFO - Epoch 3/8 (2.34s) - Train Loss: 0.3027, Val Loss: 0.7760
+2025-07-28 12:05:47,644 - INFO - Epoch 4/8 (2.42s) - Train Loss: 0.2887, Val Loss: 0.5979
+2025-07-28 12:05:50,001 - INFO - Epoch 5/8 (2.36s) - Train Loss: 0.2899, Val Loss: 0.4918
+2025-07-28 12:05:50,017 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_35/best_model.pth
+2025-07-28 12:05:52,368 - INFO - Epoch 6/8 (2.35s) - Train Loss: 0.2882, Val Loss: 0.4798
+2025-07-28 12:05:54,816 - INFO - Epoch 7/8 (2.34s) - Train Loss: 0.2790, Val Loss: 0.5337
+2025-07-28 12:05:57,143 - INFO - Epoch 8/8 (2.33s) - Train Loss: 0.2680, Val Loss: 0.6296
+2025-07-28 12:05:57,143 - INFO - Training completed in 19.25 seconds
+2025-07-28 12:05:57,143 - INFO - Best val_f1_score: 0.9075
+2025-07-28 12:05:57,148 - INFO - Trial 35: F1=0.9075, Sensitivity=0.9003, Specificity=0.7400
+2025-07-28 12:05:57,440 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:05:57,441 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:05:57,441 - INFO - Starting training for 8 epochs
+2025-07-28 12:05:57,442 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:05:59,788 - INFO - Epoch 1/8 (2.35s) - Train Loss: 0.3791, Val Loss: 0.3991
+2025-07-28 12:05:59,805 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_36/best_model.pth
+2025-07-28 12:06:02,241 - INFO - Epoch 2/8 (2.32s) - Train Loss: 0.3231, Val Loss: 0.5802
+2025-07-28 12:06:04,622 - INFO - Epoch 3/8 (2.38s) - Train Loss: 0.3115, Val Loss: 0.3848
+2025-07-28 12:06:06,982 - INFO - Epoch 4/8 (2.36s) - Train Loss: 0.3064, Val Loss: 0.5322
+2025-07-28 12:06:09,324 - INFO - Epoch 5/8 (2.34s) - Train Loss: 0.2919, Val Loss: 0.4971
+2025-07-28 12:06:11,684 - INFO - Epoch 6/8 (2.36s) - Train Loss: 0.2909, Val Loss: 0.4001
+2025-07-28 12:06:14,192 - INFO - Epoch 7/8 (2.40s) - Train Loss: 0.2849, Val Loss: 0.5166
+2025-07-28 12:06:16,556 - INFO - Epoch 8/8 (2.36s) - Train Loss: 0.2471, Val Loss: 0.4808
+2025-07-28 12:06:16,556 - INFO - Training completed in 19.11 seconds
+2025-07-28 12:06:16,556 - INFO - Best val_f1_score: 0.8976
+2025-07-28 12:06:16,561 - INFO - Trial 36: F1=0.8976, Sensitivity=0.8614, Specificity=0.8203
+2025-07-28 12:06:16,850 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:06:16,851 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:06:16,852 - INFO - Starting training for 8 epochs
+2025-07-28 12:06:16,852 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:06:19,202 - INFO - Epoch 1/8 (2.35s) - Train Loss: 0.3886, Val Loss: 0.4983
+2025-07-28 12:06:19,218 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_37/best_model.pth
+2025-07-28 12:06:21,682 - INFO - Epoch 2/8 (2.34s) - Train Loss: 0.3301, Val Loss: 0.5218
+2025-07-28 12:06:21,697 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_37/best_model.pth
+2025-07-28 12:06:24,062 - INFO - Epoch 3/8 (2.36s) - Train Loss: 0.3123, Val Loss: 0.4852
+2025-07-28 12:06:24,076 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_37/best_model.pth
+2025-07-28 12:06:26,427 - INFO - Epoch 4/8 (2.35s) - Train Loss: 0.3003, Val Loss: 0.4439
+2025-07-28 12:06:26,441 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_37/best_model.pth
+2025-07-28 12:06:28,784 - INFO - Epoch 5/8 (2.34s) - Train Loss: 0.3019, Val Loss: 0.4103
+2025-07-28 12:06:31,141 - INFO - Epoch 6/8 (2.36s) - Train Loss: 0.2918, Val Loss: 0.5883
+2025-07-28 12:06:33,609 - INFO - Epoch 7/8 (2.36s) - Train Loss: 0.2852, Val Loss: 0.4602
+2025-07-28 12:06:35,960 - INFO - Epoch 8/8 (2.35s) - Train Loss: 0.2728, Val Loss: 0.4190
+2025-07-28 12:06:35,961 - INFO - Training completed in 19.11 seconds
+2025-07-28 12:06:35,961 - INFO - Best val_f1_score: 0.8655
+2025-07-28 12:06:35,966 - INFO - Trial 37: F1=0.8655, Sensitivity=0.7993, Specificity=0.8520
+2025-07-28 12:06:36,257 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:06:36,258 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:06:36,258 - INFO - Starting training for 14 epochs
+2025-07-28 12:06:36,258 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:06:38,663 - INFO - Epoch 1/14 (2.40s) - Train Loss: 0.3598, Val Loss: 0.4302
+2025-07-28 12:06:38,679 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_38/best_model.pth
+2025-07-28 12:06:41,157 - INFO - Epoch 2/14 (2.36s) - Train Loss: 0.3191, Val Loss: 0.4169
+2025-07-28 12:06:43,758 - INFO - Epoch 3/14 (2.60s) - Train Loss: 0.2992, Val Loss: 0.7055
+2025-07-28 12:06:46,151 - INFO - Epoch 4/14 (2.39s) - Train Loss: 0.2949, Val Loss: 0.5108
+2025-07-28 12:06:48,539 - INFO - Epoch 5/14 (2.39s) - Train Loss: 0.2820, Val Loss: 0.6029
+2025-07-28 12:06:50,904 - INFO - Epoch 6/14 (2.36s) - Train Loss: 0.2781, Val Loss: 0.7128
+2025-07-28 12:06:53,385 - INFO - Epoch 7/14 (2.37s) - Train Loss: 0.2730, Val Loss: 0.5030
+2025-07-28 12:06:55,760 - INFO - Epoch 8/14 (2.37s) - Train Loss: 0.2489, Val Loss: 0.5888
+2025-07-28 12:06:58,103 - INFO - Epoch 9/14 (2.34s) - Train Loss: 0.2500, Val Loss: 0.4055
+2025-07-28 12:06:58,117 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_38/best_model.pth
+2025-07-28 12:07:00,457 - INFO - Epoch 10/14 (2.34s) - Train Loss: 0.2430, Val Loss: 0.4976
+2025-07-28 12:07:02,784 - INFO - Epoch 11/14 (2.33s) - Train Loss: 0.2384, Val Loss: 0.4894
+2025-07-28 12:07:05,218 - INFO - Epoch 12/14 (2.33s) - Train Loss: 0.2333, Val Loss: 0.4189
+2025-07-28 12:07:07,526 - INFO - Epoch 13/14 (2.31s) - Train Loss: 0.2348, Val Loss: 0.4728
+2025-07-28 12:07:09,842 - INFO - Epoch 14/14 (2.32s) - Train Loss: 0.2299, Val Loss: 0.5435
+2025-07-28 12:07:09,842 - INFO - Training completed in 33.58 seconds
+2025-07-28 12:07:09,842 - INFO - Best val_f1_score: 0.8797
+2025-07-28 12:07:09,847 - INFO - Trial 38: F1=0.8797, Sensitivity=0.8259, Specificity=0.8393
+2025-07-28 12:07:10,135 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:07:10,136 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:07:10,137 - INFO - Starting training for 7 epochs
+2025-07-28 12:07:10,137 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:07:12,461 - INFO - Epoch 1/7 (2.32s) - Train Loss: 0.3547, Val Loss: 0.4160
+2025-07-28 12:07:12,477 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_39/best_model.pth
+2025-07-28 12:07:14,927 - INFO - Epoch 2/7 (2.33s) - Train Loss: 0.3199, Val Loss: 0.6128
+2025-07-28 12:07:17,236 - INFO - Epoch 3/7 (2.31s) - Train Loss: 0.2953, Val Loss: 0.4973
+2025-07-28 12:07:19,541 - INFO - Epoch 4/7 (2.31s) - Train Loss: 0.2917, Val Loss: 0.4206
+2025-07-28 12:07:21,863 - INFO - Epoch 5/7 (2.32s) - Train Loss: 0.2754, Val Loss: 0.3931
+2025-07-28 12:07:21,878 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_39/best_model.pth
+2025-07-28 12:07:24,185 - INFO - Epoch 6/7 (2.31s) - Train Loss: 0.2726, Val Loss: 0.5837
+2025-07-28 12:07:26,619 - INFO - Epoch 7/7 (2.33s) - Train Loss: 0.2693, Val Loss: 0.4433
+2025-07-28 12:07:26,620 - INFO - Training completed in 16.48 seconds
+2025-07-28 12:07:26,620 - INFO - Best val_f1_score: 0.8832
+2025-07-28 12:07:26,624 - INFO - Trial 39: F1=0.8832, Sensitivity=0.8307, Specificity=0.8436
+2025-07-28 12:07:26,915 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:07:26,916 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:07:26,916 - INFO - Starting training for 13 epochs
+2025-07-28 12:07:26,916 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:07:29,245 - INFO - Epoch 1/13 (2.33s) - Train Loss: 0.3534, Val Loss: 0.4888
+2025-07-28 12:07:29,261 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_40/best_model.pth
+2025-07-28 12:07:31,703 - INFO - Epoch 2/13 (2.32s) - Train Loss: 0.3163, Val Loss: 0.4125
+2025-07-28 12:07:31,717 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_40/best_model.pth
+2025-07-28 12:07:34,025 - INFO - Epoch 3/13 (2.31s) - Train Loss: 0.3003, Val Loss: 0.5790
+2025-07-28 12:07:36,324 - INFO - Epoch 4/13 (2.30s) - Train Loss: 0.2837, Val Loss: 0.5651
+2025-07-28 12:07:38,640 - INFO - Epoch 5/13 (2.31s) - Train Loss: 0.2706, Val Loss: 0.4162
+2025-07-28 12:07:40,952 - INFO - Epoch 6/13 (2.31s) - Train Loss: 0.2683, Val Loss: 0.6210
+2025-07-28 12:07:43,371 - INFO - Epoch 7/13 (2.31s) - Train Loss: 0.2566, Val Loss: 0.4111
+2025-07-28 12:07:45,685 - INFO - Epoch 8/13 (2.31s) - Train Loss: 0.2507, Val Loss: 0.5287
+2025-07-28 12:07:48,010 - INFO - Epoch 9/13 (2.33s) - Train Loss: 0.2210, Val Loss: 0.4594
+2025-07-28 12:07:50,318 - INFO - Epoch 10/13 (2.31s) - Train Loss: 0.2176, Val Loss: 0.4957
+2025-07-28 12:07:52,620 - INFO - Epoch 11/13 (2.30s) - Train Loss: 0.2121, Val Loss: 0.5256
+2025-07-28 12:07:55,045 - INFO - Epoch 12/13 (2.32s) - Train Loss: 0.2125, Val Loss: 0.5901
+2025-07-28 12:07:55,045 - INFO - Early stopping after 12 epochs
+2025-07-28 12:07:55,045 - INFO - Training completed in 28.13 seconds
+2025-07-28 12:07:55,045 - INFO - Best val_f1_score: 0.8827
+2025-07-28 12:07:55,050 - INFO - Trial 40: F1=0.8827, Sensitivity=0.8266, Specificity=0.8562
+2025-07-28 12:07:55,342 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:07:55,343 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:07:55,343 - INFO - Starting training for 8 epochs
+2025-07-28 12:07:55,343 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:07:57,667 - INFO - Epoch 1/8 (2.32s) - Train Loss: 0.3691, Val Loss: 0.4288
+2025-07-28 12:07:57,683 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_41/best_model.pth
+2025-07-28 12:08:00,107 - INFO - Epoch 2/8 (2.31s) - Train Loss: 0.3143, Val Loss: 0.4637
+2025-07-28 12:08:02,422 - INFO - Epoch 3/8 (2.31s) - Train Loss: 0.2993, Val Loss: 0.5614
+2025-07-28 12:08:04,728 - INFO - Epoch 4/8 (2.31s) - Train Loss: 0.2855, Val Loss: 0.4571
+2025-07-28 12:08:07,049 - INFO - Epoch 5/8 (2.32s) - Train Loss: 0.2887, Val Loss: 0.5061
+2025-07-28 12:08:09,363 - INFO - Epoch 6/8 (2.31s) - Train Loss: 0.2732, Val Loss: 0.5003
+2025-07-28 12:08:11,789 - INFO - Epoch 7/8 (2.32s) - Train Loss: 0.2585, Val Loss: 0.6493
+2025-07-28 12:08:14,095 - INFO - Epoch 8/8 (2.31s) - Train Loss: 0.2374, Val Loss: 0.4587
+2025-07-28 12:08:14,095 - INFO - Training completed in 18.75 seconds
+2025-07-28 12:08:14,096 - INFO - Best val_f1_score: 0.8782
+2025-07-28 12:08:14,100 - INFO - Trial 41: F1=0.8782, Sensitivity=0.8198, Specificity=0.8541
+2025-07-28 12:08:14,392 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:08:14,393 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:08:14,393 - INFO - Starting training for 9 epochs
+2025-07-28 12:08:14,393 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:08:16,711 - INFO - Epoch 1/9 (2.32s) - Train Loss: 0.3665, Val Loss: 0.5956
+2025-07-28 12:08:16,728 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_42/best_model.pth
+2025-07-28 12:08:19,149 - INFO - Epoch 2/9 (2.30s) - Train Loss: 0.3155, Val Loss: 0.5317
+2025-07-28 12:08:21,461 - INFO - Epoch 3/9 (2.31s) - Train Loss: 0.2991, Val Loss: 0.5525
+2025-07-28 12:08:23,768 - INFO - Epoch 4/9 (2.31s) - Train Loss: 0.2916, Val Loss: 0.6414
+2025-07-28 12:08:26,070 - INFO - Epoch 5/9 (2.30s) - Train Loss: 0.2843, Val Loss: 0.7380
+2025-07-28 12:08:28,372 - INFO - Epoch 6/9 (2.30s) - Train Loss: 0.2770, Val Loss: 0.4959
+2025-07-28 12:08:28,386 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_42/best_model.pth
+2025-07-28 12:08:30,805 - INFO - Epoch 7/9 (2.31s) - Train Loss: 0.2729, Val Loss: 0.5716
+2025-07-28 12:08:33,109 - INFO - Epoch 8/9 (2.30s) - Train Loss: 0.2549, Val Loss: 0.6377
+2025-07-28 12:08:35,414 - INFO - Epoch 9/9 (2.30s) - Train Loss: 0.2724, Val Loss: 0.4672
+2025-07-28 12:08:35,428 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_42/best_model.pth
+2025-07-28 12:08:35,428 - INFO - Training completed in 21.03 seconds
+2025-07-28 12:08:35,428 - INFO - Best val_f1_score: 0.8684
+2025-07-28 12:08:35,432 - INFO - Trial 42: F1=0.8684, Sensitivity=0.8130, Specificity=0.8161
+2025-07-28 12:08:35,723 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:08:35,725 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:08:35,725 - INFO - Starting training for 11 epochs
+2025-07-28 12:08:35,725 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:08:38,042 - INFO - Epoch 1/11 (2.32s) - Train Loss: 0.3810, Val Loss: 0.8351
+2025-07-28 12:08:38,059 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_43/best_model.pth
+2025-07-28 12:08:40,481 - INFO - Epoch 2/11 (2.30s) - Train Loss: 0.3255, Val Loss: 0.4298
+2025-07-28 12:08:40,496 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_43/best_model.pth
+2025-07-28 12:08:42,794 - INFO - Epoch 3/11 (2.30s) - Train Loss: 0.3080, Val Loss: 0.8144
+2025-07-28 12:08:45,099 - INFO - Epoch 4/11 (2.30s) - Train Loss: 0.3036, Val Loss: 0.6122
+2025-07-28 12:08:47,404 - INFO - Epoch 5/11 (2.30s) - Train Loss: 0.2964, Val Loss: 0.3662
+2025-07-28 12:08:49,711 - INFO - Epoch 6/11 (2.31s) - Train Loss: 0.2793, Val Loss: 0.5110
+2025-07-28 12:08:52,124 - INFO - Epoch 7/11 (2.31s) - Train Loss: 0.2798, Val Loss: 0.4804
+2025-07-28 12:08:54,420 - INFO - Epoch 8/11 (2.30s) - Train Loss: 0.2630, Val Loss: 0.4501
+2025-07-28 12:08:56,771 - INFO - Epoch 9/11 (2.35s) - Train Loss: 0.2519, Val Loss: 0.4531
+2025-07-28 12:08:59,233 - INFO - Epoch 10/11 (2.46s) - Train Loss: 0.2439, Val Loss: 0.5403
+2025-07-28 12:09:01,610 - INFO - Epoch 11/11 (2.38s) - Train Loss: 0.2482, Val Loss: 0.5185
+2025-07-28 12:09:01,721 - INFO - Training completed in 26.00 seconds
+2025-07-28 12:09:01,721 - INFO - Best val_f1_score: 0.8989
+2025-07-28 12:09:01,726 - INFO - Trial 43: F1=0.8989, Sensitivity=0.8799, Specificity=0.7590
+2025-07-28 12:09:02,017 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:09:02,018 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:09:02,018 - INFO - Starting training for 8 epochs
+2025-07-28 12:09:02,018 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:09:04,412 - INFO - Epoch 1/8 (2.39s) - Train Loss: 0.3991, Val Loss: 0.3952
+2025-07-28 12:09:04,430 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_44/best_model.pth
+2025-07-28 12:09:06,931 - INFO - Epoch 2/8 (2.38s) - Train Loss: 0.3300, Val Loss: 0.3299
+2025-07-28 12:09:06,945 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_44/best_model.pth
+2025-07-28 12:09:09,325 - INFO - Epoch 3/8 (2.38s) - Train Loss: 0.3052, Val Loss: 0.4071
+2025-07-28 12:09:11,672 - INFO - Epoch 4/8 (2.35s) - Train Loss: 0.2984, Val Loss: 0.6738
+2025-07-28 12:09:13,999 - INFO - Epoch 5/8 (2.33s) - Train Loss: 0.2855, Val Loss: 0.9551
+2025-07-28 12:09:16,355 - INFO - Epoch 6/8 (2.36s) - Train Loss: 0.2888, Val Loss: 0.4362
+2025-07-28 12:09:18,791 - INFO - Epoch 7/8 (2.33s) - Train Loss: 0.2865, Val Loss: 0.4215
+2025-07-28 12:09:21,142 - INFO - Epoch 8/8 (2.35s) - Train Loss: 0.2751, Val Loss: 0.5350
+2025-07-28 12:09:21,142 - INFO - Training completed in 19.12 seconds
+2025-07-28 12:09:21,142 - INFO - Best val_f1_score: 0.9081
+2025-07-28 12:09:21,147 - INFO - Trial 44: F1=0.9081, Sensitivity=0.8805, Specificity=0.8182
+2025-07-28 12:09:21,447 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:09:21,448 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:09:21,448 - INFO - Starting training for 7 epochs
+2025-07-28 12:09:21,448 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:09:23,782 - INFO - Epoch 1/7 (2.33s) - Train Loss: 0.4045, Val Loss: 0.3790
+2025-07-28 12:09:23,799 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_45/best_model.pth
+2025-07-28 12:09:26,292 - INFO - Epoch 2/7 (2.37s) - Train Loss: 0.3469, Val Loss: 0.3792
+2025-07-28 12:09:28,679 - INFO - Epoch 3/7 (2.39s) - Train Loss: 0.3184, Val Loss: 0.5920
+2025-07-28 12:09:31,200 - INFO - Epoch 4/7 (2.52s) - Train Loss: 0.3093, Val Loss: 0.4594
+2025-07-28 12:09:33,722 - INFO - Epoch 5/7 (2.52s) - Train Loss: 0.3012, Val Loss: 0.4195
+2025-07-28 12:09:36,297 - INFO - Epoch 6/7 (2.57s) - Train Loss: 0.2901, Val Loss: 0.4987
+2025-07-28 12:09:38,726 - INFO - Epoch 7/7 (2.32s) - Train Loss: 0.2844, Val Loss: 0.3636
+2025-07-28 12:09:38,740 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_45/best_model.pth
+2025-07-28 12:09:38,740 - INFO - Training completed in 17.29 seconds
+2025-07-28 12:09:38,740 - INFO - Best val_f1_score: 0.8870
+2025-07-28 12:09:38,745 - INFO - Trial 45: F1=0.8870, Sensitivity=0.8382, Specificity=0.8393
+2025-07-28 12:09:39,038 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:09:39,039 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:09:39,039 - INFO - Starting training for 8 epochs
+2025-07-28 12:09:39,039 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:09:41,401 - INFO - Epoch 1/8 (2.36s) - Train Loss: 0.4020, Val Loss: 0.4308
+2025-07-28 12:09:41,418 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_46/best_model.pth
+2025-07-28 12:09:43,855 - INFO - Epoch 2/8 (2.32s) - Train Loss: 0.3316, Val Loss: 0.5722
+2025-07-28 12:09:43,869 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_46/best_model.pth
+2025-07-28 12:09:46,199 - INFO - Epoch 3/8 (2.33s) - Train Loss: 0.3139, Val Loss: 0.4646
+2025-07-28 12:09:48,510 - INFO - Epoch 4/8 (2.31s) - Train Loss: 0.2966, Val Loss: 0.5858
+2025-07-28 12:09:50,821 - INFO - Epoch 5/8 (2.31s) - Train Loss: 0.3029, Val Loss: 0.4362
+2025-07-28 12:09:53,142 - INFO - Epoch 6/8 (2.32s) - Train Loss: 0.2856, Val Loss: 0.5744
+2025-07-28 12:09:55,569 - INFO - Epoch 7/8 (2.32s) - Train Loss: 0.2832, Val Loss: 0.3690
+2025-07-28 12:09:55,583 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_46/best_model.pth
+2025-07-28 12:09:57,893 - INFO - Epoch 8/8 (2.31s) - Train Loss: 0.2729, Val Loss: 0.7244
+2025-07-28 12:09:57,893 - INFO - Training completed in 18.85 seconds
+2025-07-28 12:09:57,893 - INFO - Best val_f1_score: 0.8936
+2025-07-28 12:09:57,898 - INFO - Trial 46: F1=0.8936, Sensitivity=0.8539, Specificity=0.8224
+2025-07-28 12:09:58,191 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:09:58,193 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:09:58,193 - INFO - Starting training for 6 epochs
+2025-07-28 12:09:58,193 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:10:00,514 - INFO - Epoch 1/6 (2.32s) - Train Loss: 0.3620, Val Loss: 0.7147
+2025-07-28 12:10:00,531 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_47/best_model.pth
+2025-07-28 12:10:02,963 - INFO - Epoch 2/6 (2.31s) - Train Loss: 0.3150, Val Loss: 0.7609
+2025-07-28 12:10:05,277 - INFO - Epoch 3/6 (2.31s) - Train Loss: 0.2960, Val Loss: 0.5280
+2025-07-28 12:10:05,291 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_47/best_model.pth
+2025-07-28 12:10:07,597 - INFO - Epoch 4/6 (2.31s) - Train Loss: 0.2803, Val Loss: 0.4459
+2025-07-28 12:10:09,912 - INFO - Epoch 5/6 (2.31s) - Train Loss: 0.2765, Val Loss: 0.5774
+2025-07-28 12:10:12,221 - INFO - Epoch 6/6 (2.31s) - Train Loss: 0.2688, Val Loss: 0.6518
+2025-07-28 12:10:12,328 - INFO - Training completed in 14.13 seconds
+2025-07-28 12:10:12,328 - INFO - Best val_f1_score: 0.8491
+2025-07-28 12:10:12,333 - INFO - Trial 47: F1=0.8491, Sensitivity=0.7761, Specificity=0.8393
+2025-07-28 12:10:12,624 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:10:12,625 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:10:12,625 - INFO - Starting training for 8 epochs
+2025-07-28 12:10:12,625 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:10:15,015 - INFO - Epoch 1/8 (2.39s) - Train Loss: 0.3551, Val Loss: 0.3902
+2025-07-28 12:10:15,031 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_48/best_model.pth
+2025-07-28 12:10:17,460 - INFO - Epoch 2/8 (2.31s) - Train Loss: 0.3004, Val Loss: 0.4109
+2025-07-28 12:10:19,759 - INFO - Epoch 3/8 (2.30s) - Train Loss: 0.2788, Val Loss: 0.5235
+2025-07-28 12:10:22,069 - INFO - Epoch 4/8 (2.31s) - Train Loss: 0.2727, Val Loss: 0.6220
+2025-07-28 12:10:24,377 - INFO - Epoch 5/8 (2.31s) - Train Loss: 0.2615, Val Loss: 0.4572
+2025-07-28 12:10:26,697 - INFO - Epoch 6/8 (2.32s) - Train Loss: 0.2442, Val Loss: 0.5434
+2025-07-28 12:10:29,121 - INFO - Epoch 7/8 (2.32s) - Train Loss: 0.2370, Val Loss: 0.4922
+2025-07-28 12:10:31,443 - INFO - Epoch 8/8 (2.32s) - Train Loss: 0.1998, Val Loss: 0.5430
+2025-07-28 12:10:31,443 - INFO - Training completed in 18.82 seconds
+2025-07-28 12:10:31,443 - INFO - Best val_f1_score: 0.8991
+2025-07-28 12:10:31,448 - INFO - Trial 48: F1=0.8991, Sensitivity=0.8642, Specificity=0.8203
+2025-07-28 12:10:31,740 - INFO - M4 Pro MPS optimizations enabled
+2025-07-28 12:10:31,742 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-28 12:10:31,742 - INFO - Starting training for 12 epochs
+2025-07-28 12:10:31,742 - INFO - Monitoring metric: val_f1_score
+2025-07-28 12:10:34,069 - INFO - Epoch 1/12 (2.33s) - Train Loss: 0.3533, Val Loss: 0.4708
+2025-07-28 12:10:34,085 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_49/best_model.pth
+2025-07-28 12:10:36,514 - INFO - Epoch 2/12 (2.31s) - Train Loss: 0.3030, Val Loss: 0.4598
+2025-07-28 12:10:36,528 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_49/best_model.pth
+2025-07-28 12:10:38,833 - INFO - Epoch 3/12 (2.30s) - Train Loss: 0.2900, Val Loss: 0.3913
+2025-07-28 12:10:38,847 - INFO - Best model saved to optimization_temp/cnn_optimization_20250728_114257/trial_49/best_model.pth
+2025-07-28 12:10:41,157 - INFO - Epoch 4/12 (2.31s) - Train Loss: 0.2812, Val Loss: 0.4966
+2025-07-28 12:10:43,463 - INFO - Epoch 5/12 (2.31s) - Train Loss: 0.2713, Val Loss: 0.4351
+2025-07-28 12:10:45,773 - INFO - Epoch 6/12 (2.31s) - Train Loss: 0.2632, Val Loss: 0.6738
+2025-07-28 12:10:48,201 - INFO - Epoch 7/12 (2.32s) - Train Loss: 0.2546, Val Loss: 0.4921
+2025-07-28 12:10:50,511 - INFO - Epoch 8/12 (2.31s) - Train Loss: 0.2481, Val Loss: 0.4523
+2025-07-28 12:10:52,819 - INFO - Epoch 9/12 (2.31s) - Train Loss: 0.2385, Val Loss: 0.5040
+2025-07-28 12:10:55,121 - INFO - Epoch 10/12 (2.30s) - Train Loss: 0.2158, Val Loss: 0.5949
+2025-07-28 12:10:57,437 - INFO - Epoch 11/12 (2.32s) - Train Loss: 0.1969, Val Loss: 0.5090
+2025-07-28 12:10:59,856 - INFO - Epoch 12/12 (2.31s) - Train Loss: 0.1944, Val Loss: 0.5428
+2025-07-28 12:10:59,856 - INFO - Training completed in 28.11 seconds
+2025-07-28 12:10:59,856 - INFO - Best val_f1_score: 0.9044
+2025-07-28 12:10:59,861 - INFO - Trial 49: F1=0.9044, Sensitivity=0.8819, Specificity=0.7886
+2025-07-28 12:10:59,976 - INFO - Optimization completed. Best F1-score: 0.9135
+2025-07-28 12:10:59,977 - INFO - Best parameters: {'learning_rate': 0.0005873415541669079, 'dropout': 0.12827100784180542, 'epochs': 19, 'architecture': 'compact', 'batch_size': 48}
+2025-07-28 12:10:59,978 - INFO - Finished study: cnn_optimization_20250728_114257
+2025-07-28 12:16:39,472 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:39] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:41,472 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:41] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:43,471 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:43] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:45,471 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:45] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:47,472 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:47] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:49,472 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:49] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:51,473 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:51] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:53,472 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:53] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:55,474 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:55] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:57,474 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:57] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:16:59,473 - INFO - 127.0.0.1 - - [28/Jul/2025 12:16:59] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:01,476 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:01] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:03,476 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:03] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:05,477 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:05] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:07,479 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:07] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:09,480 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:09] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:11,482 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:11] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:13,479 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:13] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:15,482 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:15] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:17,483 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:17] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:19,484 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:19] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:21,485 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:21] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:23,487 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:23] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:25,485 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:25] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:27,487 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:27] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:29,486 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:29] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-28 12:17:31,487 - INFO - 127.0.0.1 - - [28/Jul/2025 12:17:31] "GET /api/optimization_status HTTP/1.1" 200 -

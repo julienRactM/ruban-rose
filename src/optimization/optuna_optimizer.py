@@ -339,6 +339,10 @@ class OptunaOptimizer:
                 
         except Exception as e:
             self.logger.error(f"Trial {trial.number} failed: {str(e)}")
+            self.logger.error(f"Trial {trial.number} parameters: {params}")
+            # Log stack trace for debugging
+            import traceback
+            self.logger.error(f"Trial {trial.number} stack trace: {traceback.format_exc()}")
             # Cleanup memory on failure
             self._cleanup_trial_memory()
             return 0.0
