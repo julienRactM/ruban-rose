@@ -335,15 +335,16 @@ def run_optimization_background(model_type, optimization_mode, data_config=None)
             })
             add_optimization_log(message)
         
-        def trial_completion_callback(trial_id, params, f1_score, sensitivity, specificity):
+        def trial_completion_callback(trial_id, params, f1_score, sensitivity, specificity, accuracy=0.0, mcc=0.0):
             result = OptimizationResult(
                 trial_id=trial_id,
                 model_type=model_type,
                 parameters=params,
                 f1_score=f1_score,
-                sensitivity=sensitivity,
+                sensitivity=sensitivity,  # Recall is same as sensitivity in medical context
                 specificity=specificity,
-                accuracy=0.0,  # Will be updated if available
+                accuracy=accuracy,
+                mcc=mcc,  # Matthews Correlation Coefficient
                 training_time=0.0,  # Will be updated if available
                 epochs_completed=params.get('epochs', 0),
                 timestamp=datetime.now().isoformat(),
@@ -993,6 +994,7 @@ def create_templates_at_path(templates_dir):
                     <div id="optimization-progress-container" style="display: none;">
                         <div>Model: <span id="optimization-current-model">-</span></div>
                         <div>Trial: <span id="optimization-current-trial">0</span>/<span id="optimization-total-trials">0</span></div>
+                        <div>Best Recall: <span id="optimization-best-recall">0.0000</span></div>
                         <div>Best F1-Score: <span id="optimization-best-f1">0.0000</span></div>
                         <div class="progress">
                             <div class="progress-bar" id="optimization-progress-bar" style="width: 0%;"></div>
@@ -1004,6 +1006,14 @@ def create_templates_at_path(templates_dir):
                                     No parameters found yet...
                                 </div>
                             </details>
+                        </div>
+                    </div>
+                    
+                    <!-- Optuna Trial Results -->
+                    <div id="optuna-results-container" style="margin-top: 1rem; display: none;">
+                        <h4>Trial Results</h4>
+                        <div id="optuna-results-table" style="max-height: 300px; overflow-y: auto;">
+                            <p>Trial results will appear here during optimization...</p>
                         </div>
                     </div>
                 </div>
@@ -1226,7 +1236,7 @@ def create_templates_at_path(templates_dir):
                 return;
             }
 
-            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>F1-Score</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
+            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>Recall</th><th>F1-Score</th><th>MCC</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
             
             for (const [modelName, result] of Object.entries(results)) {
                 const status = result.completed ? '✅ Completed' : '❌ Failed';
@@ -1235,10 +1245,59 @@ def create_templates_at_path(templates_dir):
                 html += `<tr>
                     <td><strong>${modelName.toUpperCase()}</strong></td>
                     <td>${status}</td>
+                    <td>${(metrics.recall || metrics.sensitivity || 0).toFixed(4)}</td>
                     <td>${(metrics.f1_score || 0).toFixed(4)}</td>
+                    <td>${(metrics.mcc || 0).toFixed(4)}</td>
                     <td>${(metrics.sensitivity || 0).toFixed(4)}</td>
                     <td>${(metrics.specificity || 0).toFixed(4)}</td>
                     <td>${(metrics.accuracy || 0).toFixed(4)}</td>
+                </tr>`;
+            }
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function updateOptunaResults(trialResults) {
+            const container = document.getElementById('optuna-results-table');
+            const resultsContainer = document.getElementById('optuna-results-container');
+            
+            if (!trialResults || trialResults.length === 0) {
+                container.innerHTML = '<p>Trial results will appear here during optimization...</p>';
+                resultsContainer.style.display = 'none';
+                return;
+            }
+
+            // Show the results container
+            resultsContainer.style.display = 'block';
+            
+            let html = '<table class="metrics-table"><thead><tr><th>Trial</th><th>Recall</th><th>F1-Score</th><th>MCC</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th><th>Parameters</th></tr></thead><tbody>';
+            
+            // Sort trials by F1-score descending to show best results first
+            const sortedTrials = [...trialResults].sort((a, b) => (b.f1_score || 0) - (a.f1_score || 0));
+            
+            for (const trial of sortedTrials) {
+                const recall = trial.sensitivity || 0; // Recall is same as sensitivity in medical context
+                const isTopResult = trial.f1_score === Math.max(...trialResults.map(t => t.f1_score || 0));
+                const rowClass = isTopResult ? 'style="background-color: #2c5530;"' : '';
+                
+                // Summarize parameters for display
+                const paramSummary = trial.parameters ? 
+                    Object.entries(trial.parameters)
+                        .slice(0, 3) // Show first 3 parameters
+                        .map(([key, value]) => `${key}: ${value}`)
+                        .join(', ') + (Object.keys(trial.parameters).length > 3 ? '...' : '')
+                    : 'N/A';
+                
+                html += `<tr ${rowClass}>
+                    <td><strong>#${trial.trial_id}</strong></td>
+                    <td>${recall.toFixed(4)}</td>
+                    <td>${(trial.f1_score || 0).toFixed(4)}</td>
+                    <td>${(trial.mcc || 0).toFixed(4)}</td>
+                    <td>${(trial.sensitivity || 0).toFixed(4)}</td>
+                    <td>${(trial.specificity || 0).toFixed(4)}</td>
+                    <td>${(trial.accuracy || 0).toFixed(4)}</td>
+                    <td title="${JSON.stringify(trial.parameters || {}, null, 2)}" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: help;">${paramSummary}</td>
                 </tr>`;
             }
             
@@ -1543,6 +1602,11 @@ def create_templates_at_path(templates_dir):
                     document.getElementById('optimization-current-model').textContent = status.current_model || '-';
                     document.getElementById('optimization-current-trial').textContent = status.current_trial || 0;
                     document.getElementById('optimization-total-trials').textContent = status.total_trials || 0;
+                    
+                    // Calculate best recall from trial results
+                    const bestRecall = status.trial_results && status.trial_results.length > 0 ? 
+                        Math.max(...status.trial_results.map(t => t.sensitivity || 0)) : 0;
+                    document.getElementById('optimization-best-recall').textContent = bestRecall.toFixed(4);
                     document.getElementById('optimization-best-f1').textContent = (status.best_f1_score || 0).toFixed(4);
                     
                     const progress = status.total_trials > 0 ? (status.current_trial / status.total_trials) * 100 : 0;
@@ -1552,6 +1616,9 @@ def create_templates_at_path(templates_dir):
                     if (status.best_params && Object.keys(status.best_params).length > 0) {
                         document.getElementById('optimization-best-params').textContent = JSON.stringify(status.best_params, null, 2);
                     }
+                    
+                    // Update trial results table
+                    updateOptunaResults(status.trial_results || []);
                     
                     // Show snake game during optimization
                     snakeGameCard.style.display = 'block';

@@ -42,21 +42,26 @@ class MedicalResNet(nn.Module):
         self.num_classes = num_classes
         self.fine_tune_layers = fine_tune_layers
         
-        # Load base ResNet model
-        if architecture == 'resnet18':
-            self.backbone = models.resnet18(pretrained=pretrained)
-            feature_dim = 512
-        elif architecture == 'resnet34':
-            self.backbone = models.resnet34(pretrained=pretrained)
-            feature_dim = 512
-        elif architecture == 'resnet50':
-            self.backbone = models.resnet50(pretrained=pretrained)
-            feature_dim = 2048
-        elif architecture == 'resnet101':
-            self.backbone = models.resnet101(pretrained=pretrained)
-            feature_dim = 2048
-        else:
-            raise ValueError(f"Unsupported architecture: {architecture}")
+        # Load base ResNet model with error handling
+        try:
+            if architecture == 'resnet18':
+                self.backbone = models.resnet18(pretrained=pretrained)
+                feature_dim = 512
+            elif architecture == 'resnet34':
+                self.backbone = models.resnet34(pretrained=pretrained)
+                feature_dim = 512
+            elif architecture == 'resnet50':
+                self.backbone = models.resnet50(pretrained=pretrained)
+                feature_dim = 2048
+            elif architecture == 'resnet101':
+                self.backbone = models.resnet101(pretrained=pretrained)
+                feature_dim = 2048
+            else:
+                valid_archs = ['resnet18', 'resnet34', 'resnet50', 'resnet101']
+                raise ValueError(f"Unsupported architecture '{architecture}'. Valid options: {valid_archs}")
+        except Exception as e:
+            print(f"Error loading ResNet backbone '{architecture}' with pretrained={pretrained}: {str(e)}")
+            raise
         
         # Modify input layer for 50x50 images if needed
         # Standard ImageNet input is 224x224, we have 50x50
@@ -71,11 +76,7 @@ class MedicalResNet(nn.Module):
             with torch.no_grad():
                 self.backbone.conv1.weight.copy_(original_conv1.weight)
         
-        # Freeze layers if specified
-        if fine_tune_layers >= 0:
-            self._freeze_layers(fine_tune_layers)
-        
-        # Replace classifier with medical-specific head
+        # Replace classifier with medical-specific head FIRST
         self.backbone.fc = nn.Identity()  # Remove original classifier
         
         # Medical-specific classifier head
@@ -93,6 +94,10 @@ class MedicalResNet(nn.Module):
         
         # Initialize classifier weights
         self._initialize_classifier()
+        
+        # Freeze layers if specified (AFTER classifier is created)
+        if fine_tune_layers >= 0:
+            self._freeze_layers(fine_tune_layers)
     
     def _freeze_layers(self, fine_tune_layers: int):
         """Freeze backbone layers except the last N layers"""
@@ -329,31 +334,63 @@ def create_resnet_model(config: Dict) -> nn.Module:
     Returns:
         ResNet model instance
     """
-    resnet_config = config.get('models', {}).get('resnet', {})
-    
-    architecture = resnet_config.get('architecture', 'resnet18')
-    pretrained = resnet_config.get('pretrained', True)
-    fine_tune_layers = resnet_config.get('fine_tune_layers', -1)
-    dropout_rate = resnet_config.get('dropout_rate', 0.5)
-    
-    if architecture in ['resnet18', 'resnet34', 'resnet50', 'resnet101']:
-        model = MedicalResNet(
-            architecture=architecture,
-            num_classes=2,
-            pretrained=pretrained,
-            fine_tune_layers=fine_tune_layers,
-            dropout_rate=dropout_rate,
-            config=resnet_config
-        )
-    elif architecture == 'lightweight':
-        model = LightweightResNet(
-            num_classes=2,
-            dropout_rate=dropout_rate
-        )
-    else:
-        raise ValueError(f"Unknown ResNet architecture: {architecture}")
-    
-    return model
+    try:
+        resnet_config = config.get('models', {}).get('resnet', {})
+        
+        architecture = resnet_config.get('architecture', 'resnet18')
+        pretrained = resnet_config.get('pretrained', True)
+        fine_tune_layers = resnet_config.get('fine_tune_layers', -1)
+        dropout_rate = resnet_config.get('dropout_rate', 0.5)
+        
+        # Validate parameters
+        valid_architectures = ['resnet18', 'resnet34', 'resnet50', 'resnet101', 'lightweight']
+        if architecture not in valid_architectures:
+            raise ValueError(f"Invalid ResNet architecture '{architecture}'. Valid options: {valid_architectures}")
+        
+        if not isinstance(pretrained, bool):
+            raise ValueError(f"pretrained must be boolean, got {type(pretrained)}: {pretrained}")
+        
+        if not isinstance(fine_tune_layers, int) or fine_tune_layers < -1 or fine_tune_layers > 10:
+            raise ValueError(f"fine_tune_layers must be integer between -1 and 10, got: {fine_tune_layers}")
+        
+        if not isinstance(dropout_rate, (int, float)) or dropout_rate < 0 or dropout_rate > 1:
+            raise ValueError(f"dropout_rate must be float between 0 and 1, got: {dropout_rate}")
+        
+        # Create model based on architecture
+        if architecture in ['resnet18', 'resnet34', 'resnet50', 'resnet101']:
+            # For lightweight, pretrained must be False since it's a custom architecture
+            if architecture == 'lightweight' and pretrained:
+                print(f"Warning: Setting pretrained=False for lightweight architecture")
+                pretrained = False
+                
+            model = MedicalResNet(
+                architecture=architecture,
+                num_classes=2,
+                pretrained=pretrained,
+                fine_tune_layers=fine_tune_layers,
+                dropout_rate=dropout_rate,
+                config=resnet_config
+            )
+        elif architecture == 'lightweight':
+            # Lightweight model doesn't use pretrained weights or fine_tune_layers
+            if pretrained:
+                print(f"Warning: Ignoring pretrained=True for lightweight ResNet (not supported)")
+            if fine_tune_layers != -1:
+                print(f"Warning: Ignoring fine_tune_layers={fine_tune_layers} for lightweight ResNet (not applicable)")
+                
+            model = LightweightResNet(
+                num_classes=2,
+                dropout_rate=dropout_rate
+            )
+        else:
+            raise ValueError(f"Unknown ResNet architecture: {architecture}")
+        
+        return model
+        
+    except Exception as e:
+        print(f"Error creating ResNet model: {str(e)}")
+        print(f"ResNet config: {resnet_config}")
+        raise
 
 
 def test_resnet_model():

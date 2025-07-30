@@ -38,91 +38,6 @@
         .stat-box { text-align: center; padding: 1rem; background: #ecf0f1; border-radius: 8px; }
         .stat-number { font-size: 2rem; font-weight: bold; color: #2c3e50; }
         .stat-label { color: #7f8c8d; margin-top: 0.5rem; }
-        
-        /* Stylish Toggle Switch for Training Mode */
-        .training-mode-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin: 1rem 0;
-        }
-        
-        .optuna-toggle {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-        }
-        
-        .optuna-toggle:hover {
-            background: #e9ecef;
-            border-color: #dee2e6;
-        }
-        
-        .optuna-toggle.active {
-            background: linear-gradient(135deg, #6c757d 0%, #52796f 100%);
-            border-color: #52796f;
-            color: white;
-            box-shadow: 0 4px 12px rgba(82, 121, 111, 0.3);
-        }
-        
-        .optuna-checkbox {
-            position: relative;
-            width: 22px;
-            height: 22px;
-            border: 2px solid #adb5bd;
-            border-radius: 4px;
-            background: #fff;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .optuna-toggle.active .optuna-checkbox {
-            background: #fff;
-            border-color: #fff;
-        }
-        
-        .optuna-checkbox::after {
-            content: '✓';
-            font-size: 14px;
-            font-weight: bold;
-            color: #52796f;
-            opacity: 0;
-            transform: scale(0);
-            transition: all 0.2s ease;
-        }
-        
-        .optuna-toggle.active .optuna-checkbox::after {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        .optuna-label {
-            font-weight: 600;
-            font-size: 1rem;
-            color: #6c757d;
-            transition: color 0.3s ease;
-        }
-        
-        .optuna-toggle.active .optuna-label {
-            color: #fff;
-        }
-        
-        .mode-description {
-            font-size: 0.85rem;
-            color: #6c757d;
-            margin-top: 0.25rem;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -307,14 +222,18 @@
             </div>
             
             <div style="margin-top: 1rem; text-align: center;">
-                <!-- Stylish Training Mode Toggle -->
-                <div class="training-mode-toggle">
-                    <div class="optuna-toggle" id="optuna-toggle" onclick="toggleOptuna()">
-                        <div class="optuna-checkbox"></div>
-                        <div>
-                            <div class="optuna-label">Optuna</div>
-                            <div class="mode-description">Hyperparameter Optimization</div>
-                        </div>
+                <!-- Training Mode Selection -->
+                <div class="param-group" style="margin-bottom: 1rem;">
+                    <label style="text-align: center; margin-bottom: 0.5rem; font-size: 1.1rem;">Training Mode</label>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="training-mode" value="manual" checked onchange="toggleTrainingMode()">
+                            <span>Manual Training</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="training-mode" value="optimization" onchange="toggleTrainingMode()">
+                            <span>Hyperparameter Optimization</span>
+                        </label>
                     </div>
                 </div>
 
@@ -404,6 +323,7 @@
                     <div id="optimization-progress-container" style="display: none;">
                         <div>Model: <span id="optimization-current-model">-</span></div>
                         <div>Trial: <span id="optimization-current-trial">0</span>/<span id="optimization-total-trials">0</span></div>
+                        <div>Best Recall: <span id="optimization-best-recall">0.0000</span></div>
                         <div>Best F1-Score: <span id="optimization-best-f1">0.0000</span></div>
                         <div class="progress">
                             <div class="progress-bar" id="optimization-progress-bar" style="width: 0%;"></div>
@@ -415,6 +335,14 @@
                                     No parameters found yet...
                                 </div>
                             </details>
+                        </div>
+                    </div>
+                    
+                    <!-- Optuna Trial Results -->
+                    <div id="optuna-results-container" style="margin-top: 1rem; display: none;">
+                        <h4>Trial Results</h4>
+                        <div id="optuna-results-table" style="max-height: 300px; overflow-y: auto;">
+                            <p>Trial results will appear here during optimization...</p>
                         </div>
                     </div>
                 </div>
@@ -637,7 +565,7 @@
                 return;
             }
 
-            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>F1-Score</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
+            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>Recall</th><th>F1-Score</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
             
             for (const [modelName, result] of Object.entries(results)) {
                 const status = result.completed ? '✅ Completed' : '❌ Failed';
@@ -646,10 +574,57 @@
                 html += `<tr>
                     <td><strong>${modelName.toUpperCase()}</strong></td>
                     <td>${status}</td>
+                    <td>${(metrics.recall || metrics.sensitivity || 0).toFixed(4)}</td>
                     <td>${(metrics.f1_score || 0).toFixed(4)}</td>
                     <td>${(metrics.sensitivity || 0).toFixed(4)}</td>
                     <td>${(metrics.specificity || 0).toFixed(4)}</td>
                     <td>${(metrics.accuracy || 0).toFixed(4)}</td>
+                </tr>`;
+            }
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function updateOptunaResults(trialResults) {
+            const container = document.getElementById('optuna-results-table');
+            const resultsContainer = document.getElementById('optuna-results-container');
+            
+            if (!trialResults || trialResults.length === 0) {
+                container.innerHTML = '<p>Trial results will appear here during optimization...</p>';
+                resultsContainer.style.display = 'none';
+                return;
+            }
+
+            // Show the results container
+            resultsContainer.style.display = 'block';
+            
+            let html = '<table class="metrics-table"><thead><tr><th>Trial</th><th>Recall</th><th>F1-Score</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th><th>Parameters</th></tr></thead><tbody>';
+            
+            // Sort trials by F1-score descending to show best results first
+            const sortedTrials = [...trialResults].sort((a, b) => (b.f1_score || 0) - (a.f1_score || 0));
+            
+            for (const trial of sortedTrials) {
+                const recall = trial.sensitivity || 0; // Recall is same as sensitivity in medical context
+                const isTopResult = trial.f1_score === Math.max(...trialResults.map(t => t.f1_score || 0));
+                const rowClass = isTopResult ? 'style="background-color: #2c5530;"' : '';
+                
+                // Summarize parameters for display
+                const paramSummary = trial.parameters ? 
+                    Object.entries(trial.parameters)
+                        .slice(0, 3) // Show first 3 parameters
+                        .map(([key, value]) => `${key}: ${value}`)
+                        .join(', ') + (Object.keys(trial.parameters).length > 3 ? '...' : '')
+                    : 'N/A';
+                
+                html += `<tr ${rowClass}>
+                    <td><strong>#${trial.trial_id}</strong></td>
+                    <td>${recall.toFixed(4)}</td>
+                    <td>${(trial.f1_score || 0).toFixed(4)}</td>
+                    <td>${(trial.sensitivity || 0).toFixed(4)}</td>
+                    <td>${(trial.specificity || 0).toFixed(4)}</td>
+                    <td>${(trial.accuracy || 0).toFixed(4)}</td>
+                    <td title="${JSON.stringify(trial.parameters || {}, null, 2)}" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: help;">${paramSummary}</td>
                 </tr>`;
             }
             
@@ -809,39 +784,23 @@
             document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Stylish Toggle Functions
-        function toggleOptuna() {
-            const optunaToggle = document.getElementById('optuna-toggle');
-            const isActive = optunaToggle.classList.contains('active');
+        // Optimization Functions
+        function toggleTrainingMode() {
+            const manualMode = document.querySelector('input[name="training-mode"][value="manual"]').checked;
+            const optimizationMode = document.querySelector('input[name="training-mode"][value="optimization"]').checked;
             
-            if (isActive) {
-                // Switch to Manual Training
-                optunaToggle.classList.remove('active');
-                currentTrainingMode = 'manual';
-            } else {
-                // Switch to Optuna Optimization
-                optunaToggle.classList.add('active');
-                currentTrainingMode = 'optimization';
-            }
+            currentTrainingMode = manualMode ? 'manual' : 'optimization';
             
-            // Toggle control visibility with smooth transitions
-            const manualControls = document.getElementById('manual-training-controls');
-            const optimizationControls = document.getElementById('optimization-controls');
-            
-            if (currentTrainingMode === 'manual') {
-                manualControls.style.display = 'block';
-                optimizationControls.style.display = 'none';
-            } else {
-                manualControls.style.display = 'none';
-                optimizationControls.style.display = 'block';
-            }
+            // Toggle control visibility
+            document.getElementById('manual-training-controls').style.display = manualMode ? 'block' : 'none';
+            document.getElementById('optimization-controls').style.display = optimizationMode ? 'block' : 'none';
             
             // Toggle status panel visibility
-            document.getElementById('training-status-panel').style.display = currentTrainingMode === 'manual' ? 'block' : 'none';
-            document.getElementById('optimization-status-panel').style.display = currentTrainingMode === 'optimization' ? 'block' : 'none';
+            document.getElementById('training-status-panel').style.display = manualMode ? 'block' : 'none';
+            document.getElementById('optimization-status-panel').style.display = optimizationMode ? 'block' : 'none';
             
             // Update header
-            document.getElementById('status-header').textContent = currentTrainingMode === 'manual' ? '📈 Training Status' : '🔍 Optimization Status';
+            document.getElementById('status-header').textContent = manualMode ? '📈 Training Status' : '🔍 Optimization Status';
         }
 
         function startOptimization() {
@@ -970,6 +929,11 @@
                     document.getElementById('optimization-current-model').textContent = status.current_model || '-';
                     document.getElementById('optimization-current-trial').textContent = status.current_trial || 0;
                     document.getElementById('optimization-total-trials').textContent = status.total_trials || 0;
+                    
+                    // Calculate best recall from trial results
+                    const bestRecall = status.trial_results && status.trial_results.length > 0 ? 
+                        Math.max(...status.trial_results.map(t => t.sensitivity || 0)) : 0;
+                    document.getElementById('optimization-best-recall').textContent = bestRecall.toFixed(4);
                     document.getElementById('optimization-best-f1').textContent = (status.best_f1_score || 0).toFixed(4);
                     
                     const progress = status.total_trials > 0 ? (status.current_trial / status.total_trials) * 100 : 0;
@@ -979,6 +943,9 @@
                     if (status.best_params && Object.keys(status.best_params).length > 0) {
                         document.getElementById('optimization-best-params').textContent = JSON.stringify(status.best_params, null, 2);
                     }
+                    
+                    // Update trial results table
+                    updateOptunaResults(status.trial_results || []);
                     
                     // Show snake game during optimization
                     snakeGameCard.style.display = 'block';

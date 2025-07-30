@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 import torch.backends.mps
 import numpy as np
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, matthews_corrcoef, confusion_matrix
 from typing import Dict, List, Optional, Tuple
 import time
 import os
@@ -19,6 +19,8 @@ import yaml
 import logging
 import platform
 import gc
+import pickle
+import json
 
 
 class MedicalMetrics:
@@ -54,26 +56,45 @@ class MedicalMetrics:
         except:
             auc_roc = 0.0
         
+        # Matthews Correlation Coefficient (MCC) - excellent for medical imaging
+        mcc = matthews_corrcoef(y_true, y_pred)
+        
+        # Confusion Matrix for detailed analysis
+        cm = confusion_matrix(y_true, y_pred)
+        
         return {
             'accuracy': accuracy,
             'sensitivity': sensitivity,  # Cancer detection rate
+            'recall': sensitivity,  # Same as sensitivity - cancer detection rate
             'specificity': specificity,  # Healthy detection rate
             'precision_cancer': precision_cancer,
             'precision_healthy': precision_healthy,
             'f1_score': f1_cancer,  # Primary F1 for cancer detection
             'f1_macro': f1_macro,
-            'auc_roc': auc_roc
+            'auc_roc': auc_roc,
+            'mcc': mcc,  # Matthews Correlation Coefficient
+            'confusion_matrix': cm.tolist()  # Convert to list for JSON serialization
         }
     
     @staticmethod
     def print_metrics(metrics: Dict[str, float], prefix: str = ""):
         """Print metrics in medical format"""
         print(f"\n{prefix} Medical Metrics:")
+        print(f"  Recall (Cancer Detection): {metrics['recall']:.4f}")
         print(f"  Sensitivity (Cancer Detection): {metrics['sensitivity']:.4f}")
         print(f"  Specificity (Healthy Detection): {metrics['specificity']:.4f}")  
         print(f"  F1-Score (Cancer): {metrics['f1_score']:.4f}")
+        print(f"  Matthews Correlation Coefficient: {metrics['mcc']:.4f}")
         print(f"  Accuracy: {metrics['accuracy']:.4f}")
         print(f"  AUC-ROC: {metrics['auc_roc']:.4f}")
+        
+        # Print confusion matrix in a readable format
+        if 'confusion_matrix' in metrics:
+            cm = metrics['confusion_matrix']
+            print(f"  Confusion Matrix:")
+            print(f"    Predicted:  [Cancer] [Healthy]")
+            print(f"    Cancer:     [{cm[0][0]:6d}] [{cm[0][1]:7d}]")
+            print(f"    Healthy:    [{cm[1][0]:6d}] [{cm[1][1]:7d}]")
 
 
 class BreastCancerTrainer:
@@ -111,7 +132,29 @@ class BreastCancerTrainer:
         
         # Training configuration
         training_config = config.get('training', {})
-        self.epochs = config.get('models', {}).get('cnn', {}).get('epochs', 50)  # Default fallback
+        
+        # Fix: Determine epochs based on actual model type, not just CNN
+        # Also check if epochs is directly provided in the config (from Optuna optimization)
+        model_configs = config.get('models', {})
+        
+        # First priority: directly specified epochs in model config (from Optuna)
+        model_type_name = str(type(model)).lower()
+        if ('resnet' in model_type_name) or hasattr(model, 'backbone'):
+            # ResNet model (both MedicalResNet and LightweightResNet)
+            resnet_config = model_configs.get('resnet', {})
+            self.epochs = resnet_config.get('epochs', 30)
+        elif 'vit' in model_type_name or 'transformer' in model_type_name:
+            # Vision Transformer model
+            vit_config = model_configs.get('vision_transformer', {})
+            self.epochs = vit_config.get('epochs', 20)
+        else:
+            # CNN or other models
+            cnn_config = model_configs.get('cnn', {})
+            self.epochs = cnn_config.get('epochs', 50)
+        
+        # Log epochs configuration for debugging
+        print(f"Training epochs set to: {self.epochs} for model type: {type(model).__name__}")
+        
         self.patience = training_config.get('patience', 10)
         self.monitor_metric = training_config.get('monitor_metric', 'val_f1_score')
         self.save_best_only = training_config.get('save_best_only', True)
@@ -455,9 +498,108 @@ class BreastCancerTrainer:
             checkpoint_path = self.save_dir / 'best_model.pth'
             torch.save(checkpoint, checkpoint_path)
             self.logger.info(f"Best model saved to {checkpoint_path}")
+            
+            # Save detailed predictions and analysis for best model
+            self._save_best_model_analysis(metrics)
         else:
             checkpoint_path = self.save_dir / f'checkpoint_epoch_{epoch+1}.pth'
             torch.save(checkpoint, checkpoint_path)
+    
+    def _save_best_model_analysis(self, metrics: Dict[str, float]):
+        """Save detailed prediction analysis for the best model"""
+        try:
+            # Generate predictions on validation set for detailed analysis
+            predictions_data = self._generate_detailed_predictions()
+            
+            # Create analysis directory
+            analysis_dir = self.save_dir / 'best_model_analysis'
+            analysis_dir.mkdir(exist_ok=True)
+            
+            # Save prediction matrix and probabilities
+            prediction_matrix_path = analysis_dir / 'prediction_matrix.pkl'
+            with open(prediction_matrix_path, 'wb') as f:
+                pickle.dump(predictions_data, f)
+            
+            # Save metrics and confusion matrix as JSON
+            metrics_path = analysis_dir / 'detailed_metrics.json'
+            # Convert numpy arrays to lists for JSON serialization
+            json_metrics = {}
+            for key, value in metrics.items():
+                if isinstance(value, np.ndarray):
+                    json_metrics[key] = value.tolist()
+                else:
+                    json_metrics[key] = float(value) if isinstance(value, (np.float32, np.float64)) else value
+            
+            with open(metrics_path, 'w') as f:
+                json.dump(json_metrics, f, indent=2)
+            
+            # Save confusion matrix visualization data
+            cm_data = {
+                'confusion_matrix': metrics['confusion_matrix'],
+                'class_names': ['Cancer (0)', 'Healthy (1)'],
+                'model_type': str(type(self.model).__name__),
+                'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')
+            }
+            
+            cm_path = analysis_dir / 'confusion_matrix_data.json'
+            with open(cm_path, 'w') as f:
+                json.dump(cm_data, f, indent=2)
+            
+            self.logger.info(f"Best model analysis saved to {analysis_dir}")
+            
+        except Exception as e:
+            self.logger.error(f"Failed to save best model analysis: {str(e)}")
+    
+    def _generate_detailed_predictions(self) -> Dict:
+        """Generate detailed predictions on validation set"""
+        self.model.eval()
+        all_predictions = []
+        all_labels = []
+        all_probabilities = []
+        all_image_paths = []
+        
+        with torch.no_grad():
+            for batch_idx, (data, target) in enumerate(self.val_loader):
+                data, target = data.to(self.device), target.to(self.device)
+                
+                # Get model output
+                output = self.model(data)
+                probabilities = torch.softmax(output, dim=1)
+                predictions = torch.argmax(output, dim=1)
+                
+                # Convert to CPU and store
+                batch_predictions = predictions.cpu().numpy()
+                batch_labels = target.cpu().numpy()
+                batch_probabilities = probabilities.cpu().numpy()
+                
+                all_predictions.extend(batch_predictions)
+                all_labels.extend(batch_labels)
+                all_probabilities.extend(batch_probabilities)
+                
+                # Try to get image paths if available in dataset
+                if hasattr(self.val_loader.dataset, 'get_sample_info'):
+                    for i in range(len(batch_predictions)):
+                        sample_idx = batch_idx * self.val_loader.batch_size + i
+                        if sample_idx < len(self.val_loader.dataset):
+                            info = self.val_loader.dataset.get_sample_info(sample_idx)
+                            all_image_paths.append(info.get('path', f'sample_{sample_idx}'))
+                        else:
+                            all_image_paths.append(f'sample_{sample_idx}')
+                else:
+                    # Fallback to indices
+                    for i in range(len(batch_predictions)):
+                        sample_idx = batch_idx * self.val_loader.batch_size + i
+                        all_image_paths.append(f'sample_{sample_idx}')
+        
+        return {
+            'predictions': np.array(all_predictions),
+            'true_labels': np.array(all_labels),
+            'probabilities': np.array(all_probabilities),
+            'image_paths': all_image_paths,
+            'model_type': str(type(self.model).__name__),
+            'timestamp': time.strftime('%Y-%m-%d %H:%M:%S'),
+            'validation_samples': len(all_predictions)
+        }
 
 
 def load_model_checkpoint(checkpoint_path: str, model: nn.Module, device: torch.device) -> Dict:

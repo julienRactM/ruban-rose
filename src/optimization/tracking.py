@@ -26,10 +26,11 @@ class OptimizationResult:
     sensitivity: float
     specificity: float
     accuracy: float
-    training_time: float
-    epochs_completed: int
-    timestamp: str
-    study_name: str
+    mcc: float = 0.0  # Matthews Correlation Coefficient
+    training_time: float = 0.0
+    epochs_completed: int = 0
+    timestamp: str = ""
+    study_name: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -93,12 +94,19 @@ class OptimizationTracker:
                 sensitivity REAL NOT NULL,
                 specificity REAL NOT NULL,
                 accuracy REAL NOT NULL,
+                mcc REAL DEFAULT 0.0,
                 training_time REAL NOT NULL,
                 epochs_completed INTEGER NOT NULL,
                 timestamp TEXT NOT NULL,
                 UNIQUE(trial_id, study_name)
             )
         ''')
+        
+        # Add MCC column if it doesn't exist (for backward compatibility)
+        cursor.execute("PRAGMA table_info(trials)")
+        columns = [column[1] for column in cursor.fetchall()]
+        if 'mcc' not in columns:
+            cursor.execute('ALTER TABLE trials ADD COLUMN mcc REAL DEFAULT 0.0')
         
         # Create studies table
         cursor.execute('''
@@ -156,13 +164,13 @@ class OptimizationTracker:
         cursor.execute('''
             INSERT OR REPLACE INTO trials 
             (trial_id, study_name, model_type, parameters, f1_score, 
-             sensitivity, specificity, accuracy, training_time, 
+             sensitivity, specificity, accuracy, mcc, training_time, 
              epochs_completed, timestamp)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             result.trial_id, result.study_name, result.model_type, 
             json.dumps(result.parameters), result.f1_score,
-            result.sensitivity, result.specificity, result.accuracy,
+            result.sensitivity, result.specificity, result.accuracy, result.mcc,
             result.training_time, result.epochs_completed, result.timestamp
         ))
         

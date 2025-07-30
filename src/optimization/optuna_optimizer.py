@@ -223,43 +223,99 @@ class OptunaOptimizer:
                 return [16, 32, 64]
         
         # M4 Pro optimized batch sizes based on unified memory
+        # Reduced maximum batch sizes to prevent memory issues during optimization
         if model_type == 'vision_transformer':
-            # ViT benefits from larger batches on M4 Pro
-            return [32, 64, 128, 192]
+            # ViT benefits from larger batches on M4 Pro, but keep reasonable limits
+            return [32, 64, 128]
         elif model_type == 'resnet':
-            # ResNet can handle very large batches efficiently
-            return [64, 128, 256, 384]
+            # ResNet can handle large batches efficiently, but cap at 256 for optimization stability
+            if self.unified_memory_gb >= 36:  # 38GB M4 Pro
+                return [64, 128, 192, 256]
+            else:
+                return [32, 64, 128]
         else:  # CNN
             # Custom CNN moderate batch sizes
-            return [48, 96, 192, 256]
+            return [48, 96, 128, 192]
     
     def _create_model_with_params(self, params: Dict[str, Any]):
         """Create model with suggested parameters"""
-        # Update config with suggested parameters
-        config = self.base_config.copy()
-        
-        # Update model-specific config
-        if self.model_type not in config.get('models', {}):
-            config['models'] = config.get('models', {})
-            config['models'][self.model_type] = {}
+        try:
+            self.logger.info(f"Creating {self.model_type} model with parameters: {params}")
             
-        config['models'][self.model_type].update(params)
-        
-        # Update data config if batch_size is suggested
-        if 'batch_size' in params:
-            config['data']['batch_size'] = params['batch_size']
-        
-        # Create model
-        if self.model_type == 'cnn':
-            model = create_cnn_model(config)
-        elif self.model_type == 'resnet':
-            model = create_resnet_model(config)
-        elif self.model_type == 'vision_transformer':
-            model = create_vit_model(config)
-        else:
-            raise ValueError(f"Unknown model type: {self.model_type}")
+            # Update config with suggested parameters
+            config = self.base_config.copy()
             
-        return model, config
+            # Update model-specific config
+            if self.model_type not in config.get('models', {}):
+                config['models'] = config.get('models', {})
+                config['models'][self.model_type] = {}
+                
+            config['models'][self.model_type].update(params)
+            
+            # Update data config if batch_size is suggested
+            if 'batch_size' in params:
+                config['data']['batch_size'] = params['batch_size']
+                self.logger.debug(f"Updated batch_size to {params['batch_size']}")
+            
+            # Log the final config for this model
+            self.logger.debug(f"Final config for {self.model_type}: {config['models'][self.model_type]}")
+            
+            # Create model with detailed error catching
+            model = None
+            if self.model_type == 'cnn':
+                self.logger.debug("Creating CNN model")
+                model = create_cnn_model(config)
+            elif self.model_type == 'resnet':
+                self.logger.debug("Creating ResNet model")
+                # Additional validation for ResNet parameters
+                resnet_config = config['models']['resnet']
+                architecture = resnet_config.get('architecture', 'resnet18')
+                pretrained = resnet_config.get('pretrained', True)
+                fine_tune_layers = resnet_config.get('fine_tune_layers', -1)
+                
+                self.logger.debug(f"ResNet parameters - architecture: {architecture}, pretrained: {pretrained}, fine_tune_layers: {fine_tune_layers}")
+                
+                # Validate architecture
+                valid_architectures = ['resnet18', 'resnet34', 'resnet50', 'resnet101', 'lightweight']
+                if architecture not in valid_architectures:
+                    raise ValueError(f"Invalid ResNet architecture '{architecture}'. Valid options: {valid_architectures}")
+                
+                # Validate fine_tune_layers
+                if not isinstance(fine_tune_layers, int) or fine_tune_layers < -1 or fine_tune_layers > 10:
+                    raise ValueError(f"Invalid fine_tune_layers '{fine_tune_layers}'. Must be integer between -1 and 10")
+                
+                model = create_resnet_model(config)
+                self.logger.debug("ResNet model created successfully")
+                
+            elif self.model_type == 'vision_transformer':
+                self.logger.debug("Creating Vision Transformer model")
+                model = create_vit_model(config)
+            else:
+                raise ValueError(f"Unknown model type: {self.model_type}")
+            
+            if model is None:
+                raise RuntimeError(f"Model creation failed - returned None for {self.model_type}")
+            
+            # Move model to device
+            model = model.to(self.device)
+            self.logger.debug(f"Model moved to device: {self.device}")
+            
+            # Validate model can process expected input
+            test_input = torch.randn(1, 3, 50, 50).to(self.device)
+            with torch.no_grad():
+                test_output = model(test_input)
+                if test_output.shape[1] != 2:
+                    raise RuntimeError(f"Model output shape incorrect: {test_output.shape}, expected (1, 2)")
+            
+            self.logger.info(f"{self.model_type} model created and validated successfully")
+            return model, config
+            
+        except Exception as e:
+            self.logger.error(f"Failed to create {self.model_type} model with parameters {params}")
+            self.logger.error(f"Error: {str(e)}")
+            import traceback
+            self.logger.error(f"Stack trace: {traceback.format_exc()}")
+            raise
     
     def _objective(self, trial: optuna.Trial) -> float:
         """
@@ -319,6 +375,7 @@ class OptunaOptimizer:
                 trial.set_user_attr('sensitivity', sensitivity)
                 trial.set_user_attr('specificity', specificity)
                 trial.set_user_attr('accuracy', best_metrics['accuracy'])
+                trial.set_user_attr('mcc', best_metrics.get('mcc', 0.0))
                 trial.set_user_attr('epochs_completed', len(history['val_metrics']))
                 
                 # Update best tracking
@@ -326,9 +383,10 @@ class OptunaOptimizer:
                     self.best_value = f1_score
                     self.best_params = params.copy()
                 
-                # Trial callback
+                # Trial callback (successful case)
                 if self.trial_callback:
-                    self.trial_callback(trial.number + 1, params, f1_score, sensitivity, specificity)
+                    self.trial_callback(trial.number + 1, params, f1_score, sensitivity, specificity, 
+                                      best_metrics['accuracy'], best_metrics.get('mcc', 0.0))
                 
                 self.logger.info(f"Trial {trial.number}: F1={f1_score:.4f}, Sensitivity={sensitivity:.4f}, Specificity={specificity:.4f}")
                 
@@ -338,13 +396,50 @@ class OptunaOptimizer:
                 return 0.0
                 
         except Exception as e:
-            self.logger.error(f"Trial {trial.number} failed: {str(e)}")
-            self.logger.error(f"Trial {trial.number} parameters: {params}")
-            # Log stack trace for debugging
+            error_msg = f"Trial {trial.number} failed with error: {str(e)}"
+            self.logger.error(error_msg)
+            self.logger.error(f"Trial {trial.number} parameters that caused failure: {params}")
+            
+            # Log detailed stack trace for debugging
             import traceback
-            self.logger.error(f"Trial {trial.number} stack trace: {traceback.format_exc()}")
+            stack_trace = traceback.format_exc()
+            self.logger.error(f"Trial {trial.number} full stack trace:\n{stack_trace}")
+            
+            # Set user attributes for analysis
+            trial.set_user_attr('error_type', type(e).__name__)
+            trial.set_user_attr('error_message', str(e))
+            trial.set_user_attr('failed_stage', 'unknown')
+            
+            # Try to determine which stage failed
+            if 'model creation' in str(e).lower() or 'create' in str(e).lower():
+                trial.set_user_attr('failed_stage', 'model_creation')
+            elif 'train' in str(e).lower() or 'training' in str(e).lower():
+                trial.set_user_attr('failed_stage', 'training')
+            elif 'validation' in str(e).lower() or 'val' in str(e).lower():
+                trial.set_user_attr('failed_stage', 'validation')
+            elif 'memory' in str(e).lower() or 'cuda' in str(e).lower() or 'mps' in str(e).lower():
+                trial.set_user_attr('failed_stage', 'memory_device')
+            
             # Cleanup memory on failure
             self._cleanup_trial_memory()
+            
+            # Trial callback with error information (if callback supports error parameter)
+            if self.trial_callback:
+                try:
+                    # Try to call with error parameter (including accuracy=0.0, mcc=0.0)
+                    self.trial_callback(trial.number + 1, params, 0.0, 0.0, 0.0, 0.0, 0.0, error_msg)
+                except TypeError:
+                    # Fallback to standard callback signature with accuracy and mcc
+                    self.trial_callback(trial.number + 1, params, 0.0, 0.0, 0.0, 0.0, 0.0)
+            
+            # Update progress callback with error
+            if self.progress_callback:
+                self.progress_callback(
+                    trial.number + 1, 
+                    self.total_trials, 
+                    f"Trial {trial.number + 1} FAILED: {str(e)[:100]}..."
+                )
+            
             return 0.0
         finally:
             # Always cleanup memory after trial
