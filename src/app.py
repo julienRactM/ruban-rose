@@ -446,6 +446,9 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                     add_log(f"Class balance: {cancer_pct}% cancer, {healthy_pct}% healthy")
                 else:
                     add_log(f"Class balancing: {'enabled' if data_config['class_balance_enabled'] else 'disabled'}")
+            if 'early_stopping_patience' in data_config:
+                config['training']['patience'] = data_config['early_stopping_patience']
+                add_log(f"Early stopping patience: {data_config['early_stopping_patience']} epochs")
         
         # Apply custom parameters to config
         if model_parameters:
@@ -820,6 +823,11 @@ def create_templates_at_path(templates_dir):
                     </div>
                     <small>Adjust class distribution (50/50 recommended for medical training)</small>
                 </div>
+                <div class="param-group">
+                    <label for="early-stopping-patience">Early Stopping Patience</label>
+                    <input type="number" id="early-stopping-patience" value="20" min="1" max="100" step="1">
+                    <small>Number of epochs to wait before stopping if no improvement (applies to all models)</small>
+                </div>
             </div>
         </div>
         
@@ -1161,6 +1169,7 @@ def create_templates_at_path(templates_dir):
         // Load dataset info on page load
         window.onload = function() {
             loadDatasetInfo();
+            loadConfigDefaults();
             startStatusUpdates();
             initSnakeGame();
             initializeTrainingMode();
@@ -1196,6 +1205,24 @@ def create_templates_at_path(templates_dir):
                 .catch(error => console.error('Error loading dataset info:', error));
         }
 
+        function loadConfigDefaults() {
+            fetch('/api/config')
+                .then(response => response.json())
+                .then(config => {
+                    // Set early stopping patience from config
+                    const patience = config.training?.patience || 20;
+                    document.getElementById('early-stopping-patience').value = patience;
+                    
+                    // Set other defaults from config
+                    const dataPercentage = (config.data?.data_percentage || 0.05) * 100;
+                    document.getElementById('data-percentage').value = dataPercentage;
+                    
+                    const batchSize = config.data?.batch_size || 32;
+                    document.getElementById('batch-size').value = batchSize;
+                })
+                .catch(error => console.error('Error loading config defaults:', error));
+        }
+
         function toggleModel(modelName) {
             const card = document.querySelector(`[data-model="${modelName}"]`);
             const index = selectedModels.indexOf(modelName);
@@ -1228,7 +1255,8 @@ def create_templates_at_path(templates_dir):
                 data_percentage: parseFloat(document.getElementById('data-percentage').value) / 100, // Convert % to decimal
                 batch_size: parseInt(document.getElementById('batch-size').value),
                 class_balance_ratio: classBalanceValue / 100, // Convert to 0.0-1.0 range
-                class_balance_enabled: classBalanceValue !== 50 // Enable balancing if not 50/50
+                class_balance_enabled: classBalanceValue !== 50, // Enable balancing if not 50/50
+                early_stopping_patience: parseInt(document.getElementById('early-stopping-patience').value)
             };
 
             // Collect parameters for each selected model

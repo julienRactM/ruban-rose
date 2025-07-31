@@ -3,10 +3,9 @@
 
 Add Early stopping as an onpage param
 
-On the app in Optimization Status while using optuna, the title for metrics and params (Trial	Recall	Specificity	AUC-ROC	MCC	Parameters) are written in white on a whitish background so they currently aren't visible, can you fix this ?
+
 Can you check if we are sure there are 279 Patients in our dataset ?
 
-Ask if we can add a densenet model and attempt to make one
 
 
 # may already be fixed
@@ -28,6 +27,11 @@ Possible for us to show the attention map on an actual image  with the VIT model
 
 
 # DONE
+
+On the app in Optimization Status while using optuna, the title for metrics and params (Trial	Recall	Specificity	AUC-ROC	MCC	Parameters) are written in white on a whitish background so they currently aren't visible, can you fix this ? 
+
+
+---
 
 fix the way Training Mode Manual Training & Hyperparameter Optimization is displayed on the app, it currently breaks on the page, input can be prettified too
 
