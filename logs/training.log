@@ -14938,3 +14938,5 @@ ValueError: Expected more than 1 value per channel when training, got input size
 2025-07-31 17:51:27,362 - INFO - 127.0.0.1 - - [31/Jul/2025 17:51:27] "GET /api/optimization_status HTTP/1.1" 200 -
 2025-07-31 17:51:29,132 - INFO - Epoch 11/14 (4.57s) - Train Loss: 0.2145, Val Loss: 0.5298
 2025-07-31 17:51:33,714 - INFO - Epoch 12/14 (4.47s) - Train Loss: 0.2158, Val Loss: 0.7568
+2025-07-31 17:51:37,735 - INFO - 127.0.0.1 - - [31/Jul/2025 17:51:37] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:51:38,299 - INFO - Epoch 13/14 (4.58s) - Train Loss: 0.2108, Val Loss: 0.6181
