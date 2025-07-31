@@ -47,7 +47,7 @@ optimization_status = {
     'current_model': None,
     'current_trial': 0,
     'total_trials': 0,
-    'best_f1_score': 0.0,
+    'best_medical_score': 0.0,
     'best_params': {},
     'optimization_mode': None,
     'logs': [],
@@ -268,7 +268,7 @@ def run_optimization_background(model_type, optimization_mode, data_config=None)
             'optimization_mode': optimization_mode,
             'current_trial': 0,
             'total_trials': 0,
-            'best_f1_score': 0.0,
+            'best_medical_score': 0.0,
             'best_params': {},
             'trial_results': []
         })
@@ -371,12 +371,12 @@ def run_optimization_background(model_type, optimization_mode, data_config=None)
             optimization_status['trial_results'].append(result.to_dict())
             
             # Update best results
-            if f1_score > optimization_status['best_f1_score']:
+            if f1_score > optimization_status['best_medical_score']:
                 optimization_status.update({
-                    'best_f1_score': f1_score,
+                    'best_medical_score': f1_score,
                     'best_params': params.copy()
                 })
-                add_optimization_log(f"New best F1-score: {f1_score:.4f}")
+                add_optimization_log(f"New best score: {f1_score:.4f}")
         
         optimizer.set_progress_callback(optimization_progress_callback)
         optimizer.set_trial_callback(trial_completion_callback)
@@ -396,12 +396,12 @@ def run_optimization_background(model_type, optimization_mode, data_config=None)
         optimization_status.update({
             'is_optimizing': False,
             'current_model': None,
-            'best_f1_score': study.best_value,
+            'best_medical_score': study.best_value,
             'best_params': study.best_params
         })
         
         add_optimization_log("\n=== Optimization Completed! ===")
-        add_optimization_log(f"Best F1-Score: {study.best_value:.4f}")
+        add_optimization_log(f"Best Medical Composite Score: {study.best_value:.4f}")
         add_optimization_log(f"Best Parameters: {study.best_params}")
         add_optimization_log(f"Total Trials: {len(study.trials)}")
         
@@ -501,6 +501,14 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                 epochs = model_config.get('epochs', 20)
                 training_status['total_epochs'] = epochs
                 
+                # Update training config with model-specific monitoring metric
+                model_config = config.get('models', {}).get(model_name, {})
+                training_config = config.get('training', {})
+                if 'monitor_metric' in model_config:
+                    training_config['monitor_metric'] = model_config['monitor_metric']
+                    config['training'] = training_config
+                    add_log(f"Using {model_config['monitor_metric']} as monitoring metric for {model_name}")
+                
                 # Create trainer
                 trainer = BreastCancerTrainer(
                     model=model,
@@ -533,12 +541,12 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                         'metrics': {
                             'train_loss': float(train_loss) if hasattr(train_loss, 'item') else train_loss,
                             'val_loss': float(val_loss) if hasattr(val_loss, 'item') else val_loss,
-                            'f1_score': safe_get_metric('f1_score'),
+                            'recall': safe_get_metric('recall'),
                             'sensitivity': safe_get_metric('sensitivity'),
                             'specificity': safe_get_metric('specificity'),
-                            'accuracy': safe_get_metric('accuracy'),
+                            'auc_roc': safe_get_metric('auc_roc'),
                             'mcc': safe_get_metric('mcc'),
-                            'recall': safe_get_metric('recall')
+                            'medical_composite': safe_get_metric('medical_composite')
                         }
                     })
                 
@@ -547,7 +555,7 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                 
                 # Store results
                 if history['val_metrics']:
-                    best_metrics = max(history['val_metrics'], key=lambda x: x['f1_score'])
+                    best_metrics = max(history['val_metrics'], key=lambda x: x['medical_composite'])
                     # Sanitize metrics for JSON serialization
                     sanitized_metrics = sanitize_metrics_for_json(best_metrics)
                     training_status['model_results'][model_name] = {
@@ -558,8 +566,11 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                     }
                     
                     add_log(f"{model_name} training completed!")
-                    add_log(f"Best F1-Score: {best_metrics['f1_score']:.4f}")
-                    add_log(f"Best Sensitivity: {best_metrics['sensitivity']:.4f}")
+                    add_log(f"Best Medical Composite Score: {best_metrics['medical_composite']:.4f}")
+                    add_log(f"Best Recall: {best_metrics['recall']:.4f}")
+                    add_log(f"Best Specificity: {best_metrics['specificity']:.4f}")
+                    add_log(f"Best AUC-ROC: {best_metrics['auc_roc']:.4f}")
+                    add_log(f"Best MCC: {best_metrics['mcc']:.4f}")
                 
             except Exception as e:
                 error_msg = f"Error training {model_name}: {str(e)}"
@@ -833,6 +844,15 @@ def create_templates_at_path(templates_dir):
                             </select>
                             <small>CNN architecture variant</small>
                         </div>
+                        <div class="param-group">
+                            <label for="cnn-monitor-metric">Monitoring Metric</label>
+                            <select id="cnn-monitor-metric">
+                                <option value="mcc">Matthews Correlation Coefficient (MCC)</option>
+                                <option value="recall">Recall (Cancer Detection)</option>
+                                <option value="auc_roc">AUC-ROC (Overall Performance)</option>
+                            </select>
+                            <small>Metric used for early stopping and best model selection</small>
+                        </div>
                     </div>
                 </div>
                 
@@ -877,6 +897,15 @@ def create_templates_at_path(templates_dir):
                             <input type="number" id="resnet-fine-tune" value="-1" min="-1" max="10">
                             <small>Number of layers to fine-tune (-1 for all)</small>
                         </div>
+                        <div class="param-group">
+                            <label for="resnet-monitor-metric">Monitoring Metric</label>
+                            <select id="resnet-monitor-metric">
+                                <option value="mcc">Matthews Correlation Coefficient (MCC)</option>
+                                <option value="recall">Recall (Cancer Detection)</option>
+                                <option value="auc_roc">AUC-ROC (Overall Performance)</option>
+                            </select>
+                            <small>Metric used for early stopping and best model selection</small>
+                        </div>
                     </div>
                 </div>
                 
@@ -917,6 +946,15 @@ def create_templates_at_path(templates_dir):
                             <label for="vit-patch-size">Patch Size (for Compact)</label>
                             <input type="number" id="vit-patch-size" value="5" min="2" max="10">
                             <small>Patch size for compact ViT (50px images)</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="vit-monitor-metric">Monitoring Metric</label>
+                            <select id="vit-monitor-metric">
+                                <option value="mcc">Matthews Correlation Coefficient (MCC)</option>
+                                <option value="recall">Recall (Cancer Detection)</option>
+                                <option value="auc_roc">AUC-ROC (Overall Performance)</option>
+                            </select>
+                            <small>Metric used for early stopping and best model selection</small>
                         </div>
                     </div>
                 </div>
@@ -1025,7 +1063,7 @@ def create_templates_at_path(templates_dir):
                         <div>Model: <span id="optimization-current-model">-</span></div>
                         <div>Trial: <span id="optimization-current-trial">0</span>/<span id="optimization-total-trials">0</span></div>
                         <div>Best Recall: <span id="optimization-best-recall">0.0000</span></div>
-                        <div>Best F1-Score: <span id="optimization-best-f1">0.0000</span></div>
+                        <div>Best Medical Score: <span id="optimization-best-medical">0.0000</span></div>
                         <div class="progress">
                             <div class="progress-bar" id="optimization-progress-bar" style="width: 0%;"></div>
                         </div>
@@ -1152,7 +1190,8 @@ def create_templates_at_path(templates_dir):
                         epochs: parseInt(document.getElementById('cnn-epochs').value),
                         learning_rate: parseFloat(document.getElementById('cnn-lr').value),
                         dropout: parseFloat(document.getElementById('cnn-dropout').value),
-                        architecture: document.getElementById('cnn-architecture').value
+                        architecture: document.getElementById('cnn-architecture').value,
+                        monitor_metric: document.getElementById('cnn-monitor-metric').value
                     };
                 } else if (modelName === 'resnet') {
                     modelParams.resnet = {
@@ -1160,7 +1199,8 @@ def create_templates_at_path(templates_dir):
                         learning_rate: parseFloat(document.getElementById('resnet-lr').value),
                         architecture: document.getElementById('resnet-architecture').value,
                         pretrained: document.getElementById('resnet-pretrained').value === 'true',
-                        fine_tune_layers: parseInt(document.getElementById('resnet-fine-tune').value)
+                        fine_tune_layers: parseInt(document.getElementById('resnet-fine-tune').value),
+                        monitor_metric: document.getElementById('resnet-monitor-metric').value
                     };
                 } else if (modelName === 'vision_transformer') {
                     modelParams.vision_transformer = {
@@ -1168,7 +1208,8 @@ def create_templates_at_path(templates_dir):
                         learning_rate: parseFloat(document.getElementById('vit-lr').value),
                         model_name: document.getElementById('vit-model').value,
                         dropout_rate: parseFloat(document.getElementById('vit-dropout').value),
-                        patch_size: parseInt(document.getElementById('vit-patch-size').value)
+                        patch_size: parseInt(document.getElementById('vit-patch-size').value),
+                        monitor_metric: document.getElementById('vit-monitor-metric').value
                     };
                 }
             });
@@ -1266,7 +1307,7 @@ def create_templates_at_path(templates_dir):
                 return;
             }
 
-            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>Recall</th><th>F1-Score</th><th>MCC</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
+            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>Recall</th><th>Specificity</th><th>AUC-ROC</th><th>MCC</th></tr></thead><tbody>';
             
             for (const [modelName, result] of Object.entries(results)) {
                 const status = result.completed ? '✅ Completed' : '❌ Failed';
@@ -1276,11 +1317,9 @@ def create_templates_at_path(templates_dir):
                     <td><strong>${modelName.toUpperCase()}</strong></td>
                     <td>${status}</td>
                     <td>${(metrics.recall || metrics.sensitivity || 0).toFixed(4)}</td>
-                    <td>${(metrics.f1_score || 0).toFixed(4)}</td>
-                    <td>${(metrics.mcc || 0).toFixed(4)}</td>
-                    <td>${(metrics.sensitivity || 0).toFixed(4)}</td>
                     <td>${(metrics.specificity || 0).toFixed(4)}</td>
-                    <td>${(metrics.accuracy || 0).toFixed(4)}</td>
+                    <td>${(metrics.auc_roc || 0).toFixed(4)}</td>
+                    <td>${(metrics.mcc || 0).toFixed(4)}</td>
                 </tr>`;
             }
             
@@ -1301,14 +1340,14 @@ def create_templates_at_path(templates_dir):
             // Show the results container
             resultsContainer.style.display = 'block';
             
-            let html = '<table class="metrics-table"><thead><tr><th>Trial</th><th>Recall</th><th>F1-Score</th><th>MCC</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th><th>Parameters</th></tr></thead><tbody>';
+            let html = '<table class="metrics-table"><thead><tr><th>Trial</th><th>Recall</th><th>Specificity</th><th>AUC-ROC</th><th>MCC</th><th>Parameters</th></tr></thead><tbody>';
             
-            // Sort trials by F1-score descending to show best results first
-            const sortedTrials = [...trialResults].sort((a, b) => (b.f1_score || 0) - (a.f1_score || 0));
+            // Sort trials by recall descending to show best results first (medical priority)
+            const sortedTrials = [...trialResults].sort((a, b) => (b.sensitivity || 0) - (a.sensitivity || 0));
             
             for (const trial of sortedTrials) {
                 const recall = trial.sensitivity || 0; // Recall is same as sensitivity in medical context
-                const isTopResult = trial.f1_score === Math.max(...trialResults.map(t => t.f1_score || 0));
+                const isTopResult = trial.sensitivity === Math.max(...trialResults.map(t => t.sensitivity || 0));
                 const rowClass = isTopResult ? 'style="background-color: #2c5530;"' : '';
                 
                 // Summarize parameters for display
@@ -1322,11 +1361,9 @@ def create_templates_at_path(templates_dir):
                 html += `<tr ${rowClass}>
                     <td><strong>#${trial.trial_id}</strong></td>
                     <td>${recall.toFixed(4)}</td>
-                    <td>${(trial.f1_score || 0).toFixed(4)}</td>
-                    <td>${(trial.mcc || 0).toFixed(4)}</td>
-                    <td>${(trial.sensitivity || 0).toFixed(4)}</td>
                     <td>${(trial.specificity || 0).toFixed(4)}</td>
-                    <td>${(trial.accuracy || 0).toFixed(4)}</td>
+                    <td>${(trial.auc_roc || 0).toFixed(4)}</td>
+                    <td>${(trial.mcc || 0).toFixed(4)}</td>
                     <td title="${JSON.stringify(trial.parameters || {}, null, 2)}" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: help;">${paramSummary}</td>
                 </tr>`;
             }
@@ -1637,7 +1674,7 @@ def create_templates_at_path(templates_dir):
                     const bestRecall = status.trial_results && status.trial_results.length > 0 ? 
                         Math.max(...status.trial_results.map(t => t.sensitivity || 0)) : 0;
                     document.getElementById('optimization-best-recall').textContent = bestRecall.toFixed(4);
-                    document.getElementById('optimization-best-f1').textContent = (status.best_f1_score || 0).toFixed(4);
+                    document.getElementById('optimization-best-medical').textContent = (status.best_medical_score || 0).toFixed(4);
                     
                     const progress = status.total_trials > 0 ? (status.current_trial / status.total_trials) * 100 : 0;
                     document.getElementById('optimization-progress-bar').style.width = progress + '%';
@@ -1661,7 +1698,7 @@ def create_templates_at_path(templates_dir):
                     document.getElementById('optimization-progress-container').style.display = 'none';
                     
                     // Show results if optimization completed
-                    if (status.best_f1_score > 0) {
+                    if (status.best_medical_score > 0) {
                         seeResultsBtn.style.display = 'inline-block';
                         stopSnakeGame();
                     } else {

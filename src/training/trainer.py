@@ -87,6 +87,15 @@ class MedicalMetrics:
         # Ensure we have binary classification (classes 0 and 1)
         cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
         
+        # Calculate composite medical metric for normal training
+        # Combines recall, specificity, AUC-ROC, and MCC with medical weights
+        medical_composite = (
+            0.35 * sensitivity +      # Recall/Sensitivity (cancer detection) - highest weight
+            0.25 * specificity +      # Specificity (healthy detection)  
+            0.20 * auc_roc +         # AUC-ROC (overall discrimination)
+            0.20 * max(0, mcc)       # MCC (balanced measure, only positive values)
+        )
+        
         return {
             'accuracy': accuracy,
             'sensitivity': sensitivity,  # Cancer detection rate
@@ -98,6 +107,7 @@ class MedicalMetrics:
             'f1_macro': f1_macro,
             'auc_roc': auc_roc,
             'mcc': mcc,  # Matthews Correlation Coefficient
+            'medical_composite': medical_composite,  # Composite metric for optimization
             'confusion_matrix': cm  # Keep as numpy array for internal use
         }
     
@@ -105,13 +115,14 @@ class MedicalMetrics:
     def print_metrics(metrics: Dict[str, float], prefix: str = ""):
         """Print metrics in medical format"""
         print(f"\n{prefix} Medical Metrics:")
+        print(f"  Medical Composite Score: {metrics.get('medical_composite', 0):.4f}")
         print(f"  Recall (Cancer Detection): {metrics['recall']:.4f}")
         print(f"  Sensitivity (Cancer Detection): {metrics['sensitivity']:.4f}")
         print(f"  Specificity (Healthy Detection): {metrics['specificity']:.4f}")  
-        print(f"  F1-Score (Cancer): {metrics['f1_score']:.4f}")
         print(f"  Matthews Correlation Coefficient: {metrics['mcc']:.4f}")
-        print(f"  Accuracy: {metrics['accuracy']:.4f}")
         print(f"  AUC-ROC: {metrics['auc_roc']:.4f}")
+        print(f"  F1-Score (Cancer): {metrics['f1_score']:.4f}")
+        print(f"  Accuracy: {metrics['accuracy']:.4f}")
         
         # Print confusion matrix in a readable format
         if 'confusion_matrix' in metrics:
@@ -198,7 +209,17 @@ class BreastCancerTrainer:
         print(f"Training epochs set to: {self.epochs} for model type: {type(model).__name__}")
         
         self.patience = training_config.get('patience', 10)
-        self.monitor_metric = training_config.get('monitor_metric', 'val_f1_score')
+        # Allow configurable monitoring metric: 'mcc', 'recall', 'auc_roc', or 'medical_composite'
+        monitor_choice = training_config.get('monitor_metric', 'mcc')
+        # Map to validation metric names
+        metric_mapping = {
+            'mcc': 'val_mcc',
+            'recall': 'val_recall', 
+            'auc_roc': 'val_auc_roc',
+            'medical_composite': 'val_medical_composite'
+        }
+        self.monitor_metric = metric_mapping.get(monitor_choice, 'val_mcc')
+        self.monitor_choice = monitor_choice  # Store original choice for logging
         self.save_best_only = training_config.get('save_best_only', True)
         
         # Setup logging first (needed by other methods)
@@ -458,27 +479,37 @@ class BreastCancerTrainer:
             Training history dictionary
         """
         self.logger.info(f"Starting training for {self.epochs} epochs")
-        self.logger.info(f"Monitoring metric: {self.monitor_metric}")
+        self.logger.info(f"Monitoring metric: {self.monitor_choice} ({self.monitor_metric})")
         
         start_time = time.time()
         
         for epoch in range(self.epochs):
             epoch_start = time.time()
             
-            # Training
-            train_loss, train_metrics = self.train_epoch()
-            
-            # Validation
-            val_loss, val_metrics = self.validate()
-            
-            # Update learning rate
-            monitor_value = val_metrics.get('f1_score', 0)
-            # Ensure monitor_value is a scalar for the scheduler
-            if hasattr(monitor_value, 'item'):
-                monitor_value = float(monitor_value.item())
-            elif isinstance(monitor_value, (np.floating, np.integer)):
-                monitor_value = float(monitor_value)
-            self.scheduler.step(monitor_value)
+            try:
+                # Training
+                train_loss, train_metrics = self.train_epoch()
+                
+                # Validation
+                val_loss, val_metrics = self.validate()
+                
+                # Update learning rate using selected monitoring metric
+                monitor_value = val_metrics.get(self.monitor_choice, 0)
+                print(f"DEBUG: monitor_value ({self.monitor_choice}) type: {type(monitor_value)}, value: {monitor_value}")
+                # Ensure monitor_value is a scalar for the scheduler
+                if hasattr(monitor_value, 'item'):
+                    monitor_value = float(monitor_value.item())
+                elif isinstance(monitor_value, (np.floating, np.integer)):
+                    monitor_value = float(monitor_value)
+                print(f"DEBUG: monitor_value after conversion: {type(monitor_value)}, value: {monitor_value}")
+                self.scheduler.step(monitor_value)
+                print("DEBUG: scheduler.step() completed successfully")
+            except Exception as e:
+                print(f"ERROR in epoch {epoch+1}: {str(e)}")
+                print(f"ERROR type: {type(e)}")
+                import traceback
+                print(f"ERROR traceback:\n{traceback.format_exc()}")
+                raise e
             
             # Update status callback if provided
             if status_callback:
@@ -496,19 +527,41 @@ class BreastCancerTrainer:
             
             # Tensorboard logging
             if self.writer:
-                self.writer.add_scalar('Loss/Train', train_loss, epoch)
-                self.writer.add_scalar('Loss/Val', val_loss, epoch)
-                for metric_name, value in val_metrics.items():
-                    self.writer.add_scalar(f'Metrics/Val_{metric_name}', value, epoch)
+                try:
+                    print("DEBUG: Starting Tensorboard logging")
+                    self.writer.add_scalar('Loss/Train', train_loss, epoch)
+                    self.writer.add_scalar('Loss/Val', val_loss, epoch)
+                    for metric_name, value in val_metrics.items():
+                        print(f"DEBUG: Logging metric {metric_name}: {type(value)}, {value}")
+                        # Skip confusion matrix for tensorboard
+                        if metric_name == 'confusion_matrix':
+                            continue
+                        # Ensure scalar value for tensorboard
+                        if hasattr(value, 'item'):
+                            value = float(value.item())
+                        elif isinstance(value, (np.floating, np.integer)):
+                            value = float(value)
+                        elif isinstance(value, (list, np.ndarray)):
+                            continue  # Skip non-scalar values
+                        self.writer.add_scalar(f'Metrics/Val_{metric_name}', value, epoch)
+                    print("DEBUG: Tensorboard logging completed")
+                except Exception as e:
+                    print(f"ERROR in Tensorboard logging: {str(e)}")
+                    import traceback
+                    print(f"Tensorboard ERROR traceback:\n{traceback.format_exc()}")
             
-            # Save checkpoint
-            current_metric = val_metrics.get('f1_score', 0)
+            # Save checkpoint using selected monitoring metric
+            current_metric = val_metrics.get(self.monitor_choice, 0)
+            print(f"DEBUG: current_metric ({self.monitor_choice}) type: {type(current_metric)}, value: {current_metric}")
             # Ensure current_metric is a scalar for comparison
             if hasattr(current_metric, 'item'):
                 current_metric = float(current_metric.item())
             elif isinstance(current_metric, (np.floating, np.integer)):
                 current_metric = float(current_metric)
+            print(f"DEBUG: current_metric after conversion: {type(current_metric)}, value: {current_metric}")
+            print(f"DEBUG: self.best_metric: {type(self.best_metric)}, value: {self.best_metric}")
             is_best = current_metric > self.best_metric
+            print(f"DEBUG: is_best: {is_best}")
             
             if is_best:
                 self.best_metric = current_metric
@@ -537,7 +590,7 @@ class BreastCancerTrainer:
         
         total_time = time.time() - start_time
         self.logger.info(f"Training completed in {total_time:.2f} seconds")
-        self.logger.info(f"Best {self.monitor_metric}: {self.best_metric:.4f}")
+        self.logger.info(f"Best {self.monitor_choice.upper()} Score: {self.best_metric:.4f}")
         
         if self.writer:
             self.writer.close()

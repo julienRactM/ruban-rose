@@ -167,7 +167,7 @@ training:
   device: "auto"  # auto, cuda, cpu
   mixed_precision: true
   gradient_clipping: 1.0
-  patience: 10  # Early stopping patience
+  patience: 15  # Early stopping patience
   
 # Evaluation Metrics (Medical Focus)
 metrics:
