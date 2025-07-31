@@ -686,7 +686,7 @@
             for (const trial of sortedTrials) {
                 const recall = trial.sensitivity || 0; // Recall is same as sensitivity in medical context
                 const isTopResult = trial.sensitivity === Math.max(...trialResults.map(t => t.sensitivity || 0));
-                const rowClass = isTopResult ? 'style="background-color: #2c5530; color: #ffffff;"' : '';
+                const rowClass = isTopResult ? 'style="background-color: #d4edda; color: #155724;"' : 'style="background-color: #f8f9fa;"';
                 
                 // Summarize parameters for display
                 const paramSummary = trial.parameters ? 
