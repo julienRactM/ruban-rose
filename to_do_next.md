@@ -2,7 +2,7 @@
 
 
 Add Early stopping as an onpage param
-fix the way Training Mode Manual Training & Hyperparameter Optimization is displayed on the app, it currently breaks on the page, input can be prettified too
+
 On the app in Optimization Status while using optuna, the title for metrics and params (Trial	Recall	Specificity	AUC-ROC	MCC	Parameters) are written in white on a whitish background so they currently aren't visible, can you fix this ?
 Can you check if we are sure there are 279 Patients in our dataset ?
 
@@ -20,6 +20,8 @@ but also on the app it shows that
 
 # NEED NEW BRANCH
 
+Add to the App, for both "normal" training and optuna hyperparameter optimization a new Model to our application which is a DenseNet where parameter can be managed manually in normal mode and optimized with otuna like the others currently are being optimized in optuna hyperparameter mode
+
 Possible for us to show the attention map on an actual image  with the VIT model for interpretation ? Making sure the area is readable
 
 
@@ -27,9 +29,15 @@ Possible for us to show the attention map on an actual image  with the VIT model
 
 # DONE
 
+fix the way Training Mode Manual Training & Hyperparameter Optimization is displayed on the app, it currently breaks on the page, input can be prettified too
+
+---
 
 ok VIT with optuna works properly but when running the resnet some trials don't go throught because of some hyper params errors that seems avoidable since other trials don't encounter issues.
 [16:30:26] Trial 1 FAILED: Expected more than 1 value per channel when training, got input size torch.Size([1, 256])...
 [16:30:26] Trial 1 completed. Best F1: 0.0000
 
 [16:30:27] Trial 3: Testing {'learning_rate': 7.014786718657618e-06, 'epochs': 12, 'architecture': 'lightweight', 'pretrained': False, 'fine_tune_layers': 0, 'batch_size': 256}
+
+---
+

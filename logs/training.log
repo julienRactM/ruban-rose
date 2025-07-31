@@ -13883,3 +13883,316 @@ ValueError: Expected more than 1 value per channel when training, got input size
 2025-07-31 17:07:36,141 - INFO - Epoch 1/12 (12.28s) - Train Loss: 0.3328, Val Loss: 0.3762
 2025-07-31 17:07:47,882 - INFO - Epoch 2/12 (11.62s) - Train Loss: 0.2298, Val Loss: 0.3206
 2025-07-31 17:07:59,649 - INFO - Epoch 3/12 (11.77s) - Train Loss: 0.1603, Val Loss: 0.4493
+2025-07-31 17:08:11,335 - INFO - Epoch 4/12 (11.69s) - Train Loss: 0.1075, Val Loss: 0.4285
+2025-07-31 17:08:14,466 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:16,469 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:18,471 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:20,469 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:22,470 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:23,034 - INFO - Epoch 5/12 (11.70s) - Train Loss: 0.0699, Val Loss: 0.5344
+2025-07-31 17:08:24,472 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:26,474 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:28,473 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:30,474 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:32,475 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:34,477 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:34,567 - INFO - Epoch 6/12 (11.53s) - Train Loss: 0.0510, Val Loss: 0.9041
+2025-07-31 17:08:36,478 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:38,479 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:40,479 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:42,480 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:44,481 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:46,129 - INFO - Epoch 7/12 (11.46s) - Train Loss: 0.0492, Val Loss: 0.5592
+2025-07-31 17:08:46,482 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:48,482 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:50,483 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:52,483 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:54,484 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:56,483 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:08:57,687 - INFO - Epoch 8/12 (11.56s) - Train Loss: 0.0151, Val Loss: 0.6457
+2025-07-31 17:08:58,182 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:58] "POST /api/stop_optimization HTTP/1.1" 200 -
+2025-07-31 17:08:58,485 - INFO - 127.0.0.1 - - [31/Jul/2025 17:08:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:00,485 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:03,143 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:03] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:06,451 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:09,353 - INFO - Epoch 9/12 (11.67s) - Train Loss: 0.0091, Val Loss: 0.6752
+2025-07-31 17:09:09,868 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:09] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:14,494 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:16,494 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:18,495 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:20,496 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:21,015 - INFO - Epoch 10/12 (11.66s) - Train Loss: 0.0064, Val Loss: 0.8064
+2025-07-31 17:09:22,496 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:24,497 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:26,496 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:28,498 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:30,498 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:32,500 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:32,599 - INFO - Epoch 11/12 (11.58s) - Train Loss: 0.0085, Val Loss: 0.8295
+2025-07-31 17:09:34,501 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:36,503 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:38,502 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:40,602 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:42,776 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:44,312 - INFO - Epoch 12/12 (11.61s) - Train Loss: 0.0090, Val Loss: 0.6398
+2025-07-31 17:09:44,313 - INFO - Training completed in 140.45 seconds
+2025-07-31 17:09:44,313 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:09:44,318 - INFO - Trial 2: F1=0.8992, Sensitivity=0.9313, Specificity=0.8423
+2025-07-31 17:09:44,572 - INFO - Creating resnet model with parameters: {'learning_rate': 2.8845589655522427e-05, 'epochs': 19, 'architecture': 'resnet34', 'pretrained': False, 'fine_tune_layers': 10, 'batch_size': 64}
+2025-07-31 17:09:44,813 - INFO - resnet model created and validated successfully
+2025-07-31 17:09:44,861 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:09:44,863 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:09:44,863 - INFO - Starting training for 19 epochs
+2025-07-31 17:09:44,863 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:09:44,901 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:09:49,870 - INFO - 127.0.0.1 - - [31/Jul/2025 17:09:49] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:10:00,114 - INFO - 127.0.0.1 - - [31/Jul/2025 17:10:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:10:09,725 - INFO - Epoch 1/19 (24.86s) - Train Loss: 0.4932, Val Loss: 0.3378
+2025-07-31 17:10:17,106 - INFO - 127.0.0.1 - - [31/Jul/2025 17:10:17] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:10:35,482 - INFO - Epoch 2/19 (25.64s) - Train Loss: 0.3538, Val Loss: 0.3995
+2025-07-31 17:10:52,818 - INFO - 127.0.0.1 - - [31/Jul/2025 17:10:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:10:56,537 - INFO - 127.0.0.1 - - [31/Jul/2025 17:10:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:00,402 - INFO - Epoch 3/19 (24.92s) - Train Loss: 0.2672, Val Loss: 0.3600
+2025-07-31 17:11:06,657 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:08,660 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:10,660 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:12,661 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:14,662 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:16,662 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:18,664 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:20,663 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:22,665 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:24,665 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:24] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:25,283 - INFO - Epoch 4/19 (24.88s) - Train Loss: 0.1844, Val Loss: 0.3410
+2025-07-31 17:11:26,667 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:28,668 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:28] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:30,669 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:30] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:32,670 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:34,671 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:34] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:36,673 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:38,673 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:40,675 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:42,675 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:44,677 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:46,676 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:46] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:48,677 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:48] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:49,786 - INFO - Epoch 5/19 (24.50s) - Train Loss: 0.1446, Val Loss: 0.3663
+2025-07-31 17:11:50,678 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:52,679 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:52] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:54,681 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:56,682 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:11:58,681 - INFO - 127.0.0.1 - - [31/Jul/2025 17:11:58] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:00,683 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:00] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:02,684 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:04,686 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:04] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:06,686 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:08,688 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:10,688 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:12,689 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:14,288 - INFO - Epoch 6/19 (24.50s) - Train Loss: 0.1178, Val Loss: 0.5141
+2025-07-31 17:12:14,690 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:17,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:17] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:20,366 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:23,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:23] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:26,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:29,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:29] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:32,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:35,364 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:35] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:38,364 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:38,673 - INFO - Epoch 7/19 (24.28s) - Train Loss: 0.1017, Val Loss: 0.6018
+2025-07-31 17:12:41,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:41] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:44,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:47,364 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:47] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:50,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:53,364 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:53] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:56,367 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:56] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:12:59,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:12:59] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:02,364 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:02,977 - INFO - Epoch 8/19 (24.30s) - Train Loss: 0.0644, Val Loss: 0.6041
+2025-07-31 17:13:05,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:05] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:08,365 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:08] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:10,665 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:10] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:12,667 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:12] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:14,668 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:14] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:16,668 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:16] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:18,668 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:18] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:20,734 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:20] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:23,337 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:23] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:25,581 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:25] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:27,842 - INFO - Epoch 9/19 (24.87s) - Train Loss: 0.0520, Val Loss: 0.9203
+2025-07-31 17:13:29,876 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:29] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:36,411 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:38,412 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:41,457 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:41] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:44,701 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:50,617 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:50] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:13:52,630 - INFO - Epoch 10/19 (24.79s) - Train Loss: 0.0427, Val Loss: 0.6300
+2025-07-31 17:13:55,311 - INFO - 127.0.0.1 - - [31/Jul/2025 17:13:55] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:14:05,211 - INFO - 127.0.0.1 - - [31/Jul/2025 17:14:05] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:14:17,109 - INFO - Epoch 11/19 (24.48s) - Train Loss: 0.0414, Val Loss: 0.8081
+2025-07-31 17:14:22,312 - INFO - 127.0.0.1 - - [31/Jul/2025 17:14:22] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:14:32,177 - INFO - 127.0.0.1 - - [31/Jul/2025 17:14:32] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:14:41,960 - INFO - Epoch 12/19 (24.74s) - Train Loss: 0.0358, Val Loss: 0.6416
+2025-07-31 17:15:06,494 - INFO - 127.0.0.1 - - [31/Jul/2025 17:15:06] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:15:08,248 - INFO - Epoch 13/19 (26.29s) - Train Loss: 0.0457, Val Loss: 0.8012
+2025-07-31 17:15:36,161 - INFO - Epoch 14/19 (27.91s) - Train Loss: 0.0250, Val Loss: 0.9122
+2025-07-31 17:15:57,318 - INFO - 127.0.0.1 - - [31/Jul/2025 17:15:57] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:16:00,730 - INFO - Epoch 15/19 (24.57s) - Train Loss: 0.0196, Val Loss: 0.9111
+2025-07-31 17:16:25,338 - INFO - Epoch 16/19 (24.61s) - Train Loss: 0.0166, Val Loss: 1.0636
+2025-07-31 17:16:50,045 - INFO - Epoch 17/19 (24.60s) - Train Loss: 0.0152, Val Loss: 0.7992
+2025-07-31 17:17:14,930 - INFO - Epoch 18/19 (24.88s) - Train Loss: 0.0194, Val Loss: 0.8468
+2025-07-31 17:17:39,123 - INFO - Epoch 19/19 (24.19s) - Train Loss: 0.0143, Val Loss: 0.9191
+2025-07-31 17:17:39,124 - INFO - Training completed in 474.26 seconds
+2025-07-31 17:17:39,124 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:17:39,129 - INFO - Trial 3: F1=0.8956, Sensitivity=0.8932, Specificity=0.8859
+2025-07-31 17:17:39,377 - INFO - Creating resnet model with parameters: {'learning_rate': 1.4617921630463308e-06, 'epochs': 16, 'architecture': 'resnet50', 'pretrained': False, 'fine_tune_layers': 1, 'batch_size': 192}
+2025-07-31 17:17:39,669 - INFO - resnet model created and validated successfully
+2025-07-31 17:17:39,721 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:17:39,722 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:17:39,722 - INFO - Starting training for 16 epochs
+2025-07-31 17:17:39,722 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:17:44,020 - INFO - 127.0.0.1 - - [31/Jul/2025 17:17:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:17:59,018 - INFO - Epoch 1/16 (19.30s) - Train Loss: 0.6854, Val Loss: 0.7004
+2025-07-31 17:18:18,309 - INFO - Epoch 2/16 (19.17s) - Train Loss: 0.6759, Val Loss: 0.7069
+2025-07-31 17:18:40,140 - INFO - Epoch 3/16 (21.83s) - Train Loss: 0.6683, Val Loss: 0.6996
+2025-07-31 17:30:46,764 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:30:46,766 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:30:46,766 - INFO - Starting training for 8 epochs
+2025-07-31 17:30:46,766 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:30:47,175 - INFO - 127.0.0.1 - - [31/Jul/2025 17:30:47] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:30:49,174 - INFO - 127.0.0.1 - - [31/Jul/2025 17:30:49] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:30:51,175 - INFO - 127.0.0.1 - - [31/Jul/2025 17:30:51] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:30:53,176 - INFO - 127.0.0.1 - - [31/Jul/2025 17:30:53] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:30:55,177 - INFO - 127.0.0.1 - - [31/Jul/2025 17:30:55] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:30:57,179 - INFO - 127.0.0.1 - - [31/Jul/2025 17:30:57] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:30:59,181 - INFO - 127.0.0.1 - - [31/Jul/2025 17:30:59] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:01,182 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:01] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:03,183 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:03] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:05,202 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:05] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:07,186 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:07] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:09,186 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:09] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:11,188 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:11] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:13,189 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:13] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:15,189 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:15] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:17,191 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:17] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:19,192 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:19] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:21,192 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:21] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:23,197 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:23] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:25,195 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:25] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:27,196 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:27] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:29,196 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:29] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:31,198 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:31] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:33,198 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:33] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:34,121 - INFO - Epoch 1/8 (47.35s) - Train Loss: 0.4079, Val Loss: 0.2983
+2025-07-31 17:31:35,198 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:35] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:37,198 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:37] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:37,487 - INFO - Epoch 2/8 (3.25s) - Train Loss: 0.3915, Val Loss: 0.7728
+2025-07-31 17:31:39,200 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:39] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:40,747 - INFO - Epoch 3/8 (3.26s) - Train Loss: 0.3610, Val Loss: 0.2295
+2025-07-31 17:31:41,201 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:41] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:43,202 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:43] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:44,052 - INFO - Epoch 4/8 (3.30s) - Train Loss: 0.3531, Val Loss: 0.2488
+2025-07-31 17:31:45,203 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:45] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:47,203 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:47] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:47,324 - INFO - Epoch 5/8 (3.27s) - Train Loss: 0.3366, Val Loss: 0.2666
+2025-07-31 17:31:49,205 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:49] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:50,593 - INFO - Epoch 6/8 (3.27s) - Train Loss: 0.3376, Val Loss: 0.2910
+2025-07-31 17:31:51,205 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:51] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:53,205 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:53] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:53,970 - INFO - Epoch 7/8 (3.27s) - Train Loss: 0.3274, Val Loss: 0.2604
+2025-07-31 17:31:55,206 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:55] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:57,208 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:57] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:31:57,243 - INFO - Epoch 8/8 (3.27s) - Train Loss: 0.3061, Val Loss: 0.2759
+2025-07-31 17:31:57,243 - INFO - Training completed in 70.48 seconds
+2025-07-31 17:31:57,243 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:31:57,249 - INFO - Trial 0: F1=0.9270, Sensitivity=0.9609, Specificity=0.7957
+2025-07-31 17:31:57,484 - INFO - Creating cnn model with parameters: {'learning_rate': 0.0004128387703942372, 'dropout': 0.4720869413538984, 'epochs': 16, 'architecture': 'compact', 'batch_size': 128}
+2025-07-31 17:31:57,493 - INFO - cnn model created and validated successfully
+2025-07-31 17:31:57,512 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:31:57,514 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:31:57,514 - INFO - Starting training for 16 epochs
+2025-07-31 17:31:57,514 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:31:59,209 - INFO - 127.0.0.1 - - [31/Jul/2025 17:31:59] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:00,789 - INFO - Epoch 1/16 (3.28s) - Train Loss: 0.4007, Val Loss: 0.2787
+2025-07-31 17:32:01,209 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:01] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:03,209 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:03] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:04,191 - INFO - Epoch 2/16 (3.28s) - Train Loss: 0.3541, Val Loss: 0.2938
+2025-07-31 17:32:05,210 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:05] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:07,209 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:07] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:07,478 - INFO - Epoch 3/16 (3.29s) - Train Loss: 0.3353, Val Loss: 0.3052
+2025-07-31 17:32:09,210 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:09] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:10,761 - INFO - Epoch 4/16 (3.28s) - Train Loss: 0.3210, Val Loss: 0.2666
+2025-07-31 17:32:11,210 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:11] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:13,210 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:13] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:14,064 - INFO - Epoch 5/16 (3.30s) - Train Loss: 0.3037, Val Loss: 0.2324
+2025-07-31 17:32:15,212 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:15] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:17,212 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:17] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:17,393 - INFO - Epoch 6/16 (3.33s) - Train Loss: 0.3080, Val Loss: 0.2747
+2025-07-31 17:32:19,213 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:19] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:20,847 - INFO - Epoch 7/16 (3.35s) - Train Loss: 0.2914, Val Loss: 0.3489
+2025-07-31 17:32:21,215 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:21] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:23,314 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:23] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:24,277 - INFO - Epoch 8/16 (3.43s) - Train Loss: 0.2711, Val Loss: 0.2912
+2025-07-31 17:32:26,272 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:26] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:27,742 - INFO - Epoch 9/16 (3.46s) - Train Loss: 0.2567, Val Loss: 0.3300
+2025-07-31 17:32:31,145 - INFO - Epoch 10/16 (3.40s) - Train Loss: 0.2452, Val Loss: 0.3821
+2025-07-31 17:32:31,974 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:31] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:34,787 - INFO - Epoch 11/16 (3.64s) - Train Loss: 0.2387, Val Loss: 0.3372
+2025-07-31 17:32:38,345 - INFO - Epoch 12/16 (3.44s) - Train Loss: 0.2321, Val Loss: 0.2700
+2025-07-31 17:32:41,800 - INFO - Epoch 13/16 (3.45s) - Train Loss: 0.2167, Val Loss: 0.5077
+2025-07-31 17:32:41,992 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:41] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:45,259 - INFO - Epoch 14/16 (3.46s) - Train Loss: 0.1948, Val Loss: 0.4769
+2025-07-31 17:32:48,740 - INFO - Epoch 15/16 (3.48s) - Train Loss: 0.1783, Val Loss: 0.5555
+2025-07-31 17:32:52,247 - INFO - Epoch 16/16 (3.51s) - Train Loss: 0.1708, Val Loss: 0.6995
+2025-07-31 17:32:52,359 - INFO - Training completed in 54.84 seconds
+2025-07-31 17:32:52,359 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:32:52,365 - INFO - Trial 1: F1=0.9356, Sensitivity=0.9414, Specificity=0.8706
+2025-07-31 17:32:52,601 - INFO - Creating cnn model with parameters: {'learning_rate': 3.71761627788102e-05, 'dropout': 0.34201207226438857, 'epochs': 10, 'architecture': 'compact', 'batch_size': 48}
+2025-07-31 17:32:52,609 - INFO - cnn model created and validated successfully
+2025-07-31 17:32:52,631 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:32:52,633 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:32:52,633 - INFO - Starting training for 10 epochs
+2025-07-31 17:32:52,633 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:32:54,611 - INFO - 127.0.0.1 - - [31/Jul/2025 17:32:54] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:32:56,121 - INFO - Epoch 1/10 (3.49s) - Train Loss: 0.4276, Val Loss: 0.2805
+2025-07-31 17:32:59,761 - INFO - Epoch 2/10 (3.52s) - Train Loss: 0.3736, Val Loss: 0.2615
+2025-07-31 17:33:03,217 - INFO - Epoch 3/10 (3.46s) - Train Loss: 0.3562, Val Loss: 0.3155
+2025-07-31 17:33:06,712 - INFO - Epoch 4/10 (3.49s) - Train Loss: 0.3489, Val Loss: 0.2869
+2025-07-31 17:33:10,210 - INFO - Epoch 5/10 (3.50s) - Train Loss: 0.3387, Val Loss: 0.2619
+2025-07-31 17:33:11,819 - INFO - 127.0.0.1 - - [31/Jul/2025 17:33:11] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:33:13,802 - INFO - Epoch 6/10 (3.59s) - Train Loss: 0.3283, Val Loss: 0.2935
+2025-07-31 17:33:17,511 - INFO - Epoch 7/10 (3.60s) - Train Loss: 0.3211, Val Loss: 0.2559
+2025-07-31 17:33:20,981 - INFO - Epoch 8/10 (3.47s) - Train Loss: 0.3104, Val Loss: 0.2738
+2025-07-31 17:33:24,568 - INFO - Epoch 9/10 (3.59s) - Train Loss: 0.3095, Val Loss: 0.2541
+2025-07-31 17:33:28,074 - INFO - Epoch 10/10 (3.51s) - Train Loss: 0.3012, Val Loss: 0.2678
+2025-07-31 17:33:28,074 - INFO - Training completed in 35.44 seconds
+2025-07-31 17:33:28,074 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:33:28,080 - INFO - Trial 2: F1=0.9297, Sensitivity=0.9589, Specificity=0.8109
+2025-07-31 17:33:28,319 - INFO - Creating cnn model with parameters: {'learning_rate': 3.530712061081638e-05, 'dropout': 0.5682288395024806, 'epochs': 7, 'architecture': 'custom', 'batch_size': 192}
+2025-07-31 17:33:28,532 - INFO - cnn model created and validated successfully
+2025-07-31 17:33:28,554 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:33:28,556 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:33:28,556 - INFO - Starting training for 7 epochs
+2025-07-31 17:33:28,556 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:33:35,558 - INFO - Epoch 1/7 (7.00s) - Train Loss: 0.5440, Val Loss: 0.4049
+2025-07-31 17:33:37,572 - INFO - 127.0.0.1 - - [31/Jul/2025 17:33:37] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:33:42,420 - INFO - Epoch 2/7 (6.74s) - Train Loss: 0.4167, Val Loss: 0.3863
+2025-07-31 17:33:49,189 - INFO - Epoch 3/7 (6.77s) - Train Loss: 0.3746, Val Loss: 0.3120
+2025-07-31 17:33:55,924 - INFO - Epoch 4/7 (6.73s) - Train Loss: 0.3473, Val Loss: 0.3043
+2025-07-31 17:34:02,680 - INFO - Epoch 5/7 (6.75s) - Train Loss: 0.3266, Val Loss: 0.2945
+2025-07-31 17:34:09,336 - INFO - Epoch 6/7 (6.66s) - Train Loss: 0.3091, Val Loss: 0.3088
+2025-07-31 17:34:15,044 - INFO - 127.0.0.1 - - [31/Jul/2025 17:34:15] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:34:16,136 - INFO - Epoch 7/7 (6.69s) - Train Loss: 0.2966, Val Loss: 0.2828
+2025-07-31 17:34:16,136 - INFO - Training completed in 47.58 seconds
+2025-07-31 17:34:16,136 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:34:16,141 - INFO - Trial 3: F1=0.9287, Sensitivity=0.9805, Specificity=0.7614
+2025-07-31 17:34:16,382 - INFO - Creating cnn model with parameters: {'learning_rate': 0.008943770404246107, 'dropout': 0.641967937007383, 'epochs': 11, 'architecture': 'compact', 'batch_size': 96}
+2025-07-31 17:34:16,393 - INFO - cnn model created and validated successfully
+2025-07-31 17:34:16,420 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:34:16,421 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:34:16,421 - INFO - Starting training for 11 epochs
+2025-07-31 17:34:16,421 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:34:19,850 - INFO - Epoch 1/11 (3.43s) - Train Loss: 0.4672, Val Loss: 0.3881
+2025-07-31 17:34:23,554 - INFO - Epoch 2/11 (3.58s) - Train Loss: 0.4062, Val Loss: 0.3188
+2025-07-31 17:34:27,082 - INFO - Epoch 3/11 (3.53s) - Train Loss: 0.3821, Val Loss: 0.2462
+2025-07-31 17:34:30,651 - INFO - Epoch 4/11 (3.57s) - Train Loss: 0.3718, Val Loss: 0.2442

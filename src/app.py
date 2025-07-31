@@ -743,13 +743,27 @@ def create_templates_at_path(templates_dir):
         .logs { height: 300px; overflow-y: auto; background: #f8f9fa; padding: 1rem; border-radius: 4px; font-family: monospace; font-size: 0.9rem; }
         .metrics-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
         .metrics-table th, .metrics-table td { padding: 0.5rem; text-align: left; border-bottom: 1px solid #ddd; }
-        .metrics-table th { background: #f8f9fa; }
+        .metrics-table th { background: #f8f9fa; color: #2c3e50; font-weight: 600; }
+        .metrics-table td { color: #2c3e50; }
+        .metrics-table tbody tr:hover { background-color: #f1f3f4; }
+        .metrics-table tbody tr:hover td { color: #1a252f; }
         .progress { background: #ecf0f1; border-radius: 10px; height: 20px; margin: 0.5rem 0; }
         .progress-bar { background: #3498db; height: 100%; border-radius: 10px; transition: width 0.3s; }
         .dataset-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
         .stat-box { text-align: center; padding: 1rem; background: #ecf0f1; border-radius: 8px; }
         .stat-number { font-size: 2rem; font-weight: bold; color: #2c3e50; }
         .stat-label { color: #7f8c8d; margin-top: 0.5rem; }
+        
+        /* Training Mode Selection Styles */
+        .training-mode-label:hover { border-color: #3498db !important; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .training-mode-label.selected { border-color: #e74c3c !important; background: #ffeaea !important; }
+        .training-mode-label.selected:hover { border-color: #c0392b !important; }
+        
+        /* Responsive design for training mode */
+        @media (max-width: 768px) {
+            .training-mode-options { flex-direction: column; align-items: center; }
+            .training-mode-option { max-width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -960,35 +974,59 @@ def create_templates_at_path(templates_dir):
                 </div>
             </div>
             
-            <div style="margin-top: 1rem; text-align: center;">
+            <div style="margin-top: 2rem;">
                 <!-- Training Mode Selection -->
-                <div class="param-group" style="margin-bottom: 1rem;">
-                    <label style="text-align: center; margin-bottom: 0.5rem; font-size: 1.1rem;">Training Mode</label>
-                    <div style="display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem;">
-                        <label style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="radio" name="training-mode" value="manual" checked onchange="toggleTrainingMode()">
-                            <span>Manual Training</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 0.5rem;">
-                            <input type="radio" name="training-mode" value="optimization" onchange="toggleTrainingMode()">
-                            <span>Hyperparameter Optimization</span>
-                        </label>
+                <div class="training-mode-section" style="margin-bottom: 2rem; padding: 1.5rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #3498db;">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: #2c3e50; font-size: 1.2rem;">Select Training Mode</h3>
+                    <div class="training-mode-options" style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center;">
+                        <div class="training-mode-option" style="flex: 1; min-width: 250px; max-width: 300px;">
+                            <label class="training-mode-label" style="display: block; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s; background: white;" onclick="selectTrainingMode('manual')">
+                                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                    <input type="radio" name="training-mode" value="manual" checked onchange="toggleTrainingMode()" style="margin: 0;">
+                                    <strong style="font-size: 1.1rem; color: #2c3e50;">Manual Training</strong>
+                                </div>
+                                <p style="margin: 0; font-size: 0.9rem; color: #666; line-height: 1.4;">
+                                    Train selected models with custom parameters. Full control over hyperparameters and training settings.
+                                </p>
+                            </label>
+                        </div>
+                        <div class="training-mode-option" style="flex: 1; min-width: 250px; max-width: 300px;">
+                            <label class="training-mode-label" style="display: block; padding: 1rem; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.3s; background: white;" onclick="selectTrainingMode('optimization')">
+                                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+                                    <input type="radio" name="training-mode" value="optimization" onchange="toggleTrainingMode()" style="margin: 0;">
+                                    <strong style="font-size: 1.1rem; color: #2c3e50;">Hyperparameter</strong>
+                                </div>
+                                <p style="margin: 0; font-size: 0.9rem; color: #666; line-height: 1.4;">
+                                    Automatically find optimal hyperparameters using Optuna. Best for maximizing model performance.
+                                </p>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Manual Training Controls -->
-                <div id="manual-training-controls">
-                    <button class="btn" id="start-training-btn" onclick="startTraining()">
-                        🚀 Start Training Selected Models
-                    </button>
-                    <button class="btn btn-danger" id="stop-training-btn" onclick="stopTraining()" style="display: none;">
-                        ⏹️ Stop Training
-                    </button>
+                <div id="manual-training-controls" style="text-align: center; padding: 1.5rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #27ae60;">
+                    <h4 style="margin-bottom: 1rem; color: #2c3e50;">Manual Training Controls</h4>
+                    <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.95rem;">
+                        Start training with your selected models and custom parameters
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <button class="btn" id="start-training-btn" onclick="startTraining()" style="min-width: 200px;">
+                            🚀 Start Training Selected Models
+                        </button>
+                        <button class="btn btn-danger" id="stop-training-btn" onclick="stopTraining()" style="display: none; min-width: 150px;">
+                            ⏹️ Stop Training
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Optimization Controls -->
-                <div id="optimization-controls" style="display: none;">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; text-align: left;">
+                <div id="optimization-controls" style="display: none; padding: 1.5rem; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #9b59b6;">
+                    <h4 style="margin-bottom: 1rem; color: #2c3e50; text-align: center;">Hyperparameter Optimization Controls</h4>
+                    <p style="margin-bottom: 1.5rem; color: #666; font-size: 0.95rem; text-align: center;">
+                        Automatically find the best hyperparameters for optimal model performance
+                    </p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; text-align: left;">
                         <div class="param-group">
                             <label for="optimization-model">Model to Optimize</label>
                             <select id="optimization-model">
@@ -1013,12 +1051,16 @@ def create_templates_at_path(templates_dir):
                             <small>Override preset trial count</small>
                         </div>
                     </div>
-                    <button class="btn" id="start-optimization-btn" onclick="startOptimization()">
-                        🔍 Start Hyperparameter Optimization
-                    </button>
-                    <button class="btn btn-danger" id="stop-optimization-btn" onclick="stopOptimization()" style="display: none;">
-                        ⏹️ Stop Optimization
-                    </button>
+                    <div style="text-align: center;">
+                        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn" id="start-optimization-btn" onclick="startOptimization()" style="min-width: 220px;">
+                                🔍 Start Hyperparameter Optimization
+                            </button>
+                            <button class="btn btn-danger" id="stop-optimization-btn" onclick="stopOptimization()" style="display: none; min-width: 150px;">
+                                ⏹️ Stop Optimization
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1121,7 +1163,15 @@ def create_templates_at_path(templates_dir):
             loadDatasetInfo();
             startStatusUpdates();
             initSnakeGame();
+            initializeTrainingMode();
         };
+        
+        function initializeTrainingMode() {
+            // Set initial visual state for manual training mode (default)
+            const manualLabel = document.querySelector('input[name="training-mode"][value="manual"]').closest('.training-mode-label');
+            manualLabel.classList.add('selected');
+            toggleTrainingMode();
+        }
 
         function updateClassBalanceDisplay(value) {
             const cancerPercentage = parseInt(value);
@@ -1348,7 +1398,7 @@ def create_templates_at_path(templates_dir):
             for (const trial of sortedTrials) {
                 const recall = trial.sensitivity || 0; // Recall is same as sensitivity in medical context
                 const isTopResult = trial.sensitivity === Math.max(...trialResults.map(t => t.sensitivity || 0));
-                const rowClass = isTopResult ? 'style="background-color: #2c5530;"' : '';
+                const rowClass = isTopResult ? 'style="background-color: #2c5530; color: #ffffff;"' : '';
                 
                 // Summarize parameters for display
                 const paramSummary = trial.parameters ? 
@@ -1524,12 +1574,40 @@ def create_templates_at_path(templates_dir):
             document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Optimization Functions
+        // Training Mode Functions
+        function selectTrainingMode(mode) {
+            // Update radio buttons
+            document.querySelector('input[name="training-mode"][value="manual"]').checked = (mode === 'manual');
+            document.querySelector('input[name="training-mode"][value="optimization"]').checked = (mode === 'optimization');
+            
+            // Update visual selection
+            document.querySelectorAll('.training-mode-label').forEach(label => {
+                label.classList.remove('selected');
+            });
+            
+            const selectedLabel = document.querySelector(`input[name="training-mode"][value="${mode}"]`).closest('.training-mode-label');
+            selectedLabel.classList.add('selected');
+            
+            // Trigger the mode toggle
+            toggleTrainingMode();
+        }
+        
         function toggleTrainingMode() {
             const manualMode = document.querySelector('input[name="training-mode"][value="manual"]').checked;
             const optimizationMode = document.querySelector('input[name="training-mode"][value="optimization"]').checked;
             
             currentTrainingMode = manualMode ? 'manual' : 'optimization';
+            
+            // Update visual selection
+            document.querySelectorAll('.training-mode-label').forEach(label => {
+                label.classList.remove('selected');
+            });
+            
+            if (manualMode) {
+                document.querySelector('input[name="training-mode"][value="manual"]').closest('.training-mode-label').classList.add('selected');
+            } else {
+                document.querySelector('input[name="training-mode"][value="optimization"]').closest('.training-mode-label').classList.add('selected');
+            }
             
             // Toggle control visibility
             document.getElementById('manual-training-controls').style.display = manualMode ? 'block' : 'none';
