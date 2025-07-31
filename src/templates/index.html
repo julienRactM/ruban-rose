@@ -565,7 +565,7 @@
                 return;
             }
 
-            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>Recall</th><th>F1-Score</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
+            let html = '<table class="metrics-table"><thead><tr><th>Model</th><th>Status</th><th>Recall</th><th>F1-Score</th><th>MCC</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th></tr></thead><tbody>';
             
             for (const [modelName, result] of Object.entries(results)) {
                 const status = result.completed ? '✅ Completed' : '❌ Failed';
@@ -576,6 +576,7 @@
                     <td>${status}</td>
                     <td>${(metrics.recall || metrics.sensitivity || 0).toFixed(4)}</td>
                     <td>${(metrics.f1_score || 0).toFixed(4)}</td>
+                    <td>${(metrics.mcc || 0).toFixed(4)}</td>
                     <td>${(metrics.sensitivity || 0).toFixed(4)}</td>
                     <td>${(metrics.specificity || 0).toFixed(4)}</td>
                     <td>${(metrics.accuracy || 0).toFixed(4)}</td>
@@ -599,7 +600,7 @@
             // Show the results container
             resultsContainer.style.display = 'block';
             
-            let html = '<table class="metrics-table"><thead><tr><th>Trial</th><th>Recall</th><th>F1-Score</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th><th>Parameters</th></tr></thead><tbody>';
+            let html = '<table class="metrics-table"><thead><tr><th>Trial</th><th>Recall</th><th>F1-Score</th><th>MCC</th><th>Sensitivity</th><th>Specificity</th><th>Accuracy</th><th>Parameters</th></tr></thead><tbody>';
             
             // Sort trials by F1-score descending to show best results first
             const sortedTrials = [...trialResults].sort((a, b) => (b.f1_score || 0) - (a.f1_score || 0));
@@ -621,6 +622,7 @@
                     <td><strong>#${trial.trial_id}</strong></td>
                     <td>${recall.toFixed(4)}</td>
                     <td>${(trial.f1_score || 0).toFixed(4)}</td>
+                    <td>${(trial.mcc || 0).toFixed(4)}</td>
                     <td>${(trial.sensitivity || 0).toFixed(4)}</td>
                     <td>${(trial.specificity || 0).toFixed(4)}</td>
                     <td>${(trial.accuracy || 0).toFixed(4)}</td>

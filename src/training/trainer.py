@@ -30,37 +30,62 @@ class MedicalMetrics:
     def calculate_metrics(y_true: np.ndarray, y_pred: np.ndarray, y_proba: np.ndarray) -> Dict[str, float]:
         """Calculate comprehensive medical metrics"""
         
+        # Debug print to understand data shapes
+        print(f"DEBUG: y_true shape: {np.array(y_true).shape}, y_pred shape: {np.array(y_pred).shape}")
+        if y_proba is not None:
+            print(f"DEBUG: y_proba shape: {np.array(y_proba).shape}")
+        
         # Ensure proper data types for sklearn compatibility
         y_true = np.array(y_true, dtype=np.int32)
         y_pred = np.array(y_pred, dtype=np.int32)
         if y_proba is not None:
             y_proba = np.array(y_proba, dtype=np.float32)
+            # Ensure y_proba is 2D with shape (n_samples, n_classes)
+            if len(y_proba.shape) != 2 or y_proba.shape[1] != 2:
+                print(f"ERROR: y_proba has wrong shape: {y_proba.shape}, expected (n_samples, 2)")
+                # Try to reshape if possible
+                if y_proba.size % 2 == 0:
+                    y_proba = y_proba.reshape(-1, 2)
+                    print(f"DEBUG: Reshaped y_proba to: {y_proba.shape}")
+                else:
+                    print(f"ERROR: Cannot reshape y_proba with size {y_proba.size} to (n, 2)")
+                    y_proba = None
+        
+        # Helper function to ensure scalar values
+        def ensure_scalar(value):
+            if hasattr(value, 'item'):
+                return float(value.item())
+            elif isinstance(value, (np.floating, np.integer)):
+                return float(value)
+            else:
+                return float(value)
         
         # Basic metrics
-        accuracy = accuracy_score(y_true, y_pred)
+        accuracy = ensure_scalar(accuracy_score(y_true, y_pred))
         
         # Medical-specific metrics (cancer = class 0, healthy = class 1)
-        sensitivity = recall_score(y_true, y_pred, pos_label=0, zero_division=0)  # True positive rate for cancer
-        specificity = recall_score(y_true, y_pred, pos_label=1, zero_division=0)  # True positive rate for healthy
-        precision_cancer = precision_score(y_true, y_pred, pos_label=0, zero_division=0)
-        precision_healthy = precision_score(y_true, y_pred, pos_label=1, zero_division=0)
-        f1_cancer = f1_score(y_true, y_pred, pos_label=0, zero_division=0)
-        f1_healthy = f1_score(y_true, y_pred, pos_label=1, zero_division=0)
+        sensitivity = ensure_scalar(recall_score(y_true, y_pred, pos_label=0, zero_division=0))  # True positive rate for cancer
+        specificity = ensure_scalar(recall_score(y_true, y_pred, pos_label=1, zero_division=0))  # True positive rate for healthy
+        precision_cancer = ensure_scalar(precision_score(y_true, y_pred, pos_label=0, zero_division=0))
+        precision_healthy = ensure_scalar(precision_score(y_true, y_pred, pos_label=1, zero_division=0))
+        f1_cancer = ensure_scalar(f1_score(y_true, y_pred, pos_label=0, zero_division=0))
+        f1_healthy = ensure_scalar(f1_score(y_true, y_pred, pos_label=1, zero_division=0))
         
         # Overall F1 (macro average)
-        f1_macro = f1_score(y_true, y_pred, average='macro', zero_division=0)
+        f1_macro = ensure_scalar(f1_score(y_true, y_pred, average='macro', zero_division=0))
         
         # AUC-ROC
         try:
-            auc_roc = roc_auc_score(y_true, y_proba[:, 0]) if y_proba is not None else 0.0
+            auc_roc = ensure_scalar(roc_auc_score(y_true, y_proba[:, 0]) if y_proba is not None else 0.0)
         except:
             auc_roc = 0.0
         
         # Matthews Correlation Coefficient (MCC) - excellent for medical imaging
-        mcc = matthews_corrcoef(y_true, y_pred)
+        mcc = ensure_scalar(matthews_corrcoef(y_true, y_pred))
         
         # Confusion Matrix for detailed analysis
-        cm = confusion_matrix(y_true, y_pred)
+        # Ensure we have binary classification (classes 0 and 1)
+        cm = confusion_matrix(y_true, y_pred, labels=[0, 1])
         
         return {
             'accuracy': accuracy,
@@ -73,7 +98,7 @@ class MedicalMetrics:
             'f1_macro': f1_macro,
             'auc_roc': auc_roc,
             'mcc': mcc,  # Matthews Correlation Coefficient
-            'confusion_matrix': cm.tolist()  # Convert to list for JSON serialization
+            'confusion_matrix': cm  # Keep as numpy array for internal use
         }
     
     @staticmethod
@@ -91,10 +116,27 @@ class MedicalMetrics:
         # Print confusion matrix in a readable format
         if 'confusion_matrix' in metrics:
             cm = metrics['confusion_matrix']
-            print(f"  Confusion Matrix:")
-            print(f"    Predicted:  [Cancer] [Healthy]")
-            print(f"    Cancer:     [{cm[0][0]:6d}] [{cm[0][1]:7d}]")
-            print(f"    Healthy:    [{cm[1][0]:6d}] [{cm[1][1]:7d}]")
+            try:
+                # Handle both numpy arrays and lists
+                if hasattr(cm, 'shape'):
+                    # Numpy array
+                    if cm.shape == (2, 2):
+                        print(f"  Confusion Matrix:")
+                        print(f"    Predicted:  [Cancer] [Healthy]")
+                        print(f"    Cancer:     [{int(cm[0, 0]):6d}] [{int(cm[0, 1]):7d}]")
+                        print(f"    Healthy:    [{int(cm[1, 0]):6d}] [{int(cm[1, 1]):7d}]")
+                    else:
+                        print(f"  Confusion Matrix: {cm}")
+                elif isinstance(cm, list) and len(cm) == 2 and len(cm[0]) == 2:
+                    # List format
+                    print(f"  Confusion Matrix:")
+                    print(f"    Predicted:  [Cancer] [Healthy]")
+                    print(f"    Cancer:     [{int(cm[0][0]):6d}] [{int(cm[0][1]):7d}]")
+                    print(f"    Healthy:    [{int(cm[1][0]):6d}] [{int(cm[1][1]):7d}]")
+                else:
+                    print(f"  Confusion Matrix: {cm}")
+            except Exception as e:
+                print(f"  Confusion Matrix: {cm} (printing error: {e})")
 
 
 class BreastCancerTrainer:
@@ -339,9 +381,14 @@ class BreastCancerTrainer:
             predictions = torch.argmax(output, dim=1)
             
             # Convert to CPU and ensure proper dtypes for sklearn compatibility
-            all_predictions.extend(predictions.detach().cpu().numpy().astype(np.int32))
-            all_labels.extend(target.detach().cpu().numpy().astype(np.int32))
-            all_probas.extend(probas.detach().cpu().numpy().astype(np.float32))
+            pred_np = predictions.detach().cpu().numpy().astype(np.int32)
+            target_np = target.detach().cpu().numpy().astype(np.int32)
+            probas_np = probas.detach().cpu().numpy().astype(np.float32)
+            
+            # Flatten and extend arrays to ensure 1D
+            all_predictions.extend(pred_np.flatten())
+            all_labels.extend(target_np.flatten())
+            all_probas.extend(probas_np)
         
         # Calculate metrics
         avg_loss = running_loss / len(self.train_loader)
@@ -381,9 +428,14 @@ class BreastCancerTrainer:
                 predictions = torch.argmax(output, dim=1)
                 
                 # Convert to CPU and ensure proper dtypes for sklearn compatibility
-                all_predictions.extend(predictions.detach().cpu().numpy().astype(np.int32))
-                all_labels.extend(target.detach().cpu().numpy().astype(np.int32))
-                all_probas.extend(probas.detach().cpu().numpy().astype(np.float32))
+                pred_np = predictions.detach().cpu().numpy().astype(np.int32)
+                target_np = target.detach().cpu().numpy().astype(np.int32)
+                probas_np = probas.detach().cpu().numpy().astype(np.float32)
+                
+                # Flatten and extend arrays to ensure 1D
+                all_predictions.extend(pred_np.flatten())
+                all_labels.extend(target_np.flatten())
+                all_probas.extend(probas_np)
         
         # Calculate metrics
         avg_loss = running_loss / len(self.val_loader)
@@ -421,6 +473,11 @@ class BreastCancerTrainer:
             
             # Update learning rate
             monitor_value = val_metrics.get('f1_score', 0)
+            # Ensure monitor_value is a scalar for the scheduler
+            if hasattr(monitor_value, 'item'):
+                monitor_value = float(monitor_value.item())
+            elif isinstance(monitor_value, (np.floating, np.integer)):
+                monitor_value = float(monitor_value)
             self.scheduler.step(monitor_value)
             
             # Update status callback if provided
@@ -446,6 +503,11 @@ class BreastCancerTrainer:
             
             # Save checkpoint
             current_metric = val_metrics.get('f1_score', 0)
+            # Ensure current_metric is a scalar for comparison
+            if hasattr(current_metric, 'item'):
+                current_metric = float(current_metric.item())
+            elif isinstance(current_metric, (np.floating, np.integer)):
+                current_metric = float(current_metric)
             is_best = current_metric > self.best_metric
             
             if is_best:
@@ -527,15 +589,17 @@ class BreastCancerTrainer:
             for key, value in metrics.items():
                 if isinstance(value, np.ndarray):
                     json_metrics[key] = value.tolist()
+                elif isinstance(value, (np.float32, np.float64, np.int32, np.int64)):
+                    json_metrics[key] = float(value)
                 else:
-                    json_metrics[key] = float(value) if isinstance(value, (np.float32, np.float64)) else value
+                    json_metrics[key] = value
             
             with open(metrics_path, 'w') as f:
                 json.dump(json_metrics, f, indent=2)
             
             # Save confusion matrix visualization data
             cm_data = {
-                'confusion_matrix': metrics['confusion_matrix'],
+                'confusion_matrix': metrics['confusion_matrix'].tolist() if isinstance(metrics['confusion_matrix'], np.ndarray) else metrics['confusion_matrix'],
                 'class_names': ['Cancer (0)', 'Healthy (1)'],
                 'model_type': str(type(self.model).__name__),
                 'timestamp': time.strftime('%Y-%m-%d %H:%M:%S')

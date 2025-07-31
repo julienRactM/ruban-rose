@@ -12,6 +12,7 @@ import threading
 import time
 from pathlib import Path
 import torch
+import numpy as np
 from datetime import datetime
 
 # Import model factories
@@ -66,6 +67,21 @@ def load_config():
             return yaml.safe_load(f)
     except FileNotFoundError:
         return {}
+
+def sanitize_metrics_for_json(metrics):
+    """Convert numpy arrays and types to JSON-serializable format"""
+    if not isinstance(metrics, dict):
+        return metrics
+        
+    sanitized = {}
+    for key, value in metrics.items():
+        if isinstance(value, np.ndarray):
+            sanitized[key] = value.tolist()
+        elif isinstance(value, (np.float32, np.float64, np.int32, np.int64)):
+            sanitized[key] = float(value)
+        else:
+            sanitized[key] = value
+    return sanitized
 
 def save_config(config):
     """Save configuration to YAML file"""
@@ -501,16 +517,28 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                 
                 # Create status callback to update progress
                 def update_training_status(epoch, total_epochs, train_loss, val_loss, metrics):
+                    # Convert tensor values to Python scalars to avoid tensor errors
+                    def safe_get_metric(key, default=0):
+                        value = metrics.get(key, default)
+                        if hasattr(value, 'item'):  # PyTorch tensor
+                            return float(value.item())
+                        elif isinstance(value, (np.floating, np.integer)):  # NumPy types
+                            return float(value)
+                        else:
+                            return float(value) if value is not None else default
+                    
                     training_status.update({
                         'epoch': epoch,
                         'total_epochs': total_epochs,
                         'metrics': {
-                            'train_loss': train_loss,
-                            'val_loss': val_loss,
-                            'f1_score': metrics.get('f1_score', 0),
-                            'sensitivity': metrics.get('sensitivity', 0),
-                            'specificity': metrics.get('specificity', 0),
-                            'accuracy': metrics.get('accuracy', 0)
+                            'train_loss': float(train_loss) if hasattr(train_loss, 'item') else train_loss,
+                            'val_loss': float(val_loss) if hasattr(val_loss, 'item') else val_loss,
+                            'f1_score': safe_get_metric('f1_score'),
+                            'sensitivity': safe_get_metric('sensitivity'),
+                            'specificity': safe_get_metric('specificity'),
+                            'accuracy': safe_get_metric('accuracy'),
+                            'mcc': safe_get_metric('mcc'),
+                            'recall': safe_get_metric('recall')
                         }
                     })
                 
@@ -520,9 +548,11 @@ def train_models_background(selected_models, model_parameters=None, data_config=
                 # Store results
                 if history['val_metrics']:
                     best_metrics = max(history['val_metrics'], key=lambda x: x['f1_score'])
+                    # Sanitize metrics for JSON serialization
+                    sanitized_metrics = sanitize_metrics_for_json(best_metrics)
                     training_status['model_results'][model_name] = {
                         'completed': True,
-                        'best_metrics': best_metrics,
+                        'best_metrics': sanitized_metrics,
                         'training_time': time.time(),
                         'epochs_completed': len(history['val_metrics'])
                     }
