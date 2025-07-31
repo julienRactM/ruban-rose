@@ -14940,3 +14940,56 @@ ValueError: Expected more than 1 value per channel when training, got input size
 2025-07-31 17:51:33,714 - INFO - Epoch 12/14 (4.47s) - Train Loss: 0.2158, Val Loss: 0.7568
 2025-07-31 17:51:37,735 - INFO - 127.0.0.1 - - [31/Jul/2025 17:51:37] "GET /api/optimization_status HTTP/1.1" 200 -
 2025-07-31 17:51:38,299 - INFO - Epoch 13/14 (4.58s) - Train Loss: 0.2108, Val Loss: 0.6181
+2025-07-31 17:51:42,953 - INFO - Epoch 14/14 (4.65s) - Train Loss: 0.2018, Val Loss: 0.4003
+2025-07-31 17:51:42,953 - INFO - Training completed in 63.09 seconds
+2025-07-31 17:51:42,953 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:51:42,959 - INFO - Trial 7: F1=0.8965, Sensitivity=0.8584, Specificity=0.5901
+2025-07-31 17:51:43,196 - INFO - Creating cnn model with parameters: {'learning_rate': 1.2176277861748511e-05, 'dropout': 0.5444177986985828, 'epochs': 6, 'architecture': 'custom', 'batch_size': 192}
+2025-07-31 17:51:43,228 - INFO - cnn model created and validated successfully
+2025-07-31 17:51:43,257 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:51:43,258 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:51:43,258 - INFO - Starting training for 6 epochs
+2025-07-31 17:51:43,258 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:51:45,317 - INFO - 127.0.0.1 - - [31/Jul/2025 17:51:45] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:51:47,900 - INFO - Epoch 1/6 (4.64s) - Train Loss: 0.6116, Val Loss: 0.6454
+2025-07-31 17:51:52,653 - INFO - Epoch 2/6 (4.63s) - Train Loss: 0.4988, Val Loss: 0.6264
+2025-07-31 17:51:57,357 - INFO - Epoch 3/6 (4.70s) - Train Loss: 0.4375, Val Loss: 0.6342
+2025-07-31 17:52:01,960 - INFO - Epoch 4/6 (4.60s) - Train Loss: 0.3961, Val Loss: 0.6026
+2025-07-31 17:52:02,788 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:02] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:06,562 - INFO - Epoch 5/6 (4.60s) - Train Loss: 0.3679, Val Loss: 0.6102
+2025-07-31 17:52:11,039 - INFO - Epoch 6/6 (4.48s) - Train Loss: 0.3448, Val Loss: 0.5446
+2025-07-31 17:52:11,148 - INFO - Training completed in 27.89 seconds
+2025-07-31 17:52:11,148 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:52:11,154 - INFO - Trial 8: F1=0.8049, Sensitivity=0.6887, Specificity=0.8372
+2025-07-31 17:52:11,388 - INFO - Creating cnn model with parameters: {'learning_rate': 0.00793769824764555, 'dropout': 0.6400507464532629, 'epochs': 7, 'architecture': 'custom', 'batch_size': 192}
+2025-07-31 17:52:11,423 - INFO - cnn model created and validated successfully
+2025-07-31 17:52:11,451 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:52:11,453 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:52:11,453 - INFO - Starting training for 7 epochs
+2025-07-31 17:52:11,453 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:52:16,000 - INFO - Epoch 1/7 (4.55s) - Train Loss: 0.3602, Val Loss: 0.6858
+2025-07-31 17:52:19,575 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:19] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:20,635 - INFO - Epoch 2/7 (4.51s) - Train Loss: 0.3154, Val Loss: 0.6995
+2025-07-31 17:52:25,126 - INFO - Epoch 3/7 (4.49s) - Train Loss: 0.2990, Val Loss: 0.6585
+2025-07-31 17:52:29,749 - INFO - Epoch 4/7 (4.62s) - Train Loss: 0.2922, Val Loss: 0.5765
+2025-07-31 17:52:34,318 - INFO - Epoch 5/7 (4.57s) - Train Loss: 0.2809, Val Loss: 0.4187
+2025-07-31 17:52:36,429 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:36] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:37,988 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:37] "POST /api/stop_optimization HTTP/1.1" 200 -
+2025-07-31 17:52:38,430 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:38] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:38,832 - INFO - Epoch 6/7 (4.51s) - Train Loss: 0.2722, Val Loss: 0.4224
+2025-07-31 17:52:40,432 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:40] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:42,520 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:42] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:43,370 - INFO - Epoch 7/7 (4.43s) - Train Loss: 0.2730, Val Loss: 0.5500
+2025-07-31 17:52:43,370 - INFO - Training completed in 31.92 seconds
+2025-07-31 17:52:43,371 - INFO - Best VAL_F1_SCORE Score: 0.0000
+2025-07-31 17:52:43,376 - INFO - Trial 9: F1=0.8782, Sensitivity=0.8138, Specificity=0.7151
+2025-07-31 17:52:43,615 - INFO - Creating cnn model with parameters: {'learning_rate': 0.00015722187560337144, 'dropout': 0.5086134244815826, 'epochs': 16, 'architecture': 'custom', 'batch_size': 128}
+2025-07-31 17:52:43,641 - INFO - cnn model created and validated successfully
+2025-07-31 17:52:43,672 - INFO - M4 Pro MPS optimizations enabled
+2025-07-31 17:52:43,674 - INFO - M4 Pro optimizations enabled: Mixed Precision disabled on MPS (PyTorch limitation)
+2025-07-31 17:52:43,674 - INFO - Starting training for 16 epochs
+2025-07-31 17:52:43,674 - INFO - Monitoring metric: val_f1_score (val_mcc)
+2025-07-31 17:52:44,872 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:44] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:47,183 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:47] "GET /api/optimization_status HTTP/1.1" 200 -
+2025-07-31 17:52:48,316 - INFO - Epoch 1/16 (4.64s) - Train Loss: 0.3961, Val Loss: 0.5852
+2025-07-31 17:52:49,533 - INFO - 127.0.0.1 - - [31/Jul/2025 17:52:49] "GET /api/optimization_status HTTP/1.1" 200 -
