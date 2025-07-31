@@ -301,6 +301,8 @@ class OptunaOptimizer:
             self.logger.debug(f"Model moved to device: {self.device}")
             
             # Validate model can process expected input
+            # Set model to eval mode to avoid BatchNorm issues with batch_size=1
+            model.eval()
             test_input = torch.randn(1, 3, 50, 50).to(self.device)
             with torch.no_grad():
                 test_output = model(test_input)

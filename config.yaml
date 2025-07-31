@@ -69,7 +69,7 @@ training:
   device: "mps"  # M4 Pro optimized for MPS backend
   mixed_precision: true  # Enable for M4 Pro performance boost
   gradient_clipping: 1.0
-  patience: 15  # Early stopping patience
+  patience: 20  # Early stopping patience - increased for medical training
   save_best_only: true
   monitor_metric: "val_f1_score"
   # M4 Pro specific optimizations
