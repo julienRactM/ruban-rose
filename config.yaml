@@ -47,13 +47,29 @@ models:
     epochs: 30
     fine_tune_layers: -1  # -1 for all layers, positive number for top N layers
     
+  densenet:
+    enabled: true
+    evaluate: 1
+    architecture: "densenet121"
+    pretrained: true
+    learning_rate: 0.0001
+    epochs: 25
+    growth_rate: 32
+    compression: 0.5
+    dropout_rate: 0.3
+    monitor_metric: "mcc"
+    
   faster_rcnn:
     enabled: true
     evaluate: 1
     backbone: "resnet50"
-    learning_rate: 0.0001
-    epochs: 25
-    # Note: Faster R-CNN may be overkill for 50x50 patches
+    pretrained: true
+    learning_rate: 0.00005
+    epochs: 20
+    anchor_scales: [8, 16, 32]
+    roi_pool_size: 7
+    dropout_rate: 0.5
+    monitor_metric: "mcc"
     
   vision_transformer:
     enabled: true

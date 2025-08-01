@@ -1,13 +1,3 @@
-
-
-
-Add Early stopping as an onpage param
-
-
-Can you check if we are sure there are 279 Patients in our dataset ?
-
-
-
 # may already be fixed
 
 needs to check why when making a training with optuna it still displays the F1 and shouldn't it be replaced by monitored metrics amongst recall MCC or AUC-ROC, currrently we see this: 
@@ -19,14 +9,20 @@ but also on the app it shows that
 
 # NEED NEW BRANCH
 
-Add to the App, for both "normal" training and optuna hyperparameter optimization a new Model to our application which is a DenseNet where parameter can be managed manually in normal mode and optimized with otuna like the others currently are being optimized in optuna hyperparameter mode
 
 Possible for us to show the attention map on an actual image  with the VIT model for interpretation ? Making sure the area is readable
 
 
 
-
 # DONE
+
+Add to the App, for both "normal" training and optuna hyperparameter optimization two new Models to our application which is a DenseNet and a Faster R CNN where parameters can be managed manually in normal mode and optimized with optuna like the others currently can be optimized with optuna hyperparameter mode
+
+---
+
+Add Early stopping as an onpage param
+
+---
 
 On the app in Optimization Status while using optuna, the title for metrics and params (Trial	Recall	Specificity	AUC-ROC	MCC	Parameters) are written in white on a whitish background so they currently aren't visible, can you fix this ? 
 

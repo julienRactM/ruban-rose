@@ -216,6 +216,135 @@
                     </div>
                 </div>
                 
+                <div class="model-card" data-model="densenet" onclick="toggleModel('densenet')">
+                    <h3>DenseNet</h3>
+                    <p>Dense Convolutional Network with efficient feature reuse and medical adaptations</p>
+                    <p><strong>Training time:</strong> ~25-35 minutes</p>
+                    <p><strong>Parameters:</strong> ~8M (DenseNet-121)</p>
+                    
+                    <div class="model-params" onclick="event.stopPropagation()">
+                        <h4>DenseNet Parameters</h4>
+                        <div class="param-group">
+                            <label for="densenet-epochs">Epochs</label>
+                            <input type="number" id="densenet-epochs" value="25" min="1" max="200">
+                            <small>Number of training epochs</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="densenet-lr">Learning Rate</label>
+                            <input type="number" id="densenet-lr" value="0.0001" step="0.00001" min="0.00001" max="0.01">
+                            <small>Learning rate for fine-tuning</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="densenet-architecture">Architecture</label>
+                            <select id="densenet-architecture">
+                                <option value="densenet121">DenseNet-121</option>
+                                <option value="densenet169">DenseNet-169</option>
+                                <option value="densenet201">DenseNet-201</option>
+                                <option value="compact">Compact DenseNet</option>
+                            </select>
+                            <small>DenseNet architecture variant</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="densenet-pretrained">Pre-trained</label>
+                            <select id="densenet-pretrained">
+                                <option value="true">Yes (ImageNet)</option>
+                                <option value="false">No (Random init)</option>
+                            </select>
+                            <small>Use ImageNet pre-trained weights</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="densenet-growth-rate">Growth Rate</label>
+                            <input type="number" id="densenet-growth-rate" value="32" min="8" max="64" step="4">
+                            <small>Growth rate for dense layers</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="densenet-compression">Compression</label>
+                            <input type="number" id="densenet-compression" value="0.5" min="0.1" max="1.0" step="0.1">
+                            <small>Compression factor for transition layers</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="densenet-dropout">Dropout Rate</label>
+                            <input type="number" id="densenet-dropout" value="0.3" step="0.05" min="0.0" max="0.8">
+                            <small>Dropout rate in classification head</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="densenet-monitor-metric">Monitoring Metric</label>
+                            <select id="densenet-monitor-metric">
+                                <option value="mcc">Matthews Correlation Coefficient (MCC)</option>
+                                <option value="recall">Recall (Cancer Detection)</option>
+                                <option value="auc_roc">AUC-ROC (Overall Performance)</option>
+                            </select>
+                            <small>Metric used for early stopping and best model selection</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="model-card" data-model="faster_rcnn" onclick="toggleModel('faster_rcnn')">
+                    <h3>Faster R-CNN</h3>
+                    <p>Region-based CNN adapted for classification with attention mechanisms</p>
+                    <p><strong>Training time:</strong> ~35-50 minutes</p>
+                    <p><strong>Parameters:</strong> ~28M (ResNet-50 backbone)</p>
+                    
+                    <div class="model-params" onclick="event.stopPropagation()">
+                        <h4>Faster R-CNN Parameters</h4>
+                        <div class="param-group">
+                            <label for="faster-rcnn-epochs">Epochs</label>
+                            <input type="number" id="faster-rcnn-epochs" value="20" min="1" max="100">
+                            <small>Number of training epochs</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="faster-rcnn-lr">Learning Rate</label>
+                            <input type="number" id="faster-rcnn-lr" value="0.00005" step="0.000001" min="0.000001" max="0.001">
+                            <small>Learning rate for complex architecture</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="faster-rcnn-backbone">Backbone</label>
+                            <select id="faster-rcnn-backbone">
+                                <option value="resnet50">ResNet-50</option>
+                                <option value="resnet101">ResNet-101</option>
+                                <option value="compact">Compact R-CNN</option>
+                            </select>
+                            <small>Backbone architecture for feature extraction</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="faster-rcnn-pretrained">Pre-trained</label>
+                            <select id="faster-rcnn-pretrained">
+                                <option value="true">Yes (COCO)</option>
+                                <option value="false">No (Random init)</option>
+                            </select>
+                            <small>Use COCO pre-trained weights</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="faster-rcnn-anchor-scales">Anchor Scales</label>
+                            <select id="faster-rcnn-anchor-scales">
+                                <option value="8,16,32">Small (8,16,32)</option>
+                                <option value="4,8,16">Very Small (4,8,16)</option>
+                                <option value="16,32,64">Large (16,32,64)</option>
+                            </select>
+                            <small>Anchor scales for region proposals</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="faster-rcnn-roi-pool-size">ROI Pool Size</label>
+                            <input type="number" id="faster-rcnn-roi-pool-size" value="7" min="3" max="14" step="2">
+                            <small>ROI pooling output size (odd numbers preferred)</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="faster-rcnn-dropout">Dropout Rate</label>
+                            <input type="number" id="faster-rcnn-dropout" value="0.5" step="0.05" min="0.0" max="0.8">
+                            <small>Dropout rate in classification heads</small>
+                        </div>
+                        <div class="param-group">
+                            <label for="faster-rcnn-monitor-metric">Monitoring Metric</label>
+                            <select id="faster-rcnn-monitor-metric">
+                                <option value="mcc">Matthews Correlation Coefficient (MCC)</option>
+                                <option value="recall">Recall (Cancer Detection)</option>
+                                <option value="auc_roc">AUC-ROC (Overall Performance)</option>
+                            </select>
+                            <small>Metric used for early stopping and best model selection</small>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="model-card" data-model="vision_transformer" onclick="toggleModel('vision_transformer')">
                     <h3>Vision Transformer</h3>
                     <p>Transformer-based architecture with attention mechanisms</p>
@@ -325,6 +454,8 @@
                             <select id="optimization-model">
                                 <option value="cnn">CNN</option>
                                 <option value="resnet">ResNet</option>
+                                <option value="densenet">DenseNet</option>
+                                <option value="faster_rcnn">Faster R-CNN</option>
                                 <option value="vision_transformer">Vision Transformer</option>
                             </select>
                             <small>Select one model for optimization</small>
@@ -564,6 +695,31 @@
                         pretrained: document.getElementById('resnet-pretrained').value === 'true',
                         fine_tune_layers: parseInt(document.getElementById('resnet-fine-tune').value),
                         monitor_metric: document.getElementById('resnet-monitor-metric').value
+                    };
+                } else if (modelName === 'densenet') {
+                    modelParams.densenet = {
+                        epochs: parseInt(document.getElementById('densenet-epochs').value),
+                        learning_rate: parseFloat(document.getElementById('densenet-lr').value),
+                        architecture: document.getElementById('densenet-architecture').value,
+                        pretrained: document.getElementById('densenet-pretrained').value === 'true',
+                        growth_rate: parseInt(document.getElementById('densenet-growth-rate').value),
+                        compression: parseFloat(document.getElementById('densenet-compression').value),
+                        dropout_rate: parseFloat(document.getElementById('densenet-dropout').value),
+                        monitor_metric: document.getElementById('densenet-monitor-metric').value
+                    };
+                } else if (modelName === 'faster_rcnn') {
+                    const anchorScalesStr = document.getElementById('faster-rcnn-anchor-scales').value;
+                    const anchorScales = anchorScalesStr.split(',').map(s => parseInt(s.trim()));
+                    
+                    modelParams.faster_rcnn = {
+                        epochs: parseInt(document.getElementById('faster-rcnn-epochs').value),
+                        learning_rate: parseFloat(document.getElementById('faster-rcnn-lr').value),
+                        backbone: document.getElementById('faster-rcnn-backbone').value,
+                        pretrained: document.getElementById('faster-rcnn-pretrained').value === 'true',
+                        anchor_scales: anchorScales,
+                        roi_pool_size: parseInt(document.getElementById('faster-rcnn-roi-pool-size').value),
+                        dropout_rate: parseFloat(document.getElementById('faster-rcnn-dropout').value),
+                        monitor_metric: document.getElementById('faster-rcnn-monitor-metric').value
                     };
                 } else if (modelName === 'vision_transformer') {
                     modelParams.vision_transformer = {

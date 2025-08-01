@@ -21,6 +21,8 @@ try:
     # Try relative imports first (when used as module)
     from ..models.cnn_model import create_cnn_model
     from ..models.resnet_model import create_resnet_model  
+    from ..models.densenet_model import create_densenet_model
+    from ..models.faster_rcnn_model import create_faster_rcnn_model
     from ..models.vision_transformer import create_vit_model
     from ..training.trainer import BreastCancerTrainer
     from ..data_loaders.breast_cancer_dataloader import create_dataloaders
@@ -28,6 +30,8 @@ except ImportError:
     # Fall back to direct imports (when run from src directory)
     from models.cnn_model import create_cnn_model
     from models.resnet_model import create_resnet_model  
+    from models.densenet_model import create_densenet_model
+    from models.faster_rcnn_model import create_faster_rcnn_model
     from models.vision_transformer import create_vit_model
     from training.trainer import BreastCancerTrainer
     from data_loaders.breast_cancer_dataloader import create_dataloaders
@@ -141,11 +145,18 @@ class OptunaOptimizer:
                 return 128  # ViT can handle larger batches efficiently
             elif self.model_type == 'resnet':
                 return 256  # ResNet is memory efficient
+            elif self.model_type == 'densenet':
+                return 192  # DenseNet moderate batch size (memory efficient)
+            elif self.model_type == 'faster_rcnn':
+                return 32   # Faster R-CNN smaller batches (complex model)
             else:  # CNN
                 return 192  # Custom CNN moderate batch size
         else:
             # Fallback for other configurations
-            return 96
+            if self.model_type == 'faster_rcnn':
+                return 16  # Even smaller for complex model on limited memory
+            else:
+                return 96
     
     def _setup_memory_management(self):
         """Setup memory management strategies for M4 Pro"""
@@ -197,6 +208,34 @@ class OptunaOptimizer:
                 'batch_size': trial.suggest_categorical('batch_size', batch_options)
             })
             
+        elif self.model_type == 'densenet':
+            # M4 Pro optimized batch sizes for DenseNet
+            batch_options = self._get_optimized_batch_sizes('densenet')
+            params.update({
+                'learning_rate': trial.suggest_float('learning_rate', 1e-6, 1e-3, log=True),
+                'epochs': trial.suggest_int('epochs', 10, 25),  # Optimized for M4 Pro
+                'architecture': trial.suggest_categorical('architecture', ['densenet121', 'densenet169', 'densenet201', 'compact']),
+                'pretrained': trial.suggest_categorical('pretrained', [True, False]),
+                'growth_rate': trial.suggest_categorical('growth_rate', [16, 24, 32, 48]),
+                'compression': trial.suggest_float('compression', 0.3, 0.7),
+                'dropout_rate': trial.suggest_float('dropout_rate', 0.1, 0.5),
+                'batch_size': trial.suggest_categorical('batch_size', batch_options)
+            })
+            
+        elif self.model_type == 'faster_rcnn':
+            # M4 Pro optimized batch sizes for Faster R-CNN (smaller due to complexity)
+            batch_options = self._get_optimized_batch_sizes('faster_rcnn')
+            params.update({
+                'learning_rate': trial.suggest_float('learning_rate', 1e-7, 1e-3, log=True),
+                'epochs': trial.suggest_int('epochs', 8, 20),  # Optimized for complex model
+                'backbone': trial.suggest_categorical('backbone', ['resnet50', 'resnet101', 'compact']),
+                'pretrained': trial.suggest_categorical('pretrained', [True, False]),
+                'anchor_scales': trial.suggest_categorical('anchor_scales', [[4,8,16], [8,16,32], [16,32,64]]),
+                'roi_pool_size': trial.suggest_categorical('roi_pool_size', [5, 7, 9]),
+                'dropout_rate': trial.suggest_float('dropout_rate', 0.2, 0.6),
+                'batch_size': trial.suggest_categorical('batch_size', batch_options)
+            })
+            
         elif self.model_type == 'vision_transformer':
             # M4 Pro optimized batch sizes for ViT
             batch_options = self._get_optimized_batch_sizes('vision_transformer')
@@ -219,6 +258,10 @@ class OptunaOptimizer:
                 return [8, 16, 32]
             elif model_type == 'resnet':
                 return [16, 32, 64]
+            elif model_type == 'densenet':
+                return [16, 32, 48]
+            elif model_type == 'faster_rcnn':
+                return [4, 8, 16]  # Smaller batches for complex model
             else:  # CNN
                 return [16, 32, 64]
         
@@ -233,6 +276,18 @@ class OptunaOptimizer:
                 return [64, 128, 192, 256]
             else:
                 return [32, 64, 128]
+        elif model_type == 'densenet':
+            # DenseNet moderate batch sizes (memory efficient)
+            if self.unified_memory_gb >= 36:  # 38GB M4 Pro
+                return [48, 96, 128, 192]
+            else:
+                return [32, 64, 96]
+        elif model_type == 'faster_rcnn':
+            # Faster R-CNN smaller batch sizes (complex model)
+            if self.unified_memory_gb >= 36:  # 38GB M4 Pro
+                return [8, 16, 24, 32]
+            else:
+                return [4, 8, 16]
         else:  # CNN
             # Custom CNN moderate batch sizes
             return [48, 96, 128, 192]
@@ -286,6 +341,14 @@ class OptunaOptimizer:
                 
                 model = create_resnet_model(config)
                 self.logger.debug("ResNet model created successfully")
+                
+            elif self.model_type == 'densenet':
+                self.logger.debug("Creating DenseNet model")
+                model = create_densenet_model(config)
+                
+            elif self.model_type == 'faster_rcnn':
+                self.logger.debug("Creating Faster R-CNN model")
+                model = create_faster_rcnn_model(config)
                 
             elif self.model_type == 'vision_transformer':
                 self.logger.debug("Creating Vision Transformer model")
