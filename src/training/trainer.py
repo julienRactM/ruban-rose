@@ -74,10 +74,18 @@ class MedicalMetrics:
         # Overall F1 (macro average)
         f1_macro = ensure_scalar(f1_score(y_true, y_pred, average='macro', zero_division=0))
         
-        # AUC-ROC
+        # AUC-ROC - Fixed calculation for proper label encoding
+        # In our setup: y_true has 0=Cancer, 1=Healthy
+        # sklearn expects probabilities for the positive class (1=Healthy)
+        # So we pass y_proba[:, 1] (healthy probabilities) to match sklearn convention
         try:
-            auc_roc = ensure_scalar(roc_auc_score(y_true, y_proba[:, 0]) if y_proba is not None else 0.0)
-        except:
+            if y_proba is not None:
+                # Use probabilities for class 1 (Healthy) since sklearn treats 1 as positive class
+                auc_roc = ensure_scalar(roc_auc_score(y_true, y_proba[:, 1]))
+            else:
+                auc_roc = 0.0
+        except Exception as e:
+            print(f"WARNING: AUC-ROC calculation failed: {e}")
             auc_roc = 0.0
         
         # Matthews Correlation Coefficient (MCC) - excellent for medical imaging

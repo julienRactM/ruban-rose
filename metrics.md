@@ -108,7 +108,7 @@ def evaluate_medical_metrics(y_true, y_pred, y_proba):
         'sensitivity': recall_score(y_true, y_pred, pos_label=0),  # Cancer = class 0
         'specificity': recall_score(y_true, y_pred, pos_label=1),  # Healthy = class 1
         'f1_score': f1_score(y_true, y_pred, pos_label=0),
-        'auc_roc': roc_auc_score(y_true, y_proba[:, 0]),
+        'auc_roc': roc_auc_score(y_true, y_proba[:, 1]),  # Fixed: use healthy probabilities for positive class
         'precision': precision_score(y_true, y_pred, pos_label=0),
         'accuracy': accuracy_score(y_true, y_pred)
     }
