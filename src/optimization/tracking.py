@@ -22,11 +22,12 @@ class OptimizationResult:
     trial_id: int
     model_type: str
     parameters: Dict[str, Any]
-    f1_score: float
+    f1_score: float  # Now stores the optimization_value (selected metric)
     sensitivity: float
     specificity: float
     accuracy: float
     mcc: float = 0.0  # Matthews Correlation Coefficient
+    auc_roc: float = 0.0  # AUC-ROC score
     training_time: float = 0.0
     epochs_completed: int = 0
     timestamp: str = ""

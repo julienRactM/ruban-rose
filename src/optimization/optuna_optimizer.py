@@ -88,6 +88,22 @@ class OptunaOptimizer:
         self.best_params = {}
         self.optimization_status = "ready"
         
+        # Determine optimization metric from config
+        optuna_config = base_config.get('optuna', {})
+        self.optimize_metric = optuna_config.get('optimize_metric', 'mcc')  # Default to MCC for medical
+        
+        # Validate and map optimization metric
+        valid_metrics = ['mcc', 'recall', 'sensitivity', 'specificity', 'auc_roc', 'medical_composite', 'f1_score']
+        if self.optimize_metric not in valid_metrics:
+            self.logger.warning(f"Invalid optimize_metric '{self.optimize_metric}'. Using 'mcc' instead.")
+            self.optimize_metric = 'mcc'
+        
+        # Map metric names for consistency
+        if self.optimize_metric == 'recall':
+            self.optimize_metric = 'sensitivity'  # Same metric, different name
+            
+        self.logger.info(f"Optuna optimization will maximize: {self.optimize_metric}")
+        
         # Callbacks for real-time updates
         self.progress_callback: Optional[Callable] = None
         self.trial_callback: Optional[Callable] = None
@@ -390,7 +406,7 @@ class OptunaOptimizer:
             trial: Optuna trial object
             
         Returns:
-            Objective value to maximize (F1-score)
+            Objective value to maximize (selected medical metric)
         """
         try:
             # Cleanup memory from previous trial
@@ -429,33 +445,53 @@ class OptunaOptimizer:
             # Train model
             history = trainer.train()
             
-            # Get best validation F1-score
+            # Get best validation metrics based on selected optimization metric
             if history['val_metrics']:
-                best_metrics = max(history['val_metrics'], key=lambda x: x['f1_score'])
-                f1_score = best_metrics['f1_score']
+                # Find best epoch based on selected optimization metric
+                best_metrics = max(history['val_metrics'], key=lambda x: x.get(self.optimize_metric, 0.0))
+                
+                # Extract key metrics
+                optimization_value = best_metrics.get(self.optimize_metric, 0.0)
                 sensitivity = best_metrics['sensitivity']
                 specificity = best_metrics['specificity']
+                f1_score = best_metrics.get('f1_score', 0.0)
+                auc_roc = best_metrics.get('auc_roc', 0.0)
+                mcc = best_metrics.get('mcc', 0.0)
+                accuracy = best_metrics.get('accuracy', 0.0)
                 
-                # Log additional metrics for analysis
+                # Log all metrics for analysis
                 trial.set_user_attr('sensitivity', sensitivity)
                 trial.set_user_attr('specificity', specificity)
-                trial.set_user_attr('accuracy', best_metrics['accuracy'])
-                trial.set_user_attr('mcc', best_metrics.get('mcc', 0.0))
+                trial.set_user_attr('f1_score', f1_score)
+                trial.set_user_attr('accuracy', accuracy)
+                trial.set_user_attr('auc_roc', auc_roc)
+                trial.set_user_attr('mcc', mcc)
+                trial.set_user_attr('optimization_metric', self.optimize_metric)
+                trial.set_user_attr('optimization_value', optimization_value)
                 trial.set_user_attr('epochs_completed', len(history['val_metrics']))
                 
-                # Update best tracking
-                if f1_score > self.best_value:
-                    self.best_value = f1_score
+                # Update best tracking based on selected metric
+                if optimization_value > self.best_value:
+                    self.best_value = optimization_value
                     self.best_params = params.copy()
                 
-                # Trial callback (successful case)
+                # Trial callback with selected metric as primary value
                 if self.trial_callback:
-                    self.trial_callback(trial.number + 1, params, f1_score, sensitivity, specificity, 
-                                      best_metrics['accuracy'], best_metrics.get('mcc', 0.0))
+                    try:
+                        # Try new callback signature with AUC-ROC and MCC
+                        self.trial_callback(trial.number + 1, params, optimization_value, sensitivity, specificity, 
+                                          accuracy, mcc, auc_roc)
+                    except TypeError:
+                        # Fallback to older signature
+                        self.trial_callback(trial.number + 1, params, optimization_value, sensitivity, specificity, 
+                                          accuracy, mcc)
                 
-                self.logger.info(f"Trial {trial.number}: F1={f1_score:.4f}, Sensitivity={sensitivity:.4f}, Specificity={specificity:.4f}")
+                # Log trial results with selected metric highlighted
+                self.logger.info(f"Trial {trial.number}: {self.optimize_metric.upper()}={optimization_value:.4f}, "
+                               f"Sensitivity={sensitivity:.4f}, Specificity={specificity:.4f}, "
+                               f"AUC-ROC={auc_roc:.4f}, MCC={mcc:.4f}")
                 
-                return f1_score
+                return optimization_value
             else:
                 self.logger.warning(f"Trial {trial.number}: No validation metrics available")
                 return 0.0
@@ -491,11 +527,15 @@ class OptunaOptimizer:
             # Trial callback with error information (if callback supports error parameter)
             if self.trial_callback:
                 try:
-                    # Try to call with error parameter (including accuracy=0.0, mcc=0.0)
-                    self.trial_callback(trial.number + 1, params, 0.0, 0.0, 0.0, 0.0, 0.0, error_msg)
+                    # Try to call with error parameter (including auc_roc=0.0)
+                    self.trial_callback(trial.number + 1, params, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, error_msg)
                 except TypeError:
-                    # Fallback to standard callback signature with accuracy and mcc
-                    self.trial_callback(trial.number + 1, params, 0.0, 0.0, 0.0, 0.0, 0.0)
+                    try:
+                        # Fallback to standard callback signature with accuracy, mcc, auc_roc
+                        self.trial_callback(trial.number + 1, params, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+                    except TypeError:
+                        # Final fallback to older signature
+                        self.trial_callback(trial.number + 1, params, 0.0, 0.0, 0.0, 0.0, 0.0)
             
             # Update progress callback with error
             if self.progress_callback:
@@ -562,7 +602,7 @@ class OptunaOptimizer:
             study = optuna.create_study(
                 study_name=self.study_name,
                 storage=storage,
-                direction='maximize',  # Maximize F1-score
+                direction='maximize',  # Maximize selected medical metric
                 pruner=pruner,
                 load_if_exists=True
             )
@@ -580,7 +620,7 @@ class OptunaOptimizer:
             self.optimization_status = "completed"
             
             # Log results
-            self.logger.info(f"Optimization completed. Best F1-score: {study.best_value:.4f}")
+            self.logger.info(f"Optimization completed. Best {self.optimize_metric.upper()}: {study.best_value:.4f}")
             self.logger.info(f"Best parameters: {study.best_params}")
             
             return study

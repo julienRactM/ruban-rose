@@ -188,16 +188,16 @@ if __name__ == "__main__":
     
     # Generate the confusion matrix
     generate_confusion_matrix(
-        true_positives=1283,    # Cancer correctly identified
-        false_negatives=194,    # Cancer missed (dangerous!)
-        false_positives=236,    # Healthy misidentified as cancer
-        true_negatives=919,     # Healthy correctly identified
+        true_positives=1735,    # Cancer correctly identified
+        false_negatives=18,    # Cancer missed (dangerous!)
+        false_positives=405,    # Healthy misidentified as cancer
+        true_negatives=957,     # Healthy correctly identified
         title="Breast Cancer Detection - Confusion Matrix",
         save_path="confusion_matrix_breast_cancer.png",
         show_metrics=True
     )
     
     # Optional: Create sample data for further analysis
-    y_true, y_pred = create_sample_data_from_confusion_matrix(1283, 194, 236, 919)
+    y_true, y_pred = create_sample_data_from_confusion_matrix(1735, 18, 405, 957)
     print(f"\nSample data created: {len(y_true):,} samples")
     print(f"Class distribution - Cancer: {np.sum(y_true == 0):,}, Healthy: {np.sum(y_true == 1):,}")

@@ -1,5 +1,7 @@
 BHI
 BHI/*
+BHI_uncleaned/*
+BHI_uncleaned
 venv
 
 # Model checkpoints (too large for GitHub)

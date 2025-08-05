@@ -104,7 +104,7 @@ metrics:
 optuna:
   enabled: false  # Enable after selecting best model
   n_trials: 50  # Reduced for faster M4 Pro optimization cycles
-  optimize_metric: "f1_score"
+  optimize_metric: "mcc"  # Matthews Correlation Coefficient - best for medical imaging
   search_space:
     learning_rate: [1e-5, 1e-2]
     batch_size: [64, 128, 256, 384]  # M4 Pro optimized batch sizes

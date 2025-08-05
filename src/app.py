@@ -353,16 +353,20 @@ def run_optimization_background(model_type, optimization_mode, data_config=None)
             })
             add_optimization_log(message)
         
-        def trial_completion_callback(trial_id, params, f1_score, sensitivity, specificity, accuracy=0.0, mcc=0.0):
+        def trial_completion_callback(trial_id, params, optimization_value, sensitivity, specificity, accuracy=0.0, mcc=0.0, auc_roc=0.0, error_msg=None):
+            # Handle both new and old callback signatures
+            f1_score = optimization_value  # For backward compatibility with OptimizationResult
+            
             result = OptimizationResult(
                 trial_id=trial_id,
                 model_type=model_type,
                 parameters=params,
-                f1_score=f1_score,
+                f1_score=f1_score,  # Store optimization_value as f1_score for compatibility
                 sensitivity=sensitivity,  # Recall is same as sensitivity in medical context
                 specificity=specificity,
                 accuracy=accuracy,
                 mcc=mcc,  # Matthews Correlation Coefficient
+                auc_roc=auc_roc,  # AUC-ROC score
                 training_time=0.0,  # Will be updated if available
                 epochs_completed=params.get('epochs', 0),
                 timestamp=datetime.now().isoformat(),
@@ -372,13 +376,15 @@ def run_optimization_background(model_type, optimization_mode, data_config=None)
             optimization_tracker.record_trial(result)
             optimization_status['trial_results'].append(result.to_dict())
             
-            # Update best results
-            if f1_score > optimization_status['best_medical_score']:
+            # Update best results using optimization_value (the selected metric)
+            if optimization_value > optimization_status['best_medical_score']:
                 optimization_status.update({
-                    'best_medical_score': f1_score,
+                    'best_medical_score': optimization_value,
                     'best_params': params.copy()
                 })
-                add_optimization_log(f"New best score: {f1_score:.4f}")
+                # Get the current optimization metric name from optimizer
+                metric_name = getattr(optimizer, 'optimize_metric', 'score')
+                add_optimization_log(f"New best {metric_name}: {optimization_value:.4f}")
         
         optimizer.set_progress_callback(optimization_progress_callback)
         optimizer.set_trial_callback(trial_completion_callback)
@@ -403,7 +409,8 @@ def run_optimization_background(model_type, optimization_mode, data_config=None)
         })
         
         add_optimization_log("\n=== Optimization Completed! ===")
-        add_optimization_log(f"Best Medical Composite Score: {study.best_value:.4f}")
+        metric_name = getattr(optimizer, 'optimize_metric', 'score').upper()
+        add_optimization_log(f"Best {metric_name}: {study.best_value:.4f}")
         add_optimization_log(f"Best Parameters: {study.best_params}")
         add_optimization_log(f"Total Trials: {len(study.trials)}")
         
